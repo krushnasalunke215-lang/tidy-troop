@@ -1,0 +1,54 @@
+- !<AssetImportMetadata/558ebb4c-5073-4cc9-8045-dd8197c6a4b6>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 7500693f-0945-4944-beee-bfaa8030519d
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 7500693f-0945-4944-beee-bfaa8030519d
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> c1e00a87-d223-4a61-aec9-f4c39c3a52db
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/c1e00a87-d223-4a61-aec9-f4c39c3a52db>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 47eb9d8a-d612-4f89-88d9-16a781a2e5c0
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    jingleVolume: false
+    sfxVolume: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - sfxVolume: 0.850000
+      jingleVolume: 0.800000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TidyTroopAudio – sound cues</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float sfxVolume = 0.85 {"hint":"Volume of quick feedback sounds (click, snap, chime)", "widget":"slider", "min":0, "max":1, "step":0.05}'
+    - '// @input float jingleVolume = 0.8 {"hint":"Volume of the salute bugle and the ending fanfare", "widget":"slider", "min":0, "max":1, "step":0.05}'
+    - '// @ui {"widget":"group_end"}'

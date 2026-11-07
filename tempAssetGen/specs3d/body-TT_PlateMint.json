@@ -1,0 +1,8 @@
+{
+  "prompt": "A round white ceramic dinner plate with a thin mint green rim, empty, single plate, soft stylized 3D game asset",
+  "negative_prompt": "food, cutlery, fork, knife, table, stack of plates, cup, background, dark colors",
+  "seed": 1832212550,
+  "output_quality": "compact",
+  "preview_quality": "balanced",
+  "reconstruction_quality": "balanced"
+}

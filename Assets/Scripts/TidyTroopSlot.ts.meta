@@ -1,0 +1,63 @@
+- !<AssetImportMetadata/601d704e-2ac0-4b59-96e6-5907aedf5e20>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> ef651cf2-00ad-46f5-a2d4-add42034474e
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> ef651cf2-00ad-46f5-a2d4-add42034474e
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> a71f6232-1e6f-4c6b-b4f2-57e327cece86
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/a71f6232-1e6f-4c6b-b4f2-57e327cece86>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 7bb35640-24d1-4330-8873-90313fb787ba
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    category: false
+    glowColor: false
+    glowOffsetCm: false
+    glowRadiusCm: false
+    glowUpright: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - category: clothes
+      glowRadiusCm: !<float> 6.000000
+      glowOffsetCm: !<Vec3> {x: 0.000000, y: 0.500000, z: 0.000000}
+      glowUpright: false
+      glowColor: !<Vec3> {x: 0.550000, y: 1.000000, z: 0.800000}
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TidyTroopSlot – where one item belongs</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input string category = "clothes" {"hint":"Which items belong here", "widget":"combobox", "values":[{"label":"Clothes (hanger)", "value":"clothes"}, {"label":"Book (shelf)", "value":"book"}, {"label":"Plate (rack)", "value":"plate"}]}'
+    - '// @input float glowRadiusCm = 6 {"hint":"Glow ring radius in cm", "widget":"slider", "min":2, "max":30, "step":0.5}'
+    - "// @input vec3 glowOffsetCm = {0,0.5,0} {\"hint\":\"Glow ring centre, in this slot's local cm\"}"
+    - '// @input bool glowUpright {"hint":"ON: ring stands upright facing the user (hangers). OFF: ring lies flat (shelf/rack)"}'
+    - '// @input vec3 glowColor = "{0.55,1.0,0.8}" {"hint":"Glow color", "widget":"color"}'
+    - '// @ui {"widget":"group_end"}'

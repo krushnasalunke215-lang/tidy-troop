@@ -1,0 +1,7 @@
+{
+  "prompt": "A pair of light-wash blue denim jeans lying flat, both legs straight and side by side, front pockets, belt loops, orange stitching, single garment, soft stylized 3D game asset",
+  "negative_prompt": "person, mannequin, legs, body, belt, hanger, folded, background, floor, table, dark colors",
+  "output_quality": "compact",
+  "preview_quality": "balanced",
+  "reconstruction_quality": "balanced"
+}

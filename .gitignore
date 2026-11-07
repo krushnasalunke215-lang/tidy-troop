@@ -1,0 +1,21 @@
+# BEGIN Lens Studio managed Agents-Docs block
+.mcp.json
+.cursor/mcp.json
+.vscode/mcp.json
+.codex/config.toml
+.claude/settings.local.json
+ls-live-instance.json
+ls-live-instance.json.tmp
+# END Lens Studio managed Agents-Docs block
+# Kiro MCP config holds the Lens Studio MCP auth token (added by install-clad-kiro.ps1)
+.kiro/settings/mcp.json
+.kiro/settings/mcp.json.bak-*
+# Private debug signing key (Lens Studio makes a new one per machine)
+spk_debug_key.pem
+# Generated or machine-local Lens Studio files
+Cache/
+Workspaces/
+PluginsUserPreferences/
+lens.esproj.*.lock
+# Local output of the repo check scripts
+tempAssetGen/repo-*.txt

@@ -1,0 +1,8 @@
+{
+  "prompt": "A pastel yellow cotton crew-neck T-shirt with short sleeves, lying flat and slightly wrinkled, seen from the front, single garment, soft stylized 3D game asset",
+  "negative_prompt": "person, mannequin, body, arms, hanger, folded, background, floor, table, text, logo, dark colors",
+  "seed": 1395678476,
+  "output_quality": "compact",
+  "preview_quality": "balanced",
+  "reconstruction_quality": "balanced"
+}

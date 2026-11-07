@@ -1,0 +1,8 @@
+{
+  "prompt": "A pair of pastel lavender purple cotton trousers lying flat, both legs straight and side by side, front pockets, belt loops, light stitching, rolled cuffs, single garment, soft stylized 3D game asset",
+  "negative_prompt": "person, mannequin, legs, body, belt, hanger, folded, background, floor, table, dark colors",
+  "seed": 3767544954,
+  "output_quality": "compact",
+  "preview_quality": "balanced",
+  "reconstruction_quality": "balanced"
+}

@@ -1,0 +1,9 @@
+{
+  "note": "SPECS text-to-3D batch 2, created 2026-11-06 ~18:26 IST from Lens Studio 5.23.2. Same seeds as batch 1 so the shapes match.",
+  "jobs": {
+    "TT_BookYellow": "68ee2c9e-cb34-44b2-bf74-53dbc3105414",
+    "TT_ShirtYellow": "e7dc21bd-b333-4c64-8149-4fadccb7a822",
+    "TT_PantsLavender": "d597eacd-e8e1-4b02-a073-09cbdffe6f06",
+    "TT_BookMint": "b5d58a90-66a5-40b0-8b09-28bad480fd3f"
+  }
+}

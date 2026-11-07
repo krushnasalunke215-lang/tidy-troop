@@ -1,0 +1,8 @@
+{
+  "prompt": "A closed hardcover book with a mint green cover and cream page edges, lying flat, single book, soft stylized 3D game asset",
+  "negative_prompt": "open book, stack of books, shelf, table, text, title, background, dark colors",
+  "seed": 2801333535,
+  "output_quality": "compact",
+  "preview_quality": "balanced",
+  "reconstruction_quality": "balanced"
+}

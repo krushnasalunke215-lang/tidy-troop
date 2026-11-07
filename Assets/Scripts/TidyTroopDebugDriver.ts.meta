@@ -1,0 +1,51 @@
+- !<AssetImportMetadata/f1b947bc-003d-405d-b171-92371e8aeb4f>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 9840493f-9a8a-4308-9292-a0f78fa85c52
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 9840493f-9a8a-4308-9292-a0f78fa85c52
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 7a4cf6ef-24a9-43de-82a9-75abb073458e
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/7a4cf6ef-24a9-43de-82a9-75abb073458e>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: bd7b8701-6df8-426d-9ea5-0173c3e506ce
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    main: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - main: !<MappingBased.AssignableType_1> 00000000-0000-0000-0000-000000000000
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TidyTroopDebugDriver – preview test keys (P, N, R)</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">References</span>"}'
+    - '// @ui {"widget":"group_start", "label":"References"}'
+    - '// @input AssignableType_1 main {"hint":"The game to drive"}'
+    - '// @ui {"widget":"group_end"}'

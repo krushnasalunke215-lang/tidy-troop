@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "CLAD: Lens Studio MCP liveness gate",
+      "description": "Kiro port of ls-clad hooks/hooks.json. Before any lens-studio MCP call, probes the endpoint in .mcp.json and blocks the call if Lens Studio is not reachable. Windows PowerShell.",
+      "trigger": "PreToolUse",
+      "matcher": "@lens-studio",
+      "timeout": 5,
+      "action": {
+        "type": "command",
+        "command": "powershell -NoProfile -ExecutionPolicy Bypass -File .kiro/hooks/clad/kiro-liveness-gate.ps1"
+      }
+    }
+  ]
+}

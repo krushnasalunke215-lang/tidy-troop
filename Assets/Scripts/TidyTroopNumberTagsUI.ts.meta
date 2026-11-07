@@ -1,0 +1,60 @@
+- !<AssetImportMetadata/1281e898-5ba3-4333-a7e0-1a8fff4f3138>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 00d6dc64-2234-4ab3-9f09-274830417882
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 00d6dc64-2234-4ab3-9f09-274830417882
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> e15d175b-2bd4-43cd-a240-9c6cf61901b3
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/e15d175b-2bd4-43cd-a240-9c6cf61901b3>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 9108158d-2b51-4bbc-b57b-04cdfa14ff7c
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    fillColor: false
+    numberColor: false
+    ringColor: false
+    tagDiameterCm: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - tagDiameterCm: !<float> 8.000000
+      ringColor: !<Vec4> {x: 1.000000, y: 0.930000, z: 0.600000, w: 1.000000}
+      fillColor: !<Vec4> {x: 0.080000, y: 0.120000, z: 0.300000, w: 0.600000}
+      numberColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TidyTroopNumberTagsUI – numbers on the mess</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float tagDiameterCm = 8 {"hint":"Tag diameter in cm", "widget":"slider", "min":4, "max":16, "step":0.5}'
+    - '// @input vec4 ringColor = "{1.0,0.93,0.6,1}" {"hint":"Ring color (the light circle)", "widget":"color"}'
+    - '// @input vec4 fillColor = "{0.08,0.12,0.3,0.6}" {"hint":"Fill behind the number (dark fill shows as clear on the additive display)", "widget":"color"}'
+    - '// @input vec4 numberColor = "{1,1,1,1}" {"hint":"Number color", "widget":"color"}'
+    - '// @ui {"widget":"group_end"}'

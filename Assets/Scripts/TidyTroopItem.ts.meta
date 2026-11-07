@@ -1,0 +1,69 @@
+- !<AssetImportMetadata/16ddd2aa-1a73-4446-ac30-4421aeac487a>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> e109f070-3a0c-4ac8-8deb-ad02fc275707
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> e109f070-3a0c-4ac8-8deb-ad02fc275707
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> aec11ebf-ee70-44a2-a651-685744629685
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/aec11ebf-ee70-44a2-a651-685744629685>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: b19cf02b-c641-49e5-8197-e90e1c0a5d26
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    category: false
+    colliderSizeCm: false
+    number: false
+    placedOffsetCm: false
+    placedVisualRotationDeg: false
+    standOffsetCm: false
+    tagHeightCm: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - number: !<float> 1.000000
+      category: clothes
+      colliderSizeCm: !<Vec3> {x: 44.000000, y: 10.000000, z: 40.000000}
+      tagHeightCm: !<float> 12.000000
+      placedOffsetCm: !<Vec3> {x: 0.000000, y: -21.000000, z: 0.000000}
+      placedVisualRotationDeg: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
+      standOffsetCm: !<Vec3> {x: 0.000000, y: -1.000000, z: 0.000000}
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TidyTroopItem – a numbered thing to put away</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float number = 1 {"hint":"Number shown on the floating tag (1 to 10)", "widget":"slider", "min":1, "max":10, "step":1}'
+    - '// @input string category = "clothes" {"hint":"Which kind of place it belongs in", "widget":"combobox", "values":[{"label":"Clothes (hanger)", "value":"clothes"}, {"label":"Book (shelf)", "value":"book"}, {"label":"Plate (rack)", "value":"plate"}]}'
+    - '// @input vec3 colliderSizeCm = {44,10,40} {"hint":"Grab box size in cm (big on purpose: easy to aim at)"}'
+    - '// @input float tagHeightCm = 12 {"hint":"How high above the item the number tag floats, in cm", "widget":"slider", "min":4, "max":40, "step":0.5}'
+    - '// @input vec3 placedOffsetCm = {0,-21,0} {"hint":"Placed position relative to the slot frame, cm (e.g. hang below the hanger)"}'
+    - '// @input vec3 placedVisualRotationDeg = {0,0,0} {"hint":"Placed rotation of the visual, degrees (upright on hanger/shelf, on edge in rack)"}'
+    - "// @input vec3 standOffsetCm = {0,-1,0} {\"hint\":\"Where the character stands when this item is put away, relative to where it lay, in this item's own frame (cm; turns with the item, so it works in both placement modes)\"}"
+    - '// @ui {"widget":"group_end"}'

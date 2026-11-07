@@ -1,0 +1,63 @@
+- !<AssetImportMetadata/9f01f1c6-04f7-4826-aae0-80f1c31a9ace>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 4f75be35-f446-4719-b535-29300b657f04
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 4f75be35-f446-4719-b535-29300b657f04
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> 4b47f20c-3b9a-41fa-b8fc-e6e73645ccc2
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/4b47f20c-3b9a-41fa-b8fc-e6e73645ccc2>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: 59038016-4981-4144-a295-b1f25e49145a
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    sparkleCount: false
+    sparkleSizeCm: false
+    waveColor: false
+    waveRadiusCm: false
+    waveSeconds: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - waveRadiusCm: !<float> 320.000000
+      waveSeconds: 2.200000
+      sparkleCount: !<float> 60.000000
+      sparkleSizeCm: 4.500000
+      waveColor: !<Vec3> {x: 1.000000, y: 0.950000, z: 0.700000}
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TidyTroopCelebration – light wave + sparkles</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
+    - '// @ui {"widget":"group_start", "label":"Settings"}'
+    - '// @input float waveRadiusCm = 320 {"hint":"How far the light wave travels, cm", "widget":"slider", "min":100, "max":600, "step":10}'
+    - '// @input float waveSeconds = 2.2 {"hint":"Seconds for the wave to cross the room", "widget":"slider", "min":0.5, "max":5, "step":0.1}'
+    - '// @input float sparkleCount = 60 {"hint":"Number of sparkles", "widget":"slider", "min":0, "max":120, "step":1}'
+    - '// @input float sparkleSizeCm = 4.5 {"hint":"Largest sparkle size, cm", "widget":"slider", "min":1, "max":10, "step":0.5}'
+    - '// @input vec3 waveColor = "{1.0,0.95,0.7}" {"hint":"Wave color", "widget":"color"}'
+    - '// @ui {"widget":"group_end"}'

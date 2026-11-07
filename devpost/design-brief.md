@@ -1,12 +1,14 @@
 ---
-status: draft
+status: approved
 ---
 
-# Design brief: Tidy Troop (default name)
+# Design brief: Tidy Troop
+
+> **Approved by the learner on 2026-11-07**, after both revisions below. The approval also keeps the default Lens name (Tidy Troop), character names (Sergeant Sweep, Captain Fresh), their lines and the ending. Those are still marked (default) where they appear, to show the agent proposed them and the learner accepted them.
 
 <!-- Filled in by plan-lens from the learner's interview. Use the learner's words. Mark any value they didn't choose as (default). -->
 
-> **Revised on 2026-11-06, waiting for the learner's re-approval.** The first version was approved for a fully virtual room. Since then the learner chose "bedroom option B": the mess lies on the Colorful Home preview bedroom's own bed. What changed here: "Stand-in for the preview", "Where things live" (bed, cupboard, desk, chair and item spots, tag size), the picker rule in "When things show", and a new line about the second layout.
+> **Revised on 2026-11-06.** The first version was approved for a fully virtual room. Since then the learner chose "bedroom option B": the mess lies on the Colorful Home preview bedroom's own bed. What changed here: "Stand-in for the preview", "Where things live" (bed, cupboard, desk, chair and item spots, tag size), the picker rule in "When things show", and a new line about the second layout.
 >
 > **Revised again on 2026-11-07** after the improvement analysis (`TidyTroopReports/improvement-ideas.md`), which the learner asked for and approved ("build all"). What changed: a briefing after the pick, the salute waits until you look at the cleared spot, a "Bed clear!" moment, a line per job and per buddy, and the ending now happens on the clear bed with the time taken. See "When things show", "Characters" and done criteria 3 and 5.
 
@@ -78,7 +80,7 @@ Each one can be checked in Lens Studio's preview.
 
 ## Risks and open questions
 - The choice of characters means CLAD has to build and animate two characters instead of one. The learner chose to keep it. If time runs short, finish Character 1 first.
-- The Lens name, character names, personality and ending are defaults. The learner hasn't chosen them yet.
+- The Lens name, character names, personality and ending were proposed as defaults. The learner accepted them when approving this brief on 2026-11-07.
 - Feel unproven: whether real glasses can reliably spot real clothes on a messy bed, and whether the salute still motivates on the fiftieth tidy-up.
 
 ## Build notes for CLAD

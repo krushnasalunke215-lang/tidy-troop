@@ -1,6 +1,6 @@
 # Devpost write-up: Tidy Troop (draft)
 
-Draft for the Devpost project page. Paste each section into the matching Devpost field. Parts marked **[you]** need your own words; the rest is filled in from the brief, the planning notes and the build reports. The Lens name, character names and ending are still the brief's defaults.
+Draft for the Devpost project page. Paste each section into the matching Devpost field. Parts marked **[you]** need your own words; the rest is filled in from the approved brief, the planning notes and the build reports.
 
 ---
 

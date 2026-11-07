@@ -103,4 +103,4 @@ Lens Studio 5.24.1 and 5.23.2, SPECS, TypeScript, Spectacles Interaction Kit, Sp
 
 ## Links
 - Video: **[add the YouTube link]**
-- Repo: **[add the GitHub link]**
+- Repo: https://github.com/krushnasalunke215-lang/tidy-troop

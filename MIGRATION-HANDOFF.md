@@ -30,9 +30,10 @@ Steps 1 to 4 and 6 of "Remaining work" are done, step 5 is waiting on the learne
 - The learner chose to keep both characters code-built (option A), because AI models can't move their arm to salute.
 - Step 9 prep (Nov 7):
   - Drafts written: `devpost/write-up.md` (Devpost page text; the **[you]** parts need the learner's words) and `devpost/video-script.md` (shot list, lines, recording steps). There's also a root `README.md`.
-  - A local Git repo exists (`main`) with 771 files staged and checked: no MCP token, no token-bearing configs, no `spk_debug_key.pem`.
-  - **Not committed yet**, because Git has no `user.name`/`user.email` on this machine. The learner still has to create the GitHub repo and push.
-- Still open: step 5 re-approval and step 8 choices (both the learner's), then the commit, push, video and Devpost form.
+  - Local Git repo (`main`), first commit `5da06f2`. It holds 772 files, checked for the MCP token, Bearer tokens and `.pem` files (none found).
+  - Author: krushna salunke `<247086676+krushnasalunke215-lang@users.noreply.github.com>` (the learner's GitHub noreply address). It was passed with `git -c`; the global Git config is unchanged.
+  - GitHub: https://github.com/krushnasalunke215-lang/tidy-troop (public, created by the learner on Nov 7). Remote `origin`, branch `main`. To publish later changes: commit, then `git push`.
+- Still open: step 5 re-approval and step 8 choices (both the learner's), then the push, the video and the Devpost form.
 - The "Current state" section below describes the old machine on Nov 5 and is kept for history.
 
 ## Current state (checked against the saved files at about 20:10)

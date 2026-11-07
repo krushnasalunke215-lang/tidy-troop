@@ -150,3 +150,12 @@ Also fixed while testing:
 Not rerun: AroundUser mode with the new flow. Item 1's origin and the bed items are the same objects in that mode, so it should behave the same.
 
 Screens added: 13a, 13b, 13c, 13d, 13e2, 13f, 13f2.
+
+## Second move and the learner's first test (Nov 7, evening)
+Project cloned to `C:\krish` on a 16 GB machine (Lens Studio 5.24.1). The first open spent about 9 minutes compressing textures. After it, the recompile was clean and the log showed `TidyTroop: 10 items, 10 slots` and `placement ColorfulHomeBedroom`.
+
+**Learner report: "trying to put that shirt in cupboard but it ain't going".** The learner had walked about 4.6 m back from the start pose, out through the bedroom wall, and dropped shirt 1 on the middle of the cupboard at height −40 cm. The hanger places sit on the rail at +26 cm. The drop was about 75 cm off every hanger along the view ray, and only drops within `snapRadiusCm` (32 cm) counted, so nothing happened and nothing was logged.
+
+**Fix (TidyTroopMain.findSnap):** if no place is within the snap radius, a drop on furniture that holds a free matching place now counts. That is the cupboard, the bookshelf or the plate rack: the item is inside the furniture's own box (grown by 10 cm), or on the view ray to it. The item goes to the nearest free place on that furniture. Both outcomes are logged: `item N dropped on the Cupboard, so it goes to HangerSlotK`, or `item N dropped away from a free <category> place, not snapped`.
+
+**Test (real drag through the MCP, start pose):** pressed on shirt 1 on the bed, turned to the middle of the cupboard, and released it at height −52.6 cm, 78 cm below the rail. Log: `item 1 dropped on the Cupboard, so it goes to HangerSlot2`, `item 1 placed (1 of 10)`, then the salute: `Shirt hung, soldier! / You are disciplined! 1 of 10`. Screens 14a (held over the cupboard) and 14b (on hanger 2). DebugDriver was on only for this test and is off in the save.

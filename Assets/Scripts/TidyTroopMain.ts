@@ -47,6 +47,12 @@ const BRIEFING_BUBBLE_DROP_CM = 16
 /** Sight lines to the picker count room meshes up to this fraction past the panel (things poking through it). */
 const PICKER_SIGHT_OVERSHOOT = 1.15
 
+/** A drop over the furniture itself counts too (its box grown by this much, cm), not only near one of its places. */
+const FURNITURE_DROP_PAD_CM = 10
+
+/** The view ray through a dropped item is followed this many eye-to-item distances, to find furniture behind it. */
+const FURNITURE_RAY_REACH = 20
+
 /** True when segment a + t*(b - a), 0 <= t <= tMax, touches the box [min, max] (slab test). */
 function segmentHitsBox(a: vec3, b: vec3, min: vec3, max: vec3, tMax: number): boolean {
   const d = b.sub(a)
@@ -103,7 +109,7 @@ export class TidyTroopMain extends BaseScriptComponent {
   eyeHeightCm: number = 136
 
   @input
-  @hint("How close (cm) a released item must be to its place to snap in")
+  @hint("How close (cm) a released item must be to its place to snap in. A drop over the furniture that holds the place (cupboard, bookshelf, rack) also counts")
   @widget(new SliderWidget(10, 60, 1))
   snapRadiusCm: number = 32
 
@@ -430,9 +436,14 @@ export class TidyTroopMain extends BaseScriptComponent {
     for (const s of this.slots) s.setGlow(false)
     const slot = this.findSnap(item)
     if (slot) this.place(item, slot)
+    else print("TidyTroop: item " + item.number + " dropped away from a free " + item.category + " place, not snapped")
   }
 
-  /** Nearest free matching slot that the item was released "over" (3D distance or along the view ray). */
+  /**
+   * Nearest free matching slot that the item was released "over" (3D distance or along the view ray).
+   * If none is that close, a drop over the furniture that holds free matching slots (the cupboard,
+   * the bookshelf, the plate rack) takes the nearest free one on it.
+   */
   findSnap(item: TidyTroopItem): TidyTroopSlot | null {
     const p = item.getSceneObject().getTransform().getWorldPosition()
     const eye = this.camPos()
@@ -454,6 +465,35 @@ export class TidyTroopMain extends BaseScriptComponent {
         bestScore = score
         best = s
       }
+    }
+    return best ? best : this.findFurnitureSnap(item, p, eye)
+  }
+
+  /** findSnap fallback: the item lies inside, or on the view ray to, furniture that has a free matching slot. */
+  private findFurnitureSnap(item: TidyTroopItem, p: vec3, eye: vec3): TidyTroopSlot | null {
+    const pad = new vec3(FURNITURE_DROP_PAD_CM, FURNITURE_DROP_PAD_CM, FURNITURE_DROP_PAD_CM)
+    let best: TidyTroopSlot | null = null
+    let bestDist = Number.MAX_VALUE
+    for (const s of this.slots) {
+      if (s.occupied || s.category !== item.category) continue
+      const furniture = s.getSceneObject().getParent()
+      if (!furniture) continue
+      const v = furniture.getComponent("Component.RenderMeshVisual") as RenderMeshVisual
+      if (!v || !v.mesh) continue
+      // Test in the furniture's own frame so the rotated cupboard uses its real box, not a padded world box.
+      const inv = furniture.getTransform().getInvertedWorldTransform()
+      const min = v.localAabbMin().sub(pad)
+      const max = v.localAabbMax().add(pad)
+      if (!segmentHitsBox(inv.multiplyPoint(eye), inv.multiplyPoint(p), min, max, FURNITURE_RAY_REACH)) continue
+      const d = s.getSceneObject().getTransform().getWorldPosition().distance(p)
+      if (d < bestDist) {
+        bestDist = d
+        best = s
+      }
+    }
+    if (best) {
+      print("TidyTroop: item " + item.number + " dropped on the " + best.getSceneObject().getParent().name +
+        ", so it goes to " + best.getSceneObject().name)
     }
     return best
   }

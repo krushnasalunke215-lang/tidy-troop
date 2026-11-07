@@ -8,7 +8,9 @@
  *       `saluteWaitSeconds`. Clearing the last bed item (`bedItemNumbers`) says "Bed clear!" with
  *       sparkles. After the last item the bubble says "look at your bed", the arrow points there,
  *       and the big salute plays on the spot where item `finaleOnItem` lay, with the time taken.
- *       What each buddy says lives in TidyTroopLines.ts.
+ *       What each buddy says lives in TidyTroopLines.ts; the buddy also says it out loud
+ *       (TidyTroopVoiceLines.ts), and each salute lasts until the voice is done.
+ * Far away: the buddy grows (buddyFullSizeWithinCm) and so does the bubble, so neither looks tiny.
  * Expects @inputs: the four UI modules, audio, celebration, both characters, the Room root
  *       (items, slots and TidyTroopLayoutSpots are discovered under it) and the FloorCenter anchor.
  * Placement: `placementMode` ColorfulHomeBedroom keeps the Room where it is authored (the mess sits on
@@ -19,6 +21,10 @@
  * Must not: build UI or meshes itself (UI modules / TidyTroopProp / TidyTroopCharacter do).
  */
 import WorldCameraFinderProvider from "InteractionKit.lspkg/Providers/CameraProvider/WorldCameraFinderProvider"
+import {InteractionManager} from "InteractionKit.lspkg/Core/InteractionManager/InteractionManager"
+import {InteractorInputType} from "InteractionKit.lspkg/Core/Interactor/Interactor"
+import {MouseInteractor} from "InteractionKit.lspkg/Core/MouseInteractor/MouseInteractor"
+import {VOICE_LINES} from "./TidyTroopVoiceLines"
 import {TidyTroopPickerUI} from "./TidyTroopPickerUI"
 import {TidyTroopNumberTagsUI} from "./TidyTroopNumberTagsUI"
 import {TidyTroopSpeechBubbleUI} from "./TidyTroopSpeechBubbleUI"
@@ -43,6 +49,9 @@ const LOOK_BUBBLE_DISTANCE_CM = 90
 
 /** Briefing bubble: its bottom edge sits this far below the buddy's feet (the bubble is about 12 cm tall). */
 const BRIEFING_BUBBLE_DROP_CM = 16
+
+/** The salute bugle is 1.6 s long; the buddy starts talking once it is nearly over. */
+const BUGLE_SECONDS = 1.5
 
 /** Sight lines to the picker count room meshes up to this fraction past the panel (things poking through it). */
 const PICKER_SIGHT_OVERSHOOT = 1.15
@@ -114,7 +123,7 @@ export class TidyTroopMain extends BaseScriptComponent {
   snapRadiusCm: number = 32
 
   @input
-  @hint("Seconds the character stays after each item")
+  @hint("Seconds the character stays after each item, at least (it stays longer while it is still talking)")
   @widget(new SliderWidget(1, 6, 0.1))
   saluteSeconds: number = 3
 
@@ -162,6 +171,21 @@ export class TidyTroopMain extends BaseScriptComponent {
   @hint("Longest wait (s) for you to turn to the final salute spot; after this the ending plays anyway")
   @widget(new SliderWidget(2, 30, 0.5))
   finaleWaitSeconds: number = 10
+
+  @input
+  @hint("Farther away than this (cm), the buddy grows so it looks no smaller than at this distance")
+  @widget(new SliderWidget(100, 400, 10))
+  buddyFullSizeWithinCm: number = 200
+
+  @input
+  @hint("Most the buddy grows when far away (times its normal size)")
+  @widget(new SliderWidget(1, 4, 0.1))
+  buddyMaxFarScale: number = 2.5
+
+  @input
+  @hint("Lens Studio preview only: how far the mouse can reach items, cm (the interaction kit's default is 500)")
+  @widget(new SliderWidget(300, 3000, 50))
+  mouseReachCm: number = 1500
   @ui.group_end
 
   @ui.separator
@@ -195,7 +219,11 @@ export class TidyTroopMain extends BaseScriptComponent {
   private finishTime = 0
   private finaleWaiting = false
   private finaleWaitSince = 0
+  /** Seconds after the last item before the final salute may start (lets "look at your bed" be said). */
+  private finaleMinWait = 1.2
   private finaleSpot: vec3 = vec3.zero()
+  /** Bumped whenever something new is said, so a delayed line that is no longer current stays quiet. */
+  private voiceToken = 0
   /** Every mesh under Room (furniture, hangers, items), gathered once at setup. */
   private roomVisuals: RenderMeshVisual[] = []
   /** Room meshes hidden because they covered the picker; shown again on pick. */
@@ -268,7 +296,15 @@ export class TidyTroopMain extends BaseScriptComponent {
     this.tags.hideAll()
     this.picker.onPick.add((i) => this.pick(i))
     if (this.debugColliders) this.setColliderDebug(this.room, true)
+    this.setMouseReach()
     print("TidyTroop: " + this.items.length + " items, " + this.slots.length + " slots")
+  }
+
+  /** The preview mouse can only reach 500 cm by default; items further away can't be picked up. */
+  private setMouseReach() {
+    const mice = InteractionManager.getInstance().getInteractorsByType(InteractorInputType.Mouse)
+    for (const m of mice) (m as MouseInteractor).maxRaycastDistance = this.mouseReachCm
+    print("TidyTroop: mouse reach " + this.mouseReachCm + " cm (" + mice.length + " mouse interactor)")
   }
 
   private collect(so: SceneObject) {
@@ -407,10 +443,11 @@ export class TidyTroopMain extends BaseScriptComponent {
     }
     const token = ++this.praiseToken
     const lines = linesFor(this.state.chosen)
-    ch.faceTowards(this.camPos())
-    ch.salute(Math.max(0.4, this.briefingSeconds - 1.2))
-    this.tags.pulse(first.number, this.briefingSeconds + 2)
     this.lastMessage = lines.briefing[0](this.state.total) + "\n" + lines.briefing[1](first.number)
+    const hold = Math.max(this.briefingSeconds, this.speak(this.lastMessage, 0.2) + 0.4)
+    ch.faceTowards(this.camPos())
+    ch.salute(Math.max(0.4, hold - 1.2))
+    this.tags.pulse(first.number, hold + 2)
     // The buddy stands at about eye height here, so a bubble over its head would sit above the
     // top of the SPECS display. Put it just below the buddy, centred where the picker panel was
     // (where you were just looking), so the wide bubble stays inside the display.
@@ -419,7 +456,7 @@ export class TidyTroopMain extends BaseScriptComponent {
     const panel = this.picker.getSceneObject().getTransform().getWorldPosition()
     this.bubble.show(this.lastMessage, new vec3(panel.x, feet.y - BRIEFING_BUBBLE_DROP_CM, panel.z))
     print("TidyTroop: briefing: " + this.lastMessage.replace("\n", " / "))
-    this.after(this.briefingSeconds, () => {
+    this.after(hold, () => {
       if (token !== this.praiseToken) return
       ch.hide()
       this.bubble.hide()
@@ -516,6 +553,7 @@ export class TidyTroopMain extends BaseScriptComponent {
     const token = ++this.praiseToken
     ch.hide(0.15)
     this.bubble.hide()
+    this.stopSpeaking()
     this.audio.playSalute()
     const lines = linesFor(this.state.chosen)
     const bedClear = this.isBedClearNow(item)
@@ -541,13 +579,15 @@ export class TidyTroopMain extends BaseScriptComponent {
   private startSalute(p: PendingSalute, inView: boolean, waited: number) {
     const ch = this.chosenCharacter
     if (!ch) return
-    ch.appearAt(p.item.originWorld, this.camPos(), 1)
-    ch.salute(Math.max(0.4, this.saluteSeconds - 1.4))
+    ch.appearAt(p.item.originWorld, this.camPos(), this.farScale(p.item.originWorld))
+    // The bugle played at the drop: start talking once it is nearly over.
+    const hold = Math.max(this.saluteSeconds, this.speak(p.text, Math.max(0.2, BUGLE_SECONDS - waited)) + 0.4)
+    ch.salute(Math.max(0.4, hold - 1.4))
     if (p.bedClear) {
       this.audio.playSparkle()
       // A small burst low over the cleared bed, around the buddy and below its bubble (which starts
       // about 29 cm up). No light wave: that's kept for the ending.
-      this.celebration.play(p.item.originWorld, new vec3(50, 14, 50), this.saluteSeconds,
+      this.celebration.play(p.item.originWorld, new vec3(50, 14, 50), hold,
         {wave: false, count: 24, base: 2, maxRise: 8, sizeScale: 0.7})
     }
     this.lastMessage = p.text
@@ -556,11 +596,11 @@ export class TidyTroopMain extends BaseScriptComponent {
     print("TidyTroop: salute for item " + p.item.number + " started " +
       (inView ? "when its spot came into view" : "after waiting " + this.saluteWaitSeconds + " s") +
       " (" + waited.toFixed(1) + " s after the drop): " + p.text.replace("\n", " / "))
-    this.after(this.saluteSeconds, () => {
+    this.after(hold, () => {
       if (p.token !== this.praiseToken) return
       ch.hide()
       this.bubble.hide()
-      print("TidyTroop: salute for item " + p.item.number + " ended after " + this.saluteSeconds + " s")
+      print("TidyTroop: salute for item " + p.item.number + " ended after " + hold.toFixed(1) + " s")
     })
   }
 
@@ -593,6 +633,9 @@ export class TidyTroopMain extends BaseScriptComponent {
     const eye = this.camPos()
     const ahead = c ? eye.add(c.back.uniformScale(LOOK_BUBBLE_DISTANCE_CM)) : item.originWorld
     this.bubble.show(this.lastMessage, ahead.add(new vec3(0, -6, 0)))
+    // The bugle plays now too; the final salute waits until "look at your bed" has been said.
+    const talk = this.speak(this.lastMessage, BUGLE_SECONDS)
+    this.finaleMinWait = Math.max(1.2, talk + 0.2)
     const onItem = this.finaleOnItem > 0 ? this.findItem(this.finaleOnItem) : null
     this.finaleSpot = onItem ? onItem.originWorld : this.floorCenter.getTransform().getWorldPosition()
     this.finaleWaitSince = getTime()
@@ -603,7 +646,7 @@ export class TidyTroopMain extends BaseScriptComponent {
   private updateFinaleWait(c: Transform) {
     const inView = this.inCone(c, this.finaleSpot.add(new vec3(0, 25, 0)), this.saluteViewConeDeg)
     const waited = getTime() - this.finaleWaitSince
-    if ((inView && waited >= 1.2) || waited >= this.finaleWaitSeconds) {
+    if ((inView && waited >= this.finaleMinWait) || waited >= Math.max(this.finaleWaitSeconds, this.finaleMinWait)) {
       this.finaleWaiting = false
       this.playFinale(inView, waited)
       return
@@ -618,11 +661,12 @@ export class TidyTroopMain extends BaseScriptComponent {
     this.setHint(false, null)
     this.bubble.hide()
     const eye = this.camPos()
-    ch.appearAt(this.finaleSpot, eye, 1)
+    const s = this.farScale(this.finaleSpot)
+    ch.appearAt(this.finaleSpot, eye, s)
     print("TidyTroop: final salute " + (inView ? "when its spot came into view" : "after waiting " + this.finaleWaitSeconds + " s") +
       " (" + waited.toFixed(1) + " s after the last item)")
     this.after(0.3, () => {
-      ch.growTo(2, 0.45)
+      ch.growTo(2 * s, 0.45)
       ch.holdSalute()
       this.audio.playFanfare()
       this.audio.playSparkle()
@@ -631,6 +675,7 @@ export class TidyTroopMain extends BaseScriptComponent {
         doneInText(this.finishTime - this.pickTime)
       this.bubbleFollows = true
       this.bubble.show(this.lastMessage, ch.headTopWorld())
+      this.speak(this.lastMessage, 0.6)
       print("TidyTroop: ending: " + this.lastMessage.replace("\n", " / "))
       this.after(this.endingSeconds, () => {
         ch.hide(0.6)
@@ -700,6 +745,40 @@ export class TidyTroopMain extends BaseScriptComponent {
       this.arrow.hide()
       this.hintShowing = false
     }
+  }
+
+  // ------------------------------------------------------------ voice and size
+  /**
+   * Says each line of `message` that has a voice clip for the chosen buddy, starting after
+   * `delaySeconds`, and replaces anything still being said. Returns the seconds until it is done
+   * (0 when no line has a clip).
+   */
+  private speak(message: string, delaySeconds: number): number {
+    this.stopSpeaking()
+    const table = VOICE_LINES[this.state.chosen]
+    if (!table) return 0
+    const lines = message.split("\n").filter((l) => !!table[l])
+    if (lines.length === 0) return 0
+    const tracks = lines.map((l) => table[l].track)
+    const seconds = lines.reduce((sum, l) => sum + table[l].seconds, 0)
+    const token = this.voiceToken
+    this.after(delaySeconds, () => {
+      if (token !== this.voiceToken) return
+      this.audio.say(tracks)
+      print("TidyTroop: voice: " + lines.join(" / ") + " (" + seconds.toFixed(1) + " s)")
+    })
+    return delaySeconds + seconds
+  }
+
+  private stopSpeaking() {
+    this.voiceToken++
+    this.audio.stopVoice()
+  }
+
+  /** Buddy scale at `p`: normal up close, bigger far away so it never looks smaller than at buddyFullSizeWithinCm. */
+  private farScale(p: vec3): number {
+    const d = p.distance(this.camPos())
+    return Math.min(this.buddyMaxFarScale, Math.max(1, d / this.buddyFullSizeWithinCm))
   }
 
   // ------------------------------------------------------------ helpers

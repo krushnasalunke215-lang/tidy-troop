@@ -1,7 +1,8 @@
 /**
  * TidyTroopAudio — every sound cue in one place.
  * Owns: one AudioComponent per cue (created at runtime under this object) and their volumes.
- * Cues: pick click, snap into place, salute bugle, out-of-view chime, ending fanfare, sparkles.
+ * Cues: pick click, snap into place, salute bugle, out-of-view chime, ending fanfare, sparkles,
+ *       and the buddy's voice (spoken lines played one after another, see TidyTroopVoiceLines.ts).
  * Must not: decide when cues play (TidyTroopMain calls these methods).
  */
 import {SFX} from "./TidyTroopAssets"
@@ -21,9 +22,16 @@ export class TidyTroopAudio extends BaseScriptComponent {
   @hint("Volume of the salute bugle and the ending fanfare")
   @widget(new SliderWidget(0, 1, 0.05))
   jingleVolume: number = 0.8
+
+  @input
+  @hint("Volume of the buddy's voice")
+  @widget(new SliderWidget(0, 1, 0.05))
+  voiceVolume: number = 1
   @ui.group_end
 
   private sources: {[key: string]: AudioComponent} = {}
+  private voice: AudioComponent
+  private voiceQueue: AudioTrackAsset[] = []
 
   onAwake() {
     this.add("pick", SFX.pickClick, this.sfxVolume, true)
@@ -32,6 +40,37 @@ export class TidyTroopAudio extends BaseScriptComponent {
     this.add("salute", SFX.saluteBugle, this.jingleVolume, true)
     this.add("fanfare", SFX.fanfare, this.jingleVolume, false)
     this.add("sparkle", SFX.sparkle, this.sfxVolume * 0.7, false)
+    const so = global.scene.createSceneObject("Audio_voice")
+    so.setParent(this.sceneObject)
+    this.voice = so.createComponent("Component.AudioComponent") as AudioComponent
+    this.voice.volume = this.voiceVolume
+    this.voice.setOnFinish(() => this.playNextVoice())
+    this.playCount["voice"] = 0
+  }
+
+  /** Speak these clips one after another, replacing anything still being said. */
+  say(tracks: AudioTrackAsset[]): void {
+    this.stopVoice()
+    this.voiceQueue = tracks.slice()
+    this.playNextVoice()
+  }
+
+  /** Stop the voice now and drop the rest of its lines. */
+  stopVoice(): void {
+    this.voiceQueue = []
+    if (this.voice && this.voice.isPlaying()) this.voice.stop(false)
+  }
+
+  isSpeaking(): boolean {
+    return this.voice ? this.voice.isPlaying() || this.voiceQueue.length > 0 : false
+  }
+
+  private playNextVoice() {
+    const next = this.voiceQueue.shift()
+    if (!next || !this.voice) return
+    this.voice.audioTrack = next
+    this.voice.play(1)
+    this.playCount["voice"] = (this.playCount["voice"] || 0) + 1
   }
 
   playPick(): void { this.play("pick") }

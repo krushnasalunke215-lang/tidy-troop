@@ -33,6 +33,8 @@
     bedItemNumbers: false
     briefingSeconds: false
     bubble: false
+    buddyFullSizeWithinCm: false
+    buddyMaxFarScale: false
     captain: false
     celebration: false
     debugColliders: false
@@ -42,6 +44,7 @@
     finaleText: false
     finaleWaitSeconds: false
     floorCenter: false
+    mouseReachCm: false
     picker: false
     placementMode: false
     praiseText: false
@@ -86,6 +89,9 @@
       bedItemNumbers: "1,2,3"
       finaleOnItem: !<float> 1.000000
       finaleWaitSeconds: !<float> 10.000000
+      buddyFullSizeWithinCm: !<float> 200.000000
+      buddyMaxFarScale: 2.500000
+      mouseReachCm: !<float> 1500.000000
       debugColliders: false
   ScriptTypes:
     -
@@ -112,7 +118,7 @@
     - '// @input string placementMode = "ColorfulHomeBedroom" {"hint":"Where the room goes. Colorful Home bedroom: the mess sits on the bed and floor of the Colorful Home preview bedroom (fixed world spots = the Scene transforms under Room; the virtual bed hides). Around the user: the whole stand-in room, virtual bed included, is placed around wherever the user starts, facing their start heading", "widget":"combobox", "values":[{"label":"Colorful Home bedroom (fixed)", "value":"ColorfulHomeBedroom"}, {"label":"Around the user (any room)", "value":"AroundUser"}]}'
     - '// @input float eyeHeightCm = 136 {"hint":"Around the user mode only: eye height of the user, cm. The room floor is placed this far below the eyes at start (136 matches the Colorful Home preview)", "widget":"slider", "min":100, "max":200, "step":1}'
     - '// @input float snapRadiusCm = 32 {"hint":"How close (cm) a released item must be to its place to snap in. A drop over the furniture that holds the place (cupboard, bookshelf, rack) also counts", "widget":"slider", "min":10, "max":60, "step":1}'
-    - '// @input float saluteSeconds = 3 {"hint":"Seconds the character stays after each item", "widget":"slider", "min":1, "max":6, "step":0.1}'
+    - '// @input float saluteSeconds = 3 {"hint":"Seconds the character stays after each item, at least (it stays longer while it is still talking)", "widget":"slider", "min":1, "max":6, "step":0.1}'
     - '// @input float endingSeconds = 6 {"hint":"Seconds the ending stays before it fades", "widget":"slider", "min":3, "max":12, "step":0.5}'
     - '// @input vec2 viewConeDeg = {30,65} {"hint":"Out-of-view hint: view cone half-angles in degrees (horizontal, vertical). Vertical is wide because people look down at the bed and desk"}'
     - '// @input string praiseText = "You are disciplined!" {"hint":"Second line of the bubble after each item (the count is added). The first line names the job and depends on the buddy (TidyTroopLines.ts)"}'
@@ -123,6 +129,9 @@
     - "// @input string bedItemNumbers = \"1,2,3\" {\"hint\":\"Item numbers that lie on the bed, comma separated. Putting the last of them away gets 'Bed clear!' and sparkles\"}"
     - '// @input float finaleOnItem = 1 {"hint":"The final salute happens on the spot where this item lay (1 = the shirt on the bed). 0 = at FloorCenter", "widget":"slider", "min":0, "max":10, "step":1}'
     - '// @input float finaleWaitSeconds = 10 {"hint":"Longest wait (s) for you to turn to the final salute spot; after this the ending plays anyway", "widget":"slider", "min":2, "max":30, "step":0.5}'
+    - '// @input float buddyFullSizeWithinCm = 200 {"hint":"Farther away than this (cm), the buddy grows so it looks no smaller than at this distance", "widget":"slider", "min":100, "max":400, "step":10}'
+    - '// @input float buddyMaxFarScale = 2.5 {"hint":"Most the buddy grows when far away (times its normal size)", "widget":"slider", "min":1, "max":4, "step":0.1}'
+    - "// @input float mouseReachCm = 1500 {\"hint\":\"Lens Studio preview only: how far the mouse can reach items, cm (the interaction kit's default is 500)\", \"widget\":\"slider\", \"min\":300, \"max\":3000, \"step\":50}"
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Debug</span>"}'

@@ -818,6 +818,9 @@
     bedItemNumbers: true
     finaleOnItem: true
     finaleWaitSeconds: true
+    buddyFullSizeWithinCm: true
+    buddyMaxFarScale: true
+    mouseReachCm: true
     debugColliders: true
   ScriptTypesDefault:
     {}
@@ -847,6 +850,9 @@
       bedItemNumbers: "1,2,3"
       finaleOnItem: !<float> 1.000000
       finaleWaitSeconds: !<float> 10.000000
+      buddyFullSizeWithinCm: !<float> 200.000000
+      buddyMaxFarScale: 2.500000
+      mouseReachCm: !<float> 1500.000000
       debugColliders: false
   ScriptTypes:
     "":
@@ -1490,12 +1496,14 @@
   ScriptInputsDefault:
     sfxVolume: true
     jingleVolume: true
+    voiceVolume: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       sfxVolume: 0.850000
       jingleVolume: 0.800000
+      voiceVolume: !<float> 1.000000
   ScriptTypes:
     "":
       {}
@@ -1739,6 +1747,7 @@
   Enabled: true
   ScriptAsset: !<reference> 12b62d98-612b-44e8-ba83-ce966a44fba2
   ScriptInputsDefault:
+    maxFarScale: true
     textColor: true
   ScriptTypesDefault:
     {}
@@ -1746,6 +1755,7 @@
     "":
       textWidthCm: !<float> 36.000000
       readingDistanceCm: !<float> 200.000000
+      maxFarScale: !<float> 3.000000
       textColor: !<Vec4> {x: 1.000000, y: 1.000000, z: 1.000000, w: 1.000000}
   ScriptTypes:
     "":

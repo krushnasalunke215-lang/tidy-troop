@@ -30,6 +30,7 @@
   ScriptInputsHidden:
     jingleVolume: false
     sfxVolume: false
+    voiceVolume: false
   ScriptTypesHidden:
     {}
   ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
@@ -41,6 +42,7 @@
   DefaultScriptInputs:
     - sfxVolume: 0.850000
       jingleVolume: 0.800000
+      voiceVolume: !<float> 1.000000
   ScriptTypes:
     -
       {}
@@ -51,4 +53,5 @@
     - '// @ui {"widget":"group_start", "label":"Settings"}'
     - '// @input float sfxVolume = 0.85 {"hint":"Volume of quick feedback sounds (click, snap, chime)", "widget":"slider", "min":0, "max":1, "step":0.05}'
     - '// @input float jingleVolume = 0.8 {"hint":"Volume of the salute bugle and the ending fanfare", "widget":"slider", "min":0, "max":1, "step":0.05}'
+    - "// @input float voiceVolume = 1 {\"hint\":\"Volume of the buddy's voice\", \"widget\":\"slider\", \"min\":0, \"max\":1, \"step\":0.05}"
     - '// @ui {"widget":"group_end"}'

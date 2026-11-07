@@ -28,6 +28,11 @@ export class TidyTroopSpeechBubbleUI extends BaseScriptComponent {
   @widget(new SliderWidget(60, 250, 5))
   readingDistanceCm: number = 150
 
+  @input
+  @hint("Farther away than the reading distance, the bubble grows so the letters keep their size, up to this many times")
+  @widget(new SliderWidget(1, 5, 0.1))
+  maxFarScale: number = 4
+
   @input('vec4', '{1,1,1,1}')
   @hint("Text color")
   @widget(new ColorWidget())
@@ -100,7 +105,10 @@ export class TidyTroopSpeechBubbleUI extends BaseScriptComponent {
     }
     const camPos = this.camTr ? this.camTr.getWorldPosition() : vec3.zero()
     const tr = this.sceneObject.getTransform()
-    const centre = this.anchor.add(new vec3(0, this.plateHeight * 0.5 * tr.getWorldScale().y, 0))
+    // Past the reading distance the bubble grows with distance, so the text never looks smaller.
+    const s = Math.min(this.maxFarScale, Math.max(1, this.anchor.distance(camPos) / this.readingDistanceCm))
+    tr.setWorldScale(new vec3(s, s, s))
+    const centre = this.anchor.add(new vec3(0, this.plateHeight * 0.5 * s, 0))
     tr.setWorldPosition(centre)
     tr.setWorldRotation(faceCamera(centre, camPos))
   }

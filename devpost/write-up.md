@@ -17,11 +17,12 @@ In our room, clothes, books and plates are "just roaming." We know where everyth
 
 ## What it does
 1. You pick a buddy on two big cards: **Sergeant Sweep**, a small soldier with a helmet and broom, or **Captain Fresh**, a round cartoon buddy in a captain's cap. Both are original characters.
-2. Numbers 1 to 10 appear on the mess: 2 shirts, 2 pants, 3 books and 3 plates on the bed, the floor, the nightstand, the chair and the desk.
-3. You grab a thing, carry it, and drop it where it belongs: clothes on the hangers in the cupboard, books on the shelf, plates in the rack. While you carry it, only the places it fits glow. It snaps in and its number disappears.
-4. Your buddy pops up on the exact spot you just cleared, salutes and says "You are disciplined! 3 of 10" with a little bugle. Three seconds later it's gone.
-5. If every item left is out of view, a small arrow and one soft chime point you to the nearest one. Plate 10 sits on the floor behind you, so you'll meet the arrow.
-6. After the 10th item, your buddy marches to the middle of the floor and gives a big final salute. A wave of light sweeps across the room with sparkles and a fanfare: "Room fresh! 10 of 10."
+2. Numbers 1 to 10 appear on the mess: 2 shirts, 2 pants, 3 books and 3 plates on the bed, the floor, the nightstand, the chair and the desk. Your buddy salutes and tells you where to start: "10 things out of place! Start with number 1!"
+3. You grab a thing, carry it, and drop it where it belongs: clothes on the hangers in the cupboard, books on the shelf, plates in the rack. While you carry it, only the places it fits glow. It snaps in with a bugle and its number disappears.
+4. When you turn back, your buddy is standing on the exact spot you just cleared. It salutes and says what you did, in its own voice ("Shirt hung, soldier!" or "Nice! Shirt hung!"), and "You are disciplined! 3 of 10". The salute waits until you look, so you never miss it.
+5. When the last thing leaves the bed, your buddy cheers "Bed clear!" with a little burst of sparkles.
+6. If every item left is out of view, a small arrow and one soft chime point you to the nearest one. Plate 10 sits on the floor behind you, so you'll meet the arrow.
+7. After the 10th item, your buddy says "Now look at your bed!" and the arrow points the way. On the clear bed it grows big and holds a final salute. A wave of light sweeps out from the bed with sparkles and a fanfare: "Room fresh! 10 of 10. Done in 3 min 21 s."
 
 ## Who it's for
 Students sharing a room, like me and my roommates, who know where things go but are too tired to start.
@@ -40,6 +41,11 @@ The preview can't see a real room, so the green bedroom in Lens Studio's **Color
 - **Things show when needed, then leave.** The picker only shows at the start. The places glow only while you carry something that fits there. The buddy stays for 3 seconds. The arrow only shows when every remaining item is out of view.
 - **Nothing covers the picker.** If a stand-in, like the open cupboard door, would block the character cards, it hides until you pick, because real furniture can't cover virtual content on glasses either.
 - **Readable at arm's length.** Card names and taglines are sized to read at 80 cm.
+- **The reward waits for you.** SPECS shows only about 32° side to side, and the bed is about 99° away from the cupboard. A salute that started at the drop would play behind you. So the bugle plays at the drop, and the buddy salutes once the cleared spot is in view.
+- **The ending is where your eyes are.** The first ending happened on the floor right in front of you, 57° to 68° below eye level, which is out of view. It now plays on the bed, about 1.3 m away and a comfortable angle down, and a "look at your bed" line plus the arrow bring you there.
+- **The bed is the hero.** In my own test, clearing the bed was the moment that felt good. So clearing the bed gets its own cheer, and the final salute happens on the clear bed.
+
+I found these by measuring what you'd see from where you stand (angles from the item and furniture positions) and comparing them with SPECS' field of view and the hackathon's design rules. The analysis is in `TidyTroopReports/improvement-ideas.md`.
 
 Ideas I ruled out while planning, and why:
 - Erasing the mess to show a clean room: SPECS can add light, but it can't hide real objects.
@@ -64,9 +70,9 @@ Ideas I ruled out while planning, and why:
 |---|---|---|
 | 1 | Pinch a character card: the picker hides and numbers 1-10 appear | Logic proven (real click in preview) |
 | 2 | Shirt 1 from the bed onto a hanger: it snaps and its number hides | Logic proven (real drag in preview, with the AI shirt) |
-| 3 | The buddy appears on the cleared spot, salutes, "You are disciplined! N of 10", gone in about 3 s | Logic proven (screenshot and log) |
+| 3 | Once the cleared spot is in view, the buddy appears there, salutes, says the job and "You are disciplined! N of 10", gone in about 3 s | Logic proven (screenshots and log: it waited while facing the cupboard and started when the bed came into view) |
 | 4 | All remaining items out of view: an arrow to the nearest one, and a chime | Logic proven |
-| 5 | The 10th item plays the ending | Logic proven (march, light wave, sparkles, fanfare, "Room fresh! 10 of 10") |
+| 5 | The 10th item: "look at your bed", then the ending on the clear bed with the time | Logic proven (both buddies: big salute on the bed, light wave, sparkles, "Room fresh! 10 of 10 / Done in 3 min 21 s") |
 
 Feel unproven: comfort over a whole tidy-up, real hand tracking, and recognising real clothes on a real messy bed. Only real glasses can show those.
 
@@ -82,6 +88,7 @@ Feel unproven: comfort over a whole tidy-up, real hand tracking, and recognising
 - If a phone could do the same thing, it isn't really an AR idea. The glasses version has to use what you're looking at and keep your hands free.
 - On an additive display, dark colours vanish.
 - Good AR shows things only when they're needed and then gets out of the way.
+- The glasses show only a small window of what you see. A reward that plays behind you is wasted, so it should wait until you look.
 
 ## What's next
 - Recognise real clothes, books and plates on a real bed, and learn where things go in each room.

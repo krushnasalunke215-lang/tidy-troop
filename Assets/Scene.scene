@@ -812,6 +812,12 @@
     viewConeDeg: true
     praiseText: true
     finaleText: true
+    saluteViewConeDeg: true
+    saluteWaitSeconds: true
+    briefingSeconds: true
+    bedItemNumbers: true
+    finaleOnItem: true
+    finaleWaitSeconds: true
     debugColliders: true
   ScriptTypesDefault:
     {}
@@ -835,6 +841,12 @@
       viewConeDeg: !<Vec2> {x: 30.000000, y: 65.000000}
       praiseText: You are disciplined!
       finaleText: Room fresh!
+      saluteViewConeDeg: !<Vec2> {x: 16.000000, y: 18.000000}
+      saluteWaitSeconds: !<float> 8.000000
+      briefingSeconds: 3.500000
+      bedItemNumbers: "1,2,3"
+      finaleOnItem: !<float> 1.000000
+      finaleWaitSeconds: !<float> 10.000000
       debugColliders: false
   ScriptTypes:
     "":

@@ -19,3 +19,4 @@ PluginsUserPreferences/
 lens.esproj.*.lock
 # Local output of the repo check scripts
 tempAssetGen/repo-*.txt
+tempAssetGen/log-grep.txt

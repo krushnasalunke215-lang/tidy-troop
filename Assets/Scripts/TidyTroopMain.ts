@@ -1,7 +1,14 @@
 /**
  * TidyTroopMain — orchestrates Tidy Troop.
- * Owns: the flow (pick character -> tidy 10 numbered items -> salute per item -> ending),
- *       snapping released items into matching free slots, and the out-of-view hint rule.
+ * Owns: the flow (pick character -> briefing -> tidy 10 numbered items -> salute per item ->
+ *       ending on the clear bed), snapping released items into matching free slots, and the
+ *       out-of-view hint rule.
+ * Salutes wait for you: the bugle plays at the drop, and the buddy's salute and bubble start once
+ *       the cleared spot is inside the salute view cone (about the SPECS display), or after
+ *       `saluteWaitSeconds`. Clearing the last bed item (`bedItemNumbers`) says "Bed clear!" with
+ *       sparkles. After the last item the bubble says "look at your bed", the arrow points there,
+ *       and the big salute plays on the spot where item `finaleOnItem` lay, with the time taken.
+ *       What each buddy says lives in TidyTroopLines.ts.
  * Expects @inputs: the four UI modules, audio, celebration, both characters, the Room root
  *       (items, slots and TidyTroopLayoutSpots are discovered under it) and the FloorCenter anchor.
  * Placement: `placementMode` ColorfulHomeBedroom keeps the Room where it is authored (the mess sits on
@@ -23,9 +30,19 @@ import {TidyTroopItem} from "./TidyTroopItem"
 import {TidyTroopSlot} from "./TidyTroopSlot"
 import {TidyTroopLayoutSpot} from "./TidyTroopLayoutSpot"
 import {TidyTroopState} from "./TidyTroopState"
+import {doneInText, itemKind, linesFor, parseNumberList} from "./TidyTroopLines"
+
+/** A salute that waits until the cleared spot is in view. */
+type PendingSalute = {item: TidyTroopItem, text: string, bedClear: boolean, since: number, token: number}
 
 /** Seconds every remaining item must stay out of view before the arrow + chime appear. */
 const HINT_DELAY_SECONDS = 0.6
+
+/** "Look at your bed" bubble after the last item: this far straight ahead of the eyes, cm. */
+const LOOK_BUBBLE_DISTANCE_CM = 90
+
+/** Briefing bubble: its bottom edge sits this far below the buddy's feet (the bubble is about 12 cm tall). */
+const BRIEFING_BUBBLE_DROP_CM = 16
 
 /** Sight lines to the picker count room meshes up to this fraction past the panel (things poking through it). */
 const PICKER_SIGHT_OVERSHOOT = 1.15
@@ -66,7 +83,7 @@ export class TidyTroopMain extends BaseScriptComponent {
   @input @hint("Character 1: Sergeant Sweep") sergeant: TidyTroopCharacter
   @input @hint("Character 2: Captain Fresh") captain: TidyTroopCharacter
   @input @hint("Room root: every TidyTroopItem and TidyTroopSlot under it takes part") room: SceneObject
-  @input @hint("Where the character marches for the final salute (middle of the floor)") floorCenter: SceneObject
+  @input @hint("A point on the room floor: its height is the floor for the ending light wave, and the final salute happens here if 'Final salute on item' is 0") floorCenter: SceneObject
   @ui.group_end
 
   @ui.separator
@@ -105,12 +122,40 @@ export class TidyTroopMain extends BaseScriptComponent {
   viewConeDeg: vec2 = new vec2(30, 65)
 
   @input
-  @hint("What the character says after each item (the count is added)")
+  @hint("Second line of the bubble after each item (the count is added). The first line names the job and depends on the buddy (TidyTroopLines.ts)")
   praiseText: string = "You are disciplined!"
 
   @input
-  @hint("What the character says at the end (the count is added)")
+  @hint("What the character says at the end (the count is added; the time taken goes on the second line)")
   finaleText: string = "Room fresh!"
+
+  @input
+  @hint("Salute view cone half-angles in degrees (horizontal, vertical): the salute starts once the cleared spot is inside it. 16 x 18 is about the SPECS display")
+  saluteViewConeDeg: vec2 = new vec2(16, 18)
+
+  @input
+  @hint("Longest wait (s) for you to look at the cleared spot; after this the salute plays anyway")
+  @widget(new SliderWidget(1, 20, 0.5))
+  saluteWaitSeconds: number = 8
+
+  @input
+  @hint("Seconds the buddy explains where to start, right after the pick")
+  @widget(new SliderWidget(0, 8, 0.5))
+  briefingSeconds: number = 3.5
+
+  @input
+  @hint("Item numbers that lie on the bed, comma separated. Putting the last of them away gets 'Bed clear!' and sparkles")
+  bedItemNumbers: string = "1,2,3"
+
+  @input
+  @hint("The final salute happens on the spot where this item lay (1 = the shirt on the bed). 0 = at FloorCenter")
+  @widget(new SliderWidget(0, 10, 1))
+  finaleOnItem: number = 1
+
+  @input
+  @hint("Longest wait (s) for you to turn to the final salute spot; after this the ending plays anyway")
+  @widget(new SliderWidget(2, 30, 0.5))
+  finaleWaitSeconds: number = 10
   @ui.group_end
 
   @ui.separator
@@ -136,6 +181,15 @@ export class TidyTroopMain extends BaseScriptComponent {
   private praiseToken = 0
   private heldItem: TidyTroopItem | null = null
   private finaleChar: TidyTroopCharacter | null = null
+  /** The salute waiting for its cleared spot to come into view. */
+  private pending: PendingSalute | null = null
+  /** False while the bubble is pinned somewhere other than the buddy's head. */
+  private bubbleFollows = true
+  private pickTime = 0
+  private finishTime = 0
+  private finaleWaiting = false
+  private finaleWaitSince = 0
+  private finaleSpot: vec3 = vec3.zero()
   /** Every mesh under Room (furniture, hangers, items), gathered once at setup. */
   private roomVisuals: RenderMeshVisual[] = []
   /** Room meshes hidden because they covered the picker; shown again on pick. */
@@ -188,6 +242,8 @@ export class TidyTroopMain extends BaseScriptComponent {
       " bubble=" + this.bubble.isShowing() + ":'" + this.bubble.getText() + "'" +
       " arrow=" + this.arrow.isShowing() + " chimes=" + this.hintChimes +
       " celebration=" + this.celebration.isRunning() +
+      " pendingSalute=" + (this.pending ? this.pending.item.number : "none") +
+      " finaleWaiting=" + this.finaleWaiting +
       " pickerCleared=[" + this.hiddenForPicker.map((v) => v.getSceneObject().name).join(",") + "]" +
       " audio=" + JSON.stringify(this.audio.playCount)
   }
@@ -292,8 +348,10 @@ export class TidyTroopMain extends BaseScriptComponent {
       return
     }
     const ch = this.finaleChar || this.chosenCharacter
-    if (ch && this.bubble.isShowing()) this.bubble.moveTo(ch.headTopWorld())
+    if (ch && this.bubbleFollows && this.bubble.isShowing()) this.bubble.moveTo(ch.headTopWorld())
+    if (this.pending) this.updatePending(c)
     if (this.state.phase === "tidying") this.updateHint(c)
+    if (this.finaleWaiting) this.updateFinaleWait(c)
   }
 
   /** ColorfulHomeBedroom: keep the authored Room. AroundUser: Room root to the user's floor spot + heading. */
@@ -325,11 +383,41 @@ export class TidyTroopMain extends BaseScriptComponent {
     this.audio.playPick()
     this.picker.hide()
     this.restorePickerView()
-    this.sergeant.hide(0.15)
-    this.captain.hide(0.15)
+    const ch = this.chosenCharacter
+    for (const other of [this.sergeant, this.captain]) if (other !== ch) other.hide(0.15)
     this.tags.showAll()
     for (const item of this.items) item.setInteractive(true)
+    this.pickTime = getTime()
     print("TidyTroop: picked " + (index === 0 ? "Sergeant Sweep" : "Captain Fresh"))
+    if (ch) this.brief(ch)
+  }
+
+  /** Right after the pick: the buddy stays where its card was and says where to start. */
+  private brief(ch: TidyTroopCharacter) {
+    const first = this.items.find((i) => !i.placed)
+    if (!first || this.briefingSeconds <= 0) {
+      ch.hide(0.15)
+      return
+    }
+    const token = ++this.praiseToken
+    const lines = linesFor(this.state.chosen)
+    ch.faceTowards(this.camPos())
+    ch.salute(Math.max(0.4, this.briefingSeconds - 1.2))
+    this.tags.pulse(first.number, this.briefingSeconds + 2)
+    this.lastMessage = lines.briefing[0](this.state.total) + "\n" + lines.briefing[1](first.number)
+    // The buddy stands at about eye height here, so a bubble over its head would sit above the
+    // top of the SPECS display. Put it just below the buddy, centred where the picker panel was
+    // (where you were just looking), so the wide bubble stays inside the display.
+    this.bubbleFollows = false
+    const feet = ch.getSceneObject().getTransform().getWorldPosition()
+    const panel = this.picker.getSceneObject().getTransform().getWorldPosition()
+    this.bubble.show(this.lastMessage, new vec3(panel.x, feet.y - BRIEFING_BUBBLE_DROP_CM, panel.z))
+    print("TidyTroop: briefing: " + this.lastMessage.replace("\n", " / "))
+    this.after(this.briefingSeconds, () => {
+      if (token !== this.praiseToken) return
+      ch.hide()
+      this.bubble.hide()
+    })
   }
 
   private onGrab(item: TidyTroopItem) {
@@ -377,65 +465,160 @@ export class TidyTroopMain extends BaseScriptComponent {
     this.audio.playSnap()
     const count = this.state.placeOne()
     print("TidyTroop: item " + item.number + " placed (" + count + " of " + this.state.total + ")")
-    if (count < this.state.total) this.praise(item, count)
-    else this.finale(item)
+    if (count < this.state.total) this.queuePraise(item, count)
+    else this.startFinale(item)
   }
 
-  private praise(item: TidyTroopItem, count: number) {
+  /** The bugle plays now; the salute itself waits until the cleared spot is in view. */
+  private queuePraise(item: TidyTroopItem, count: number) {
     const ch = this.chosenCharacter
     if (!ch) return
     const token = ++this.praiseToken
-    ch.appearAt(item.originWorld, this.camPos(), 1)
-    ch.salute(Math.max(0.4, this.saluteSeconds - 1.4))
+    ch.hide(0.15)
+    this.bubble.hide()
     this.audio.playSalute()
-    this.lastMessage = this.praiseText + " " + count + " of " + this.state.total
-    this.bubble.show(this.lastMessage, ch.headTopWorld())
+    const lines = linesFor(this.state.chosen)
+    const bedClear = this.isBedClearNow(item)
+    const first = bedClear ? lines.bedClear : lines.job[itemKind(item.category, item.getSceneObject().name)]
+    const text = first + "\n" + this.praiseText + " " + count + " of " + this.state.total
+    this.pending = {item, text, bedClear, since: getTime(), token}
+  }
+
+  private updatePending(c: Transform) {
+    const p = this.pending
+    if (!p) return
+    if (p.token !== this.praiseToken) {
+      this.pending = null
+      return
+    }
+    const inView = this.inCone(c, p.item.originWorld.add(new vec3(0, 12, 0)), this.saluteViewConeDeg)
+    const waited = getTime() - p.since
+    if (!inView && waited < this.saluteWaitSeconds) return
+    this.pending = null
+    this.startSalute(p, inView, waited)
+  }
+
+  private startSalute(p: PendingSalute, inView: boolean, waited: number) {
+    const ch = this.chosenCharacter
+    if (!ch) return
+    ch.appearAt(p.item.originWorld, this.camPos(), 1)
+    ch.salute(Math.max(0.4, this.saluteSeconds - 1.4))
+    if (p.bedClear) {
+      this.audio.playSparkle()
+      // A small burst low over the cleared bed, around the buddy and below its bubble (which starts
+      // about 29 cm up). No light wave: that's kept for the ending.
+      this.celebration.play(p.item.originWorld, new vec3(50, 14, 50), this.saluteSeconds,
+        {wave: false, count: 24, base: 2, maxRise: 8, sizeScale: 0.7})
+    }
+    this.lastMessage = p.text
+    this.bubbleFollows = true
+    this.bubble.show(p.text, ch.headTopWorld())
+    print("TidyTroop: salute for item " + p.item.number + " started " +
+      (inView ? "when its spot came into view" : "after waiting " + this.saluteWaitSeconds + " s") +
+      " (" + waited.toFixed(1) + " s after the drop): " + p.text.replace("\n", " / "))
     this.after(this.saluteSeconds, () => {
-      if (token !== this.praiseToken) return
+      if (p.token !== this.praiseToken) return
       ch.hide()
       this.bubble.hide()
-      print("TidyTroop: salute for item " + item.number + " ended after " + this.saluteSeconds + " s")
+      print("TidyTroop: salute for item " + p.item.number + " ended after " + this.saluteSeconds + " s")
     })
   }
 
-  private finale(item: TidyTroopItem) {
+  /** True when `item` was the last bed item still out (the bed is now clear) and others remain. */
+  private isBedClearNow(item: TidyTroopItem): boolean {
+    const bed = parseNumberList(this.bedItemNumbers)
+    if (bed.indexOf(item.number) < 0) return false
+    return bed.every((n) => {
+      const it = this.findItem(n)
+      return !it || it.placed
+    })
+  }
+
+  /** Last item in: say "look at your bed" where you are looking, then wait for the bed spot. */
+  private startFinale(item: TidyTroopItem) {
     const ch = this.chosenCharacter
     if (!ch) return
     this.praiseToken++
+    this.pending = null
+    this.finishTime = getTime()
     this.finaleChar = ch
-    this.arrow.hide()
-    this.hintShowing = false
-    const eye = this.camPos()
-    const center = this.floorCenter.getTransform().getWorldPosition()
-    ch.appearAt(item.originWorld, eye, 1)
+    ch.hide(0.15)
+    this.setHint(false, null)
     this.audio.playSalute()
-    this.after(0.45, () => {
-      ch.marchTo(center, 1.6, eye, () => {
-        ch.growTo(2, 0.45)
-        ch.holdSalute()
-        this.audio.playFanfare()
-        this.audio.playSparkle()
-        this.celebration.play(center, new vec3(170, 150, 140), this.endingSeconds)
-        this.lastMessage = this.finaleText + " " + this.state.total + " of " + this.state.total
-        this.bubble.show(this.lastMessage, ch.headTopWorld())
-        this.after(this.endingSeconds, () => {
-          ch.hide(0.6)
-          this.bubble.hide()
-          this.state.phase = "done"
-          print("TidyTroop: ending finished")
-        })
+    const lines = linesFor(this.state.chosen)
+    this.lastMessage = lines.lastOne[0] + "\n" + lines.lastOne[1]
+    // Show it right where you are looking (not on the item, which can sit at the edge of the view).
+    this.bubbleFollows = false
+    const c = this.camera()
+    const eye = this.camPos()
+    const ahead = c ? eye.add(c.back.uniformScale(LOOK_BUBBLE_DISTANCE_CM)) : item.originWorld
+    this.bubble.show(this.lastMessage, ahead.add(new vec3(0, -6, 0)))
+    const onItem = this.finaleOnItem > 0 ? this.findItem(this.finaleOnItem) : null
+    this.finaleSpot = onItem ? onItem.originWorld : this.floorCenter.getTransform().getWorldPosition()
+    this.finaleWaitSince = getTime()
+    this.finaleWaiting = true
+    print("TidyTroop: last item in after " + (this.finishTime - this.pickTime).toFixed(1) + " s; waiting for the final salute spot")
+  }
+
+  private updateFinaleWait(c: Transform) {
+    const inView = this.inCone(c, this.finaleSpot.add(new vec3(0, 25, 0)), this.saluteViewConeDeg)
+    const waited = getTime() - this.finaleWaitSince
+    if ((inView && waited >= 1.2) || waited >= this.finaleWaitSeconds) {
+      this.finaleWaiting = false
+      this.playFinale(inView, waited)
+      return
+    }
+    // Give the "look at your bed" line a moment, then point the way if the spot is out of view.
+    if (waited >= 1.2) this.setHint(!inView, inView ? null : this.finaleSpot)
+  }
+
+  private playFinale(inView: boolean, waited: number) {
+    const ch = this.finaleChar
+    if (!ch) return
+    this.setHint(false, null)
+    this.bubble.hide()
+    const eye = this.camPos()
+    ch.appearAt(this.finaleSpot, eye, 1)
+    print("TidyTroop: final salute " + (inView ? "when its spot came into view" : "after waiting " + this.finaleWaitSeconds + " s") +
+      " (" + waited.toFixed(1) + " s after the last item)")
+    this.after(0.3, () => {
+      ch.growTo(2, 0.45)
+      ch.holdSalute()
+      this.audio.playFanfare()
+      this.audio.playSparkle()
+      this.celebration.play(this.floorBelow(this.finaleSpot), new vec3(170, 150, 140), this.endingSeconds)
+      this.lastMessage = this.finaleText + " " + this.state.total + " of " + this.state.total + "\n" +
+        doneInText(this.finishTime - this.pickTime)
+      this.bubbleFollows = true
+      this.bubble.show(this.lastMessage, ch.headTopWorld())
+      print("TidyTroop: ending: " + this.lastMessage.replace("\n", " / "))
+      this.after(this.endingSeconds, () => {
+        ch.hide(0.6)
+        this.bubble.hide()
+        this.state.phase = "done"
+        print("TidyTroop: ending finished")
       })
     })
+  }
+
+  /** The point on the room floor (FloorCenter's height) straight below `p`. */
+  private floorBelow(p: vec3): vec3 {
+    return new vec3(p.x, this.floorCenter.getTransform().getWorldPosition().y, p.z)
   }
 
   // ------------------------------------------------------------ out-of-view hint
   /** True when the point is inside the view cone of the camera. */
   isInView(c: Transform, p: vec3): boolean {
+    return this.inCone(c, p, this.viewConeDeg)
+  }
+
+  /** True when the point is inside a cone of `halfAnglesDeg` (horizontal, vertical) around the view. */
+  private inCone(c: Transform, p: vec3, halfAnglesDeg: vec2): boolean {
     const d = p.sub(c.getWorldPosition())
     const fwd = d.dot(c.back)
     if (fwd <= 0) return false
-    const limH = Math.tan(this.viewConeDeg.x * MathUtils.DegToRad)
-    const limV = Math.tan(this.viewConeDeg.y * MathUtils.DegToRad)
+    const limH = Math.tan(halfAnglesDeg.x * MathUtils.DegToRad)
+    const limV = Math.tan(halfAnglesDeg.y * MathUtils.DegToRad)
     return Math.abs(d.dot(c.right)) / fwd < limH && Math.abs(d.dot(c.up)) / fwd < limV
   }
 

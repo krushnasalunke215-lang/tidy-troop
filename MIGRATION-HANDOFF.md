@@ -33,7 +33,8 @@ Steps 1 to 4 and 6 of "Remaining work" are done, step 5 is waiting on the learne
   - Local Git repo (`main`), first commit `5da06f2`. It holds 772 files, checked for the MCP token, Bearer tokens and `.pem` files (none found).
   - Author: krushna salunke `<247086676+krushnasalunke215-lang@users.noreply.github.com>` (the learner's GitHub noreply address). It was passed with `git -c`; the global Git config is unchanged.
   - GitHub: https://github.com/krushnasalunke215-lang/tidy-troop (public, created by the learner on Nov 7). Remote `origin`, branch `main`. To publish later changes: commit, then `git push`.
-- Still open: step 5 re-approval and step 8 choices (both the learner's), then the push, the video and the Devpost form.
+- Improvements (Nov 7, saved 13:51, DebugDriver off): from the analysis in `TidyTroopReports/improvement-ideas.md`, which the learner approved in full. The salute waits until you look at the cleared spot, there's a briefing after the pick, "Bed clear!" with sparkles, a line per job and per buddy (`Assets/Scripts/TidyTroopLines.ts`), and the ending plays on the clear bed with the time taken. The brief, done criteria 3 and 5, the write-up and the video script are updated to match. Checks and screens 13a-13f2: "Improvements from the analysis" in the report.
+- Still open: step 5 re-approval and step 8 choices (both the learner's), then the video and the Devpost form.
 - The "Current state" section below describes the old machine on Nov 5 and is kept for history.
 
 ## Current state (checked against the saved files at about 20:10)

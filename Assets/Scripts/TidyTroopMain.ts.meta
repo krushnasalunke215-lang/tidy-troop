@@ -30,19 +30,25 @@
   ScriptInputsHidden:
     arrow: false
     audio: false
+    bedItemNumbers: false
+    briefingSeconds: false
     bubble: false
     captain: false
     celebration: false
     debugColliders: false
     endingSeconds: false
     eyeHeightCm: false
+    finaleOnItem: false
     finaleText: false
+    finaleWaitSeconds: false
     floorCenter: false
     picker: false
     placementMode: false
     praiseText: false
     room: false
     saluteSeconds: false
+    saluteViewConeDeg: false
+    saluteWaitSeconds: false
     sergeant: false
     snapRadiusCm: false
     tags: false
@@ -74,6 +80,12 @@
       viewConeDeg: !<Vec2> {x: 30.000000, y: 65.000000}
       praiseText: You are disciplined!
       finaleText: Room fresh!
+      saluteViewConeDeg: !<Vec2> {x: 16.000000, y: 18.000000}
+      saluteWaitSeconds: !<float> 8.000000
+      briefingSeconds: 3.500000
+      bedItemNumbers: "1,2,3"
+      finaleOnItem: !<float> 1.000000
+      finaleWaitSeconds: !<float> 10.000000
       debugColliders: false
   ScriptTypes:
     -
@@ -92,7 +104,7 @@
     - '// @input AssignableType_7 sergeant {"hint":"Character 1: Sergeant Sweep"}'
     - '// @input AssignableType_8 captain {"hint":"Character 2: Captain Fresh"}'
     - '// @input SceneObject room {"hint":"Room root: every TidyTroopItem and TidyTroopSlot under it takes part"}'
-    - '// @input SceneObject floorCenter {"hint":"Where the character marches for the final salute (middle of the floor)"}'
+    - "// @input SceneObject floorCenter {\"hint\":\"A point on the room floor: its height is the floor for the ending light wave, and the final salute happens here if 'Final salute on item' is 0\"}"
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Settings</span>"}'
@@ -103,8 +115,14 @@
     - '// @input float saluteSeconds = 3 {"hint":"Seconds the character stays after each item", "widget":"slider", "min":1, "max":6, "step":0.1}'
     - '// @input float endingSeconds = 6 {"hint":"Seconds the ending stays before it fades", "widget":"slider", "min":3, "max":12, "step":0.5}'
     - '// @input vec2 viewConeDeg = {30,65} {"hint":"Out-of-view hint: view cone half-angles in degrees (horizontal, vertical). Vertical is wide because people look down at the bed and desk"}'
-    - '// @input string praiseText = "You are disciplined!" {"hint":"What the character says after each item (the count is added)"}'
-    - '// @input string finaleText = "Room fresh!" {"hint":"What the character says at the end (the count is added)"}'
+    - '// @input string praiseText = "You are disciplined!" {"hint":"Second line of the bubble after each item (the count is added). The first line names the job and depends on the buddy (TidyTroopLines.ts)"}'
+    - '// @input string finaleText = "Room fresh!" {"hint":"What the character says at the end (the count is added; the time taken goes on the second line)"}'
+    - '// @input vec2 saluteViewConeDeg = {16,18} {"hint":"Salute view cone half-angles in degrees (horizontal, vertical): the salute starts once the cleared spot is inside it. 16 x 18 is about the SPECS display"}'
+    - '// @input float saluteWaitSeconds = 8 {"hint":"Longest wait (s) for you to look at the cleared spot; after this the salute plays anyway", "widget":"slider", "min":1, "max":20, "step":0.5}'
+    - '// @input float briefingSeconds = 3.5 {"hint":"Seconds the buddy explains where to start, right after the pick", "widget":"slider", "min":0, "max":8, "step":0.5}'
+    - "// @input string bedItemNumbers = \"1,2,3\" {\"hint\":\"Item numbers that lie on the bed, comma separated. Putting the last of them away gets 'Bed clear!' and sparkles\"}"
+    - '// @input float finaleOnItem = 1 {"hint":"The final salute happens on the spot where this item lay (1 = the shirt on the bed). 0 = at FloorCenter", "widget":"slider", "min":0, "max":10, "step":1}'
+    - '// @input float finaleWaitSeconds = 10 {"hint":"Longest wait (s) for you to turn to the final salute spot; after this the ending plays anyway", "widget":"slider", "min":2, "max":30, "step":0.5}'
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'
     - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">Debug</span>"}'

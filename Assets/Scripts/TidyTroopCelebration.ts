@@ -9,6 +9,9 @@ import {VERTEX_COLOR_MATERIAL} from "./TidyTroopAssets"
 
 type Sparkle = {so: SceneObject, pos: vec3, delay: number, phase: number}
 
+/** Highest a sparkle drifts above its start point, cm. */
+const SPARKLE_MAX_RISE_CM = 36
+
 @component
 export class TidyTroopCelebration extends BaseScriptComponent {
   @ui.label('<span style="color: #60A5FA;">TidyTroopCelebration – light wave + sparkles</span>')
@@ -47,6 +50,10 @@ export class TidyTroopCelebration extends BaseScriptComponent {
   private t = 0
   private total = 6
   private center = vec3.zero()
+  private withWave = true
+  private activeCount = 0
+  private maxRise = SPARKLE_MAX_RISE_CM
+  private sizeScale = 1
 
   onAwake() {
     this.wave = global.scene.createSceneObject("LightWave")
@@ -71,18 +78,28 @@ export class TidyTroopCelebration extends BaseScriptComponent {
     this.createEvent("UpdateEvent").bind(() => this.tick(getDeltaTime()))
   }
 
-  /** Start at `floorCenter` (world). Sparkles fill a box of `halfExtentCm` around it. */
-  play(floorCenter: vec3, halfExtentCm: vec3, totalSeconds: number): void {
+  /**
+   * Start at `floorCenter` (world). Sparkles fill a box of `halfExtentCm`, starting `base` cm above it.
+   * opts.wave = false skips the light wave; opts.count uses only that many sparkles (a small burst);
+   * opts.base (default 15), opts.maxRise (default 36) and opts.sizeScale (default 1) shape the burst.
+   */
+  play(floorCenter: vec3, halfExtentCm: vec3, totalSeconds: number,
+    opts?: {wave?: boolean, count?: number, base?: number, maxRise?: number, sizeScale?: number}): void {
     this.center = floorCenter
     this.total = totalSeconds
     this.t = 0
     this.running = true
-    this.wave.enabled = true
+    this.withWave = opts?.wave ?? true
+    this.activeCount = Math.min(this.sparkles.length, opts?.count ?? this.sparkles.length)
+    this.maxRise = opts?.maxRise ?? SPARKLE_MAX_RISE_CM
+    this.sizeScale = opts?.sizeScale ?? 1
+    const base = opts?.base ?? 15
+    this.wave.enabled = this.withWave
     this.wave.getTransform().setWorldPosition(floorCenter.add(new vec3(0, 1, 0)))
     for (const s of this.sparkles) {
       s.pos = floorCenter.add(new vec3(
         (Math.random() * 2 - 1) * halfExtentCm.x,
-        15 + Math.random() * halfExtentCm.y,
+        base + Math.random() * halfExtentCm.y,
         (Math.random() * 2 - 1) * halfExtentCm.z))
       const dist = Math.sqrt(Math.pow(s.pos.x - floorCenter.x, 2) + Math.pow(s.pos.z - floorCenter.z, 2))
       s.delay = Math.min(1, dist / this.waveRadiusCm) * this.waveSeconds
@@ -106,21 +123,23 @@ export class TidyTroopCelebration extends BaseScriptComponent {
     const wk = Math.min(1, this.t / this.waveSeconds)
     const r = 10 + wk * this.waveRadiusCm
     const thick = 1 - wk * 0.85
-    this.wave.enabled = wk < 1
+    this.wave.enabled = this.withWave && wk < 1
     this.wave.getTransform().setLocalScale(new vec3(r, thick * 40 + 1, r))
-    for (const s of this.sparkles) {
+    for (let i = 0; i < this.sparkles.length; i++) {
+      const s = this.sparkles[i]
       const life = this.t - s.delay
       const remaining = this.total - this.t
-      if (life < 0 || remaining <= 0) {
+      if (i >= this.activeCount || life < 0 || remaining <= 0) {
         s.so.enabled = false
         continue
       }
       s.so.enabled = true
       const fade = Math.min(1, life * 3) * Math.min(1, remaining / 0.8)
       const tw = 0.6 + 0.4 * Math.sin(this.t * 8 + s.phase)
-      const size = this.sparkleSizeCm * (0.6 + 0.4 * tw) * fade
+      const size = this.sparkleSizeCm * this.sizeScale * (0.6 + 0.4 * tw) * fade
       const tr = s.so.getTransform()
-      tr.setWorldPosition(s.pos.add(new vec3(0, life * 6, 0)))
+      // Drift up 6 cm/s, but no higher than maxRise, so long effects stay where they were put.
+      tr.setWorldPosition(s.pos.add(new vec3(0, Math.min(life * 6, this.maxRise), 0)))
       tr.setLocalScale(new vec3(size, size, size))
       tr.setLocalRotation(quat.angleAxis(this.t * 2 + s.phase, vec3.up()))
     }

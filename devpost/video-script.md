@@ -24,18 +24,20 @@ Target length: about 2:45. The spoken lines are drafts in your voice. Change any
 | 0:15-0:30 | The preview at the foot of the bed, the messy bed in view | "Once, I put just one shirt and one pair of pants on hangers, and the bed was clear. It felt good. Tidy Troop is built around that moment, for students sharing a room." |
 | 0:30-0:45 | Scroll `devpost/design-brief.md`: "The one spatial moment", "Why it belongs on glasses" | "I planned it with Devpost's plan-lens skill. On glasses, the numbers sit on the real shirt or plate, the reward shows up on the exact spot I cleared, and my hands stay free to carry things." |
 | 0:45-0:55 | Kiro chat or a report: the agent building through CLAD and the Lens Studio MCP | "An AI agent, Kiro with Snap's CLAD, built and tested it in Lens Studio through the Lens Studio MCP." |
-| 0:55-1:05 | Preview: the two character cards. Hover, then click Sergeant Sweep | "First I pick my buddy: Sergeant Sweep or Captain Fresh." |
-| 1:05-1:10 | Numbers 1-10 appear on the items | "Numbers appear on ten things lying around." |
-| 1:10-1:30 | Grab shirt 1 on the bed, turn right, the hangers glow, drop it on a hanger | "I grab the shirt. Only the places it fits light up. I drop it on a hanger and it snaps in." |
-| 1:30-1:40 | The buddy on the cleared bed spot, saluting, "You are disciplined! 1 of 10" | "My buddy pops up right where the shirt was, salutes, and says I'm disciplined." |
-| 1:40-2:05 | Pants and a book (shelf on the left), then a plate (rack). Cut between items so this stays short | "Pants go on a hanger, books on the shelf, plates in the rack. Every spot I clear gets a salute." |
-| 2:05-2:15 | With only plate 10 left, face the bed: the arrow appears and the chime plays | "When everything left is out of view, an arrow and a soft chime point me to it." |
-| 2:15-2:35 | Turn around, grab plate 10, drop it in the rack: march, big salute, light wave, sparkles, fanfare, "Room fresh! 10 of 10" | "The tenth one finishes the room." |
+| 0:55-1:05 | Preview: the two character cards. Hover, then click Sergeant Sweep. He salutes: "10 things out of place! Start with number 1!" | "First I pick my buddy. He tells me where to start." |
+| 1:05-1:10 | Numbers 1-10 on the items, tag 1 pulsing | "Numbers appear on ten things lying around." |
+| 1:10-1:25 | Grab shirt 1 on the bed, turn right, the hangers glow, drop it on a hanger (bugle) | "I grab the shirt. Only the places it fits light up. I drop it on a hanger and it snaps in." |
+| 1:25-1:35 | Turn back to the bed: the buddy appears on the cleared spot, "Shirt hung, soldier! / You are disciplined! 1 of 10" | "When I look back, my buddy is standing where the shirt was. It waits until I look, so I never miss it." |
+| 1:35-1:55 | Pants 2 to a hanger, book 3 to the shelf on the left, then face the bed: "Bed clear, soldier!" with sparkles | "When the bed is empty, that's the moment that felt good in real life, so it gets its own cheer." |
+| 1:55-2:05 | A plate to the rack. With only plate 10 left, face the bed: the arrow appears and the chime plays | "When everything left is out of view, an arrow and a soft chime point me to it." |
+| 2:05-2:35 | Turn around, grab plate 10, drop it in the rack: "That's all of them! / Eyes on your bed, soldier!", the arrow points to the bed. Turn to the bed: big salute, light wave, sparkles, fanfare, "Room fresh! 10 of 10 / Done in ..." | "The tenth one finishes the room, and my buddy sends me back to see the clear bed." |
 | 2:35-2:50 | Back to the clear bed, or the brief's done criteria | "The logic is tested in the preview. What only real glasses can tell is comfort and real recognition. That's next: spotting real clothes on a real bed, and tidying together with roommates." |
 
 ## Tips
 - Use real drags for every item you show. The scene's `DebugDriver` test keys are off in the saved project; leave them off for the recording.
 - You don't need to show all 10 drags. Show 4 or 5, cut the rest, and say so in the video ("skipping ahead").
+- After each drop, turn back toward the spot the item came from. The salute starts when that spot is in view (or after 8 s). If you place another item first, only the newest salute shows.
+- The ending shows "Done in ..." with the time since the pick. If you pause while recording, that time includes the pause.
 - If the preview stutters, keep the camera still for a second before each click or drop.
 - Keep it under 3:00. YouTube shows the exact length after upload.
 

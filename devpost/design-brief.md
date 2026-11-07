@@ -6,10 +6,12 @@ status: draft
 
 <!-- Filled in by plan-lens from the learner's interview. Use the learner's words. Mark any value they didn't choose as (default). -->
 
-> **Revised on 2026-11-06, waiting for the learner's re-approval.** The first version was approved for a fully virtual room. Since then the learner chose "bedroom option B": the mess lies on the Colorful Home preview bedroom's own bed. What changed here: "Stand-in for the preview", "Where things live" (bed, cupboard, desk, chair and item spots, tag size), the picker rule in "When things show", and a new line about the second layout. The flow, the characters, the done criteria and everything else are unchanged.
+> **Revised on 2026-11-06, waiting for the learner's re-approval.** The first version was approved for a fully virtual room. Since then the learner chose "bedroom option B": the mess lies on the Colorful Home preview bedroom's own bed. What changed here: "Stand-in for the preview", "Where things live" (bed, cupboard, desk, chair and item spots, tag size), the picker rule in "When things show", and a new line about the second layout.
+>
+> **Revised again on 2026-11-07** after the improvement analysis (`TidyTroopReports/improvement-ideas.md`), which the learner asked for and approved ("build all"). What changed: a briefing after the pick, the salute waits until you look at the cleared spot, a "Bed clear!" moment, a line per job and per buddy, and the ending now happens on the clear bed with the time taken. See "When things show", "Characters" and done criteria 3 and 5.
 
 ## The one spatial moment
-You come home tired to your shared room, where clothes, books and plates are "just roaming." Numbers appear on 10 things lying around. Each time you put one in its place, your chosen character pops up on the spot that just got clear, gives a salute and says "You are disciplined." When the 10th thing is in its place, the whole room gets a celebration (default ending, see below).
+You come home tired to your shared room, where clothes, books and plates are "just roaming." Numbers appear on 10 things lying around, and your chosen character tells you where to start. Each time you put one in its place, the character pops up on the spot that just got clear, gives a salute and says what you did and "You are disciplined." When the bed is empty it says "Bed clear!" with sparkles. When the 10th thing is in its place, it sends you back to look at your clear bed, where it gives the big final salute (default ending, see below).
 
 For: students sharing a room, like the learner and their roommates, who know where things go but are too tired or lazy to put them there.
 
@@ -45,24 +47,27 @@ For: students sharing a room, like the learner and their roommates, who know whe
 ## When things show
 - Character picker: shows at the start; hides once a character is picked. Card names and taglines are sized to read at 80 cm. If a virtual stand-in (for example the open cupboard door) would cover the cards, it stays hidden until you pick (default), since real furniture can't cover virtual content on the glasses either.
 - Number tags: appear on all 10 items once a character is picked. Each tag disappears when its item is in its place.
+- Briefing (default): right after the pick, the chosen character stays where its card was for about 3.5 seconds, salutes, and says where to start ("10 things out of place! / Start with number 1!"). Tag 1 pulses.
 - Places (hanger, shelf slot, rack slot): glow softly only while you're carrying an item that belongs there (default).
-- Character: appears on the cleared spot, salutes, and shows a speech bubble, "You are disciplined! 3 of 10" (the count is a default), with a short salute sound. It disappears after about 3 seconds.
-- Ending after the 10th item (default, the learner should decide): the character marches to the middle of the floor and gives a big final salute. A soft wave of light sweeps across the room with sparkles and a short fanfare, and the bubble says "Room fresh! 10 of 10." It stays for about 6 seconds, then fades.
+- Character: the salute sound plays when the item snaps in. The character then waits until the spot that just got clear is in view (or 8 seconds at most), because you're usually facing the cupboard or desk at that moment. Then it appears on the cleared spot, salutes, and shows a two-line speech bubble: what you did ("Shirt hung, soldier!") and "You are disciplined! 3 of 10" (the count is a default). It disappears after about 3 seconds.
+- Bed clear (default): when the last of the 3 things on the bed is put away, the first line says "Bed clear!" and a small burst of sparkles shows around the character on the bed. This is the learner's own good moment: "the bed is clean and it felt good."
+- Ending after the 10th item (default, the learner should decide): a bubble right where you're looking says "That's all of them! / Now look at your bed!", and the arrow points to the bed if it's out of view. Once the bed is in view (or after 10 seconds), the character appears on the bed where shirt 1 lay, grows to twice its size and holds a big salute. A soft wave of light sweeps out from the bed with sparkles and a short fanfare, and the bubble says "Room fresh! 10 of 10 / Done in 2 min 41 s" (the time since the pick). It stays for about 6 seconds, then fades.
 - If something needs attention out of view: when every remaining item is out of view, a small arrow points toward the nearest one and a soft chime plays once (default).
 
 ## Characters
 - The learner kept a choice of characters. Both are original, not known cartoons, because the rules ban third-party trademarks. "Mr. Clean" is a real brand, so it can't be used.
 - Personality (default, built from the learner's words): a strict little drill sergeant of cleanliness who is proud of you every time a spot gets clear.
-- Character 1 (default): Sergeant Sweep, a small soldier.
-- Character 2 (default): Captain Fresh, a cartoon-style buddy with the same salute.
+- Character 1 (default): Sergeant Sweep, a small soldier. Strict: "Shirt hung, soldier!", "Bed clear, soldier!", "Eyes on your bed, soldier!"
+- Character 2 (default): Captain Fresh, a cartoon-style buddy with the same salute. Friendly: "Nice! Shirt hung!", "Yay, your bed is clear!", "Now look at your bed!"
+- Both keep the learner's line, "You are disciplined!", on every item.
 
 ## Done criteria
 Each one can be checked in Lens Studio's preview.
 1. At the start, pinching a character card picks that character, the picker disappears, and numbers 1 to 10 appear on the 10 items.
 2. Grabbing the shirt numbered 1 from the bed and releasing it over a hanger in the cupboard snaps it onto the hanger, and its number disappears.
-3. Right after that, the chosen character appears on the cleared spot on the bed, salutes, shows "You are disciplined! 1 of 10," and disappears within about 3 seconds.
+3. After that, as soon as the cleared spot on the bed is in view (or 8 seconds at most), the chosen character appears there, salutes, shows "Shirt hung" (in its own words) and "You are disciplined! 1 of 10," and disappears within about 3 seconds.
 4. Turning away from all remaining items shows an arrow pointing to the nearest one and plays a chime.
-5. Putting the 10th item in its place plays the ending: the final salute, the light wave with sparkles, and "Room fresh! 10 of 10."
+5. Putting the 10th item in its place says "look at your bed" where you're looking. Once the bed is in view, the ending plays there: the final salute, the light wave with sparkles, and "Room fresh! 10 of 10" with the time taken.
 
 ## Out of scope
 - Recognizing real clothes, books or plates, or the real room.

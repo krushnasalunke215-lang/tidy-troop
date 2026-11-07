@@ -115,3 +115,38 @@ All 10 items (2 shirts, 2 pants, 3 books, 3 plates) are now SPECS text-to-3D mod
 `.gitignore` now also covers `spk_debug_key.pem`, `Cache/`, `Workspaces/`, `PluginsUserPreferences/` and the `lens.esproj` lock files.
 
 Screens added: 11a-11c, 12a-12b.
+
+## Improvements from the analysis (Nov 7)
+The learner asked for an analysis of how to improve the Lens (`improvement-ideas.md`) and approved all six recommended changes ("build all"). Saved at 13:51 with DebugDriver off; recompile and refresh clean.
+
+**What changed** (`TidyTroopMain.ts`, new `TidyTroopLines.ts`, `TidyTroopSpeechBubbleUI.ts`, `TidyTroopNumberTagsUI.ts`, `TidyTroopCelebration.ts`; grab and snap code untouched):
+1. **Salute when you look.** The bugle plays at the drop. The salute and bubble wait until the cleared spot is inside a 16° x 18° cone (about the SPECS display), or 8 s at most (`saluteViewConeDeg`, `saluteWaitSeconds`). If another item is placed first, only the newest salute shows.
+2. **Final salute on the clear bed.** After item 10, a bubble 90 cm straight ahead says "That's all of them! / Now look at your bed!" (Sergeant: "Eyes on your bed, soldier!"), and the arrow points to the bed when it's out of view. When the spot where item 1 lay is in view (or after 10 s), the buddy appears there, grows 2x, holds the salute, and the light wave and sparkles start from the floor below the bed (`finaleOnItem = 1`, `finaleWaitSeconds`). FloorCenter is now only the floor height.
+3. **Briefing.** After the pick, the chosen buddy stays where its card was for 3.5 s, salutes, and says where to start. The bubble sits below it, centred on where the picker was, so it stays inside the display. Tag 1 pulses (`briefingSeconds`, `TidyTroopNumberTagsUI.pulse`).
+4. **Bed clear.** Putting away the last of items 1, 2, 3 (`bedItemNumbers`) changes the first line to "Bed clear!" and adds a small burst of 24 sparkles low around the buddy, with no light wave.
+5. **Personal lines.** The bubble now has two lines: the job in the buddy's voice, then "You are disciplined! N of 10". Sergeant Sweep is strict ("Shirt hung, soldier!"), Captain Fresh friendly ("Nice! Shirt hung!", "Yay, your bed is clear!"). The lines are in `TidyTroopLines.ts`.
+6. **Time in the ending.** "Room fresh! 10 of 10 / Done in 3 min 21 s" (time from the pick to the last item).
+
+Also fixed while testing:
+- The bubble now sits with its bottom edge on the anchor, so two lines don't cover the buddy's head.
+- Sparkles stop rising after 36 cm, so they stay where they were put.
+
+**Checked in the preview** (Colorful Home, start pose at the foot of the bed). The preview here renders slowly, so for the captures the timers were set long (briefing up to 300 s, salute up to 150 s) and put back to 3.5 / 3 / 6 / 10 / 8 s before the save.
+
+| Check | Result | Evidence |
+|---|---|---|
+| Briefing after a real click on Sergeant Sweep | Pass: salute and "10 things out of place! / Start with number 1!" in view under the buddy | Screen 13a; log `briefing: ...` |
+| Briefing for Captain Fresh | Pass (log only; it ended before the capture): "Hi! 10 things to put away. / Let's start with number 1!" | Log 13:44:39 |
+| Salute waits while facing the cupboard | Pass: shirt on hanger 1, no buddy; log has no salute until the camera turned | Screen 13b; log `item 1 placed` then nothing |
+| Salute starts when the bed comes into view | Pass: "Shirt hung, soldier! / You are disciplined! 1 of 10" on the cleared spot | Screen 13c; log `started when its spot came into view (83.9 s after the drop)` |
+| Salute falls back after 8 s if you never look | Pass | Log 12:17:46 `started after waiting 8 s` |
+| Real drag of the AI shirt still works | Pass | Log 12:17:39 `item 1 placed` from a real drag |
+| Bed clear (Captain Fresh) | Pass: "Yay, your bed is clear! / You are disciplined! 3 of 10" with sparkles around the buddy | Screen 13d |
+| Job lines | Pass: "Pants hung, soldier!", "Plate racked, soldier!", "Nice! Pants hung!", "Nice! Plate put away!" | Log |
+| Last item: look at your bed | Pass: bubble centred in view, arrow pointing right to the bed | Screen 13e2 |
+| Ending on the clear bed (Captain Fresh) | Pass: 2x buddy on the bed, light wave, sparkles, "Room fresh! 10 of 10 / Done in 3 min 21 s" | Screen 13f2; log `final salute when its spot came into view` |
+| Ending on the clear bed (Sergeant Sweep) | Pass. The time reads 63 min because that test run sat paused for an hour | Screen 13f |
+
+Not rerun: AroundUser mode with the new flow. Item 1's origin and the bed items are the same objects in that mode, so it should behave the same.
+
+Screens added: 13a, 13b, 13c, 13d, 13e2, 13f, 13f2.

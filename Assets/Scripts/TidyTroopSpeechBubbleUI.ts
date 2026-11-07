@@ -1,7 +1,8 @@
 /**
- * TidyTroopSpeechBubbleUI — the character's speech bubble ("You are disciplined! 3 of 10").
- * Owns: a UIKit BackPlate bubble with one line of text that floats at an anchor point and
- *       faces the user.
+ * TidyTroopSpeechBubbleUI — the character's speech bubble ("Shirt hung, soldier!" /
+ *       "You are disciplined! 3 of 10").
+ * Owns: a UIKit BackPlate bubble with two lines of text (split with "\n") that floats with its
+ *       bottom edge at an anchor point and faces the user.
  * API: show(text, worldAnchor), moveTo(worldAnchor), hide(), isShowing(), getText()
  * Must not: compose the message or decide timing (TidyTroopMain does).
  */
@@ -36,6 +37,8 @@ export class TidyTroopSpeechBubbleUI extends BaseScriptComponent {
   private text: Text
   private camTr: Transform | null = null
   private anchor: vec3 = vec3.zero()
+  /** Bubble height in its own cm, so its bottom edge (not its centre) sits on the anchor. */
+  private plateHeight = 0
 
   onAwake() {
     this.sceneObject.createComponent("Component.Canvas")
@@ -54,11 +57,14 @@ export class TidyTroopSpeechBubbleUI extends BaseScriptComponent {
     flex.paddingRight = 1.5
     flex.onLayoutComplete.add((r) => {
       plate.size = new vec2(r.containerWidth, r.containerHeight)
+      this.plateHeight = r.containerHeight
     })
     const lineH = 3.4 * this.readingDistanceCm / 110
-    flexChild(content, "Line", this.textWidthCm, lineH, (c) => {
-      this.text = addText(c, "BubbleText", "You are disciplined! 10 of 10", "Headline2",
-        this.readingDistanceCm, this.textWidthCm, lineH, this.textColor)
+    const textH = lineH * 2
+    this.plateHeight = textH + flex.paddingTop + flex.paddingBottom
+    flexChild(content, "Lines", this.textWidthCm, textH, (c) => {
+      this.text = addText(c, "BubbleText", "Book shelved, soldier!\nYou are disciplined! 10 of 10", "Headline2",
+        this.readingDistanceCm, this.textWidthCm, textH, this.textColor)
     })
     this.createEvent("UpdateEvent").bind(() => this.follow())
     this.sceneObject.enabled = false
@@ -94,7 +100,8 @@ export class TidyTroopSpeechBubbleUI extends BaseScriptComponent {
     }
     const camPos = this.camTr ? this.camTr.getWorldPosition() : vec3.zero()
     const tr = this.sceneObject.getTransform()
-    tr.setWorldPosition(this.anchor)
-    tr.setWorldRotation(faceCamera(this.anchor, camPos))
+    const centre = this.anchor.add(new vec3(0, this.plateHeight * 0.5 * tr.getWorldScale().y, 0))
+    tr.setWorldPosition(centre)
+    tr.setWorldRotation(faceCamera(centre, camPos))
   }
 }

@@ -27,6 +27,7 @@ Numbers appear on 10 things lying around a shared room: 2 shirts, 2 pants, 3 boo
 | `LeafDrafts/` | LEAF test scenarios for the 5 done criteria (LEAF 4.0.0 needs Lens Studio 5.25, so they haven't run) |
 | `tempAssetGen/` | Sound generators, and the prompts and helper scripts for the 3D models |
 | `.kiro/` | Snap's CLAD and Devpost's skill pack as installed for the Kiro agent. Licences and changes are in `.kiro/third-party/` |
+| `tools/connect-kiro-mcp.ps1` | Connects Kiro to Lens Studio's MCP server (copies the server from `.mcp.json` into `.kiro/settings/mcp.json`) |
 | `MIGRATION-HANDOFF.md` | Project state and decisions, kept so a new agent session can continue the work |
 
 ## How it was built

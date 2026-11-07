@@ -15,6 +15,7 @@ This project has Snap's CLAD toolkit (the `ls-clad` plugin from github.com/lens-
 
 ## Lens Studio MCP tools (Hard Rule 2, Kiro row)
 - The tools come from the `lens-studio` server in `.kiro/settings/mcp.json`. install-clad-kiro.ps1 copies it from the `.mcp.json` that Lens Studio writes. Kiro does not read `.mcp.json`.
+- Tidy Troop project note: this repo already holds the CLAD files under `.kiro/`, so the CLAD-for-Kiro kit may not be on the machine. Wherever this file says "re-run install-clad-kiro.ps1", `powershell -NoProfile -ExecutionPolicy Bypass -File tools\connect-kiro-mcp.ps1` (run in the project folder) does the same MCP step.
 - Kiro shows the tools as `@lens-studio/<Tool>`. The callable name can be a sanitized form such as `mcp_lens_studio_<tool>`. Match by the bare tool name (`ExecuteEditorCode`, `VirtualScene`, `scene-graphql`).
 - Kiro has no `ToolSearch` step. Skip every "On Claude Code, ToolSearch(...)" line. Kiro loads MCP tool definitions itself.
 - If no lens-studio tools exist, follow CLAD's "MCP not connected" stop path. Tell the user to open this project in Lens Studio, start the server (AI Assistant > AI Model Context Protocol (MCP) > Configure Server), re-run install-clad-kiro.ps1 for this folder to refresh the URL and token, and reconnect `lens-studio` in Kiro's MCP Servers panel. That is what CLAD's "restart the session so MCP is picked up" means in Kiro.

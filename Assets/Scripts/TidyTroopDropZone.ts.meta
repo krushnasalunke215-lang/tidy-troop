@@ -1,0 +1,51 @@
+- !<AssetImportMetadata/c53bc188-29a2-43c5-b4d4-f7880b0b2108>
+  ImportedAssetIds:
+    TypeScriptAsset: !<reference> 127072cc-7d25-4a84-81eb-50adb1207626
+  ImporterName: TypeScriptAssetImporter
+  PrimaryAsset: !<reference> 127072cc-7d25-4a84-81eb-50adb1207626
+  PackageType: NotAPackage
+  LegacyPackagePolicy: ~
+  ExtraData:
+    {}
+  AssetDataMap:
+    TypeScriptAsset: !<own> ea4f1e7b-7e07-4277-8f20-5784a03c8791
+  DependentFiles:
+    []
+  ImporterSettings: !<AssetImporterSettings>
+    {}
+  CompressionSettings: !<own> 00000000-0000-0000-0000-000000000000
+- !<TypeScriptAssetData/ea4f1e7b-7e07-4277-8f20-5784a03c8791>
+  SvgIcon: ""
+  SetupScript:
+    code: ""
+  Description: ""
+  VersionMajor: 0
+  VersionMinor: 0
+  VersionPatch: 0
+  VersionPrerelease: ""
+  UpdateOrder: 0
+  ComponentUid: f3606a3e-d1e0-4390-b6af-5d4609d68ca8
+  ExportUid: 00000000-0000-0000-0000-000000000000
+  PackagePolicy: CanBeUnpacked
+  ScriptInputsHidden:
+    centerCm: false
+    sizeCm: false
+  ScriptTypesHidden:
+    {}
+  ReadMe: !<reference> 00000000-0000-0000-0000-000000000000
+  DeclarationFile: !<reference> 00000000-0000-0000-0000-000000000000
+  Tags:
+    []
+  Attachments:
+    []
+  DefaultScriptInputs:
+    - centerCm: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
+      sizeCm: !<Vec3> {x: 100.000000, y: 100.000000, z: 60.000000}
+  ScriptTypes:
+    -
+      {}
+  InputLines:
+    - '// @ui {"widget":"label", "label":"<span style=\"color: #60A5FA;\">TidyTroopDropZone – drop area for the places under this object</span>"}'
+    - '// @ui {"widget":"separator"}'
+    - "// @input vec3 centerCm = {0,0,0} {\"hint\":\"Centre of the drop box, in this object's local cm\"}"
+    - '// @input vec3 sizeCm = {100,100,60} {"hint":"Size of the drop box, cm (local X, Y, Z)"}'

@@ -17,8 +17,8 @@ In our room, clothes, books and plates are "just roaming." We know where everyth
 
 ## What it does
 1. You pick a buddy on two big cards: **Sergeant Sweep**, a small soldier with a helmet and broom, or **Captain Fresh**, a round cartoon buddy in a captain's cap. Both are original characters.
-2. Numbers 1 to 10 appear on the mess: 2 shirts, 2 pants, 3 books and 3 plates on the bed, the floor, the nightstand, the chair and the desk. Your buddy salutes and tells you where to start: "10 things out of place! Start with number 1!"
-3. You grab a thing, carry it, and drop it where it belongs: clothes on the hangers in the cupboard, books on the shelf, plates in the rack. While you carry it, only the places it fits glow. It snaps in with a bugle and its number disappears.
+2. Numbers 1 to 10 appear on the mess: 2 shirts, 2 pants, 3 books and 3 plates on the bed, the floor and the nightstands. Your buddy salutes and tells you where to start: "10 things out of place! Start with number 1!"
+3. You grab a thing, carry it, and drop it where it belongs: clothes on the hangers on the wardrobe, books on the shelf, plates in the rack on the table. While you carry it, only the places it fits glow. It snaps in with a bugle and its number disappears.
 4. When you turn back, your buddy is standing on the exact spot you just cleared. It salutes and says what you did, in its own voice ("Shirt hung, soldier!" or "Nice! Shirt hung!"), and "You are disciplined! 3 of 10". The salute waits until you look, so you never miss it.
 5. When the last thing leaves the bed, your buddy cheers "Bed clear!" with a little burst of sparkles.
 6. If every item left is out of view, a small arrow and one soft chime point you to the nearest one. Plate 10 sits on the floor behind you, so you'll meet the arrow.
@@ -33,15 +33,17 @@ Students sharing a room, like me and my roommates, who know where things go but 
 - It's an overlay: the real version would respond to the real mess in your room.
 
 ## How the preview stands in for a real room
-The preview can't see a real room, so the green bedroom in Lens Studio's **Colorful Home** preview scene plays the room. The mess lies on its own double bed and nightstand. The places things belong are virtual and real size: a cupboard with a hanging rail and 4 hangers, a desk with a bookshelf and a plate rack, and a chair. Dropping an item in its place stands in for the glasses noticing you put the real thing away. A second setting, "Around the user", puts the whole stand-in room, with a virtual bed, around wherever you start, so it also works in other preview scenes.
+The preview can't see a real room, so the green bedroom in Lens Studio's **Colorful Home** preview scene plays the room. The mess lies on its own double bed, nightstands and floor, and the places things belong are its own furniture: clothes go on a small rail fixed to the white wardrobe, books on the white open shelves, and plates in a small rack on the round table. Only the items, the rail, the hangers and the rack are virtual, because the SPECS display is small and a big virtual cupboard always looked cut in half. Dropping an item in its place stands in for the glasses noticing you put the real thing away. A second setting, "Around the user", puts a whole stand-in room (virtual bed, cupboard, desk and chair) around wherever you start, so it also works in other preview scenes.
 
 ## Design choices
 - **Light colours everywhere.** The SPECS display is additive, so black shows as see-through. Tags, text and characters are light and bright.
 - **Real scale, in reach.** Everything is in centimetres at real size, 1 to 1.75 m from where you stand, mostly at bed and desk height, where your eyes already are while you tidy.
 - **Things show when needed, then leave.** The picker only shows at the start. The places glow only while you carry something that fits there. The buddy stays for 3 seconds. The arrow only shows when every remaining item is out of view.
-- **Nothing covers the picker.** If a stand-in, like the open cupboard door, would block the character cards, it hides until you pick, because real furniture can't cover virtual content on glasses either.
+- **Use the room's own furniture.** SPECS shows virtual content only in a small window in the middle of your view. My first version had a virtual cupboard and desk, and from where you stand they were bigger than that window, so they always looked cut in half. Now the clothes, books and plates go to the room's real wardrobe, shelves and table. That fits the idea better too: on the glasses, your cupboard is already real.
+- **The buddy talks.** Both buddies say their lines out loud (pre-made voice clips, because Lens Studio's text-to-speech doesn't run on SPECS), and each salute lasts until the buddy has finished talking. Far away, the buddy and its speech bubble grow so they stay readable.
+- **Nothing covers the picker.** If a stand-in, like the open cupboard door in the "Around the user" layout, would block the character cards, it hides until you pick, because real furniture can't cover virtual content on glasses either.
 - **Readable at arm's length.** Card names and taglines are sized to read at 80 cm.
-- **The reward waits for you.** SPECS shows only about 32° side to side, and the bed is about 99° away from the cupboard. A salute that started at the drop would play behind you. So the bugle plays at the drop, and the buddy salutes once the cleared spot is in view.
+- **The reward waits for you.** SPECS shows only about 32° side to side, and the bed is about 100° away from the wardrobe. A salute that started at the drop would play behind you. So the bugle plays at the drop, and the buddy salutes once the cleared spot is in view.
 - **The ending is where your eyes are.** The first ending happened on the floor right in front of you, 57° to 68° below eye level, which is out of view. It now plays on the bed, about 1.3 m away and a comfortable angle down, and a "look at your bed" line plus the arrow bring you there.
 - **The bed is the hero.** In my own test, clearing the bed was the moment that felt good. So clearing the bed gets its own cheer, and the final salute happens on the clear bed.
 

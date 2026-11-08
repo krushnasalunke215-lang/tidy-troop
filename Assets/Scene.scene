@@ -176,6 +176,23 @@
   FalloffType: None
   FalloffRange: .inf
   ShadowType: None
+- !<SceneObject/00dbfea4-bbc2-42cc-b0dd-0f02dd4e84b0>
+  PrefabRemaps:
+    []
+  Name: BedroomPlaces
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 3e4777dd-1bf3-4f1f-8568-f405f160547c
+    - !<own> 56eefdb8-0782-425a-b015-28ace6e52dec
+    - !<own> 1f02afca-a722-44a8-8c66-0f02858c4e13
+  Components:
+    - !<own> 7e14ce02-2d79-428a-9cab-cf6974749f4b
 - !<ScriptComponent/018d01cc-e075-480f-b474-f1eaca3c7db2>
   PrefabRemaps:
     []
@@ -503,13 +520,12 @@
   Enabled: true
   ScriptAsset: !<reference> c0964c44-c97e-4ae4-9bf3-4285f3de0cfa
   ScriptInputsDefault:
-    showInBedroom: true
     showAroundUser: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      showInBedroom: true
+      showInBedroom: false
       showAroundUser: true
       aroundUserPositionCm: !<Vec3> {x: 135.000000, y: 0.000000, z: -160.000000}
       aroundUserRotationDeg: !<Vec3> {x: 0.000000, y: -40.000000, z: 0.000000}
@@ -551,6 +567,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/18399498-a8ed-44ec-bda4-f80f3fd80f9a>
+  PrefabRemaps:
+    []
+  Name: WardrobeHanger3
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 70.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 46ebffbd-79d8-4282-b5a4-b83f37ba1e78
 - !<RenderMeshVisual/18940ca0-205a-4703-ac6e-3ee9a42cf259>
   PrefabRemaps:
     []
@@ -651,6 +682,21 @@
     []
   Components:
     - !<own> 0b7dba49-b939-46c5-8d6e-cc11000c3bd5
+- !<SceneObject/1cf19dac-95f8-4c85-ae60-16cd35bea7cc>
+  PrefabRemaps:
+    []
+  Name: TableRackSlot2
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 1.500000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 9d8d6211-bf68-4703-b692-c17c2c9b1dd3
 - !<SceneObject/1d444a79-0df8-4290-8ef2-9b682aeb49c2>
   PrefabRemaps:
     []
@@ -666,6 +712,24 @@
     []
   Components:
     - !<own> d8410175-941c-4c05-9a05-65760782bd2a
+- !<SceneObject/1f02afca-a722-44a8-8c66-0f02858c4e13>
+  PrefabRemaps:
+    []
+  Name: TablePlateRack
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: -614.700012, y: -80.000000, z: -31.900000}
+    Rotation: {x: 0.000000, y: -17.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 5ea63ed2-9f4f-477f-a7d6-865fcdd7f513
+    - !<own> 1cf19dac-95f8-4c85-ae60-16cd35bea7cc
+    - !<own> 6456bf50-d944-47a1-bf4c-f2ba499ca71d
+  Components:
+    - !<own> 5da66621-9f1a-419d-a996-c1eefcbe0e79
+    - !<own> baf47bfd-3f14-4b96-829b-f09eb62f7474
 - !<SceneObject/1f2fa34b-6d83-4b1b-8861-9749f2d3c5f0>
   PrefabRemaps:
     []
@@ -719,6 +783,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/20e4ef0b-cce0-43b5-a5b0-d2e7e4b4922b>
+  PrefabRemaps:
+    []
+  Name: WardrobeHanger2
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 70.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 912e5ab3-d5d3-40ad-8784-25496ab9a6ae
 - !<ScriptComponent/20f54ae8-7a42-44ac-9a6b-bb16b3f82bc3>
   PrefabRemaps:
     []
@@ -1060,6 +1139,27 @@
   ScriptTypes:
     "":
       {}
+- !<ScriptComponent/299334d2-9be7-41ec-a2f1-d98280742648>
+  PrefabRemaps:
+    []
+  Name: TidyTroopSlot
+  Enabled: true
+  ScriptAsset: !<reference> ef651cf2-00ad-46f5-a2d4-add42034474e
+  ScriptInputsDefault:
+    glowRadiusCm: true
+    glowColor: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      category: book
+      glowRadiusCm: !<float> 6.000000
+      glowOffsetCm: !<Vec3> {x: 0.000000, y: 11.000000, z: 9.000000}
+      glowUpright: true
+      glowColor: !<Vec3> {x: 0.550000, y: 1.000000, z: 0.800000}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/29b316f9-90c7-4686-be24-0a55115b7d4f>
   PrefabRemaps:
     []
@@ -1104,6 +1204,27 @@
     "":
       logLevelFilter: 3
       _debugModeEnabled: false
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/2c595f79-02f6-44f4-a2db-c15ba5a35165>
+  PrefabRemaps:
+    []
+  Name: TidyTroopSlot
+  Enabled: true
+  ScriptAsset: !<reference> ef651cf2-00ad-46f5-a2d4-add42034474e
+  ScriptInputsDefault:
+    glowUpright: true
+    glowColor: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      category: plate
+      glowRadiusCm: !<float> 4.000000
+      glowOffsetCm: !<Vec3> {x: 0.000000, y: 0.300000, z: 0.000000}
+      glowUpright: false
+      glowColor: !<Vec3> {x: 0.550000, y: 1.000000, z: 0.800000}
   ScriptTypes:
     "":
       {}
@@ -1152,6 +1273,21 @@
     []
   Components:
     - !<own> 338a943b-bb46-4da5-a8aa-e0174a73185a
+- !<SceneObject/2fc46b85-af99-4f4e-9b59-74940be331a0>
+  PrefabRemaps:
+    []
+  Name: WardrobeHanger1
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 70.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 913bfa4e-16bd-4175-94fd-fbb80990a643
 - !<SceneObject/2ffd274a-cb4e-472e-8c44-04a2988f40f0>
   PrefabRemaps:
     []
@@ -1384,8 +1520,8 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -529.599976, y: -91.500000, z: 240.399994}
-    Rotation: {x: 0.000000, y: -46.000000, z: 0.000000}
+    Position: {x: -548.099976, y: -134.500000, z: 202.699997}
+    Rotation: {x: 0.000000, y: -100.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
@@ -1408,6 +1544,25 @@
     []
   Components:
     - !<own> 93eb1911-f91d-43e1-a391-ab5a1ca9a001
+- !<SceneObject/3e4777dd-1bf3-4f1f-8568-f405f160547c>
+  PrefabRemaps:
+    []
+  Name: WardrobeRail
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: -639.299988, y: -136.000000, z: 123.900002}
+    Rotation: {x: 0.000000, y: 134.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> ccda6ba4-99ea-421f-9ded-79f593960f92
+    - !<own> 69adbfd1-3fcd-4c59-b37d-643b4a0d4bae
+    - !<own> 766df14c-e121-4b24-80d5-8ec756ff383f
+    - !<own> b875c407-1962-4c52-b47d-8973d43165d2
+  Components:
+    - !<own> a94bc782-d08b-43c9-b63a-b6bfa29f20d4
+    - !<own> fe032ece-739a-414e-a540-bddde60f76e0
 - !<SceneObject/3f2bd561-029e-4b6d-9c9e-552968479431>
   PrefabRemaps:
     []
@@ -1423,6 +1578,21 @@
     - !<own> 4243cabb-65f2-4431-9adc-7e06fde8072d
   Components:
     []
+- !<SceneObject/4223b0a9-0d9b-486b-aa8b-04512acfa3ee>
+  PrefabRemaps:
+    []
+  Name: RealShelfSlot3
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 11.500000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 90c6607a-f4b2-4352-8186-0544c618f894
 - !<SceneObject/4243cabb-65f2-4431-9adc-7e06fde8072d>
   PrefabRemaps:
     - 18a8bf4a-6df0-4739-ac31-a31b121953f0: cebc67b4-474a-4d02-5658-038473295413
@@ -1457,6 +1627,24 @@
     - !<own> aa6d9031-7275-4932-8bb3-08cb546f60be
   Components:
     - !<own> 30049269-b93a-4d48-817c-6f243ccfe09d
+- !<ScriptComponent/46ebffbd-79d8-4282-b5a4-b83f37ba1e78>
+  PrefabRemaps:
+    []
+  Name: TidyTroopProp
+  Enabled: true
+  ScriptAsset: !<reference> 9e36db5d-3a27-4f77-be56-ccd4b4664da7
+  ScriptInputsDefault:
+    accentColor: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      kind: Hanger
+      mainColor: !<Vec3> {x: 0.950000, y: 0.880000, z: 0.700000}
+      accentColor: !<Vec3> {x: 0.600000, y: 0.780000, z: 0.980000}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/477e9d33-3e6f-4130-8b48-f44e73553b30>
   PrefabRemaps:
     []
@@ -1523,6 +1711,27 @@
   Components:
     - !<own> 5e35cdce-9c6c-4975-b490-11762c09fbc3
     - !<own> d157cba8-8fd2-4549-af1e-f4ad1db3b30c
+- !<ScriptComponent/4b78ad44-3afc-4d5a-b9b3-2df5dcd0de7c>
+  PrefabRemaps:
+    []
+  Name: TidyTroopSlot
+  Enabled: true
+  ScriptAsset: !<reference> ef651cf2-00ad-46f5-a2d4-add42034474e
+  ScriptInputsDefault:
+    category: true
+    glowColor: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      category: clothes
+      glowRadiusCm: !<float> 8.000000
+      glowOffsetCm: !<Vec3> {x: 0.000000, y: -12.000000, z: 2.000000}
+      glowUpright: true
+      glowColor: !<Vec3> {x: 0.550000, y: 1.000000, z: 0.800000}
+  ScriptTypes:
+    "":
+      {}
 - !<ScriptComponent/4b9dac33-ee78-424e-a825-d65ce782ab70>
   PrefabRemaps:
     []
@@ -1589,7 +1798,7 @@
   Layers: 1
   LocalTransform: !<TransformEntity>
     Position: {x: 0.000000, y: 0.000000, z: 0.000000}
-    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: -90.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
   Children:
@@ -1603,13 +1812,12 @@
   Enabled: true
   ScriptAsset: !<reference> c0964c44-c97e-4ae4-9bf3-4285f3de0cfa
   ScriptInputsDefault:
-    showInBedroom: true
     showAroundUser: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      showInBedroom: true
+      showInBedroom: false
       showAroundUser: true
       aroundUserPositionCm: !<Vec3> {x: -80.000000, y: 0.000000, z: 5.000000}
       aroundUserRotationDeg: !<Vec3> {x: 0.000000, y: -90.000000, z: 0.000000}
@@ -1686,6 +1894,40 @@
     - !<own> 97346289-573a-4775-a0a9-f109e9417142
   Components:
     []
+- !<SceneObject/56eefdb8-0782-425a-b015-28ace6e52dec>
+  PrefabRemaps:
+    []
+  Name: RealShelves
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: -741.599976, y: -22.000000, z: 69.800003}
+    Rotation: {x: 0.000000, y: 134.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 83c093bd-3700-46a8-8d46-5085b2600f02
+    - !<own> 87f48262-fe67-464e-9b0b-6abee9e86657
+    - !<own> 4223b0a9-0d9b-486b-aa8b-04512acfa3ee
+  Components:
+    - !<own> 5754d311-eb3a-4a9a-ad9c-caf3b9f564c3
+- !<ScriptComponent/5754d311-eb3a-4a9a-ad9c-caf3b9f564c3>
+  PrefabRemaps:
+    []
+  Name: TidyTroopDropZone
+  Enabled: true
+  ScriptAsset: !<reference> 127072cc-7d25-4a84-81eb-50adb1207626
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      centerCm: !<Vec3> {x: 0.000000, y: 20.000000, z: 0.000000}
+      sizeCm: !<Vec3> {x: 80.000000, y: 150.000000, z: 40.000000}
+  ScriptTypes:
+    "":
+      {}
 - !<ScriptComponent/59165981-bf6b-4088-b9a8-fd818bd76507>
   PrefabRemaps:
     []
@@ -1760,6 +2002,24 @@
   ScriptTypes:
     "":
       {}
+- !<ScriptComponent/5da66621-9f1a-419d-a996-c1eefcbe0e79>
+  PrefabRemaps:
+    []
+  Name: TidyTroopProp
+  Enabled: true
+  ScriptAsset: !<reference> 9e36db5d-3a27-4f77-be56-ccd4b4664da7
+  ScriptInputsDefault:
+    accentColor: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      kind: PlateRack
+      mainColor: !<Vec3> {x: 0.930000, y: 0.800000, z: 0.620000}
+      accentColor: !<Vec3> {x: 0.600000, y: 0.780000, z: 0.980000}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/5de7af96-4701-43d4-bdfe-30956e28db4f>
   PrefabRemaps:
     []
@@ -1798,6 +2058,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/5ea63ed2-9f4f-477f-a7d6-865fcdd7f513>
+  PrefabRemaps:
+    []
+  Name: TableRackSlot1
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: -9.000000, y: 1.500000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> a458abbc-d895-482f-81a6-7c09a98aa6d5
 - !<SceneObject/62b9fa09-0cec-4aa7-a548-8b84d3db1c43>
   PrefabRemaps:
     - 16c78c95-cc2d-44ee-b27b-100aaacf0e05: fc739615-1ebb-4b44-6dba-060697dc6c58
@@ -1817,6 +2092,21 @@
     - !<own> 16c78c95-cc2d-44ee-b27b-100aaacf0e05
   Components:
     []
+- !<SceneObject/6456bf50-d944-47a1-bf4c-f2ba499ca71d>
+  PrefabRemaps:
+    []
+  Name: TableRackSlot3
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 9.000000, y: 1.500000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 2c595f79-02f6-44f4-a2db-c15ba5a35165
 - !<ScriptComponent/65b7e7bd-b464-47b3-a1bd-03d0bad0e1b1>
   PrefabRemaps:
     []
@@ -1888,6 +2178,21 @@
   Components:
     - !<own> 347a4fce-3974-40c9-9cc2-51db8d58fad8
     - !<own> 09423b8f-62d1-43f6-9044-aba1d1ff0608
+- !<SceneObject/69adbfd1-3fcd-4c59-b37d-643b4a0d4bae>
+  PrefabRemaps:
+    []
+  Name: WardrobeSlot2
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: -10.000000, y: 162.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 20e4ef0b-cce0-43b5-a5b0-d2e7e4b4922b
+  Components:
+    - !<own> 97848d75-b4b1-409b-a659-f9e18fd077b4
 - !<SceneObject/69c8cc16-cd1f-4944-8ca5-cd969b6e1803>
   PrefabRemaps:
     []
@@ -1919,6 +2224,7 @@
     - !<own> 84d2970b-c5e9-4495-adc3-4c9d9e95d8ee
     - !<own> ed242ac7-8103-4ef0-bc07-aedd758a26da
     - !<own> fd85f434-44b0-4f03-b5cb-70514458cb4e
+    - !<own> 00dbfea4-bbc2-42cc-b0dd-0f02dd4e84b0
   Components:
     []
 - !<SceneObject/6b544fb4-a035-488a-859c-f61e7638be9d>
@@ -2095,20 +2401,36 @@
   ScriptAsset: !<reference> e109f070-3a0c-4ac8-8deb-ad02fc275707
   ScriptInputsDefault:
     category: true
+    standOffsetCm: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
       number: !<float> 6.000000
       category: clothes
-      colliderSizeCm: !<Vec3> {x: 32.000000, y: 88.000000, z: 8.000000}
-      tagHeightCm: !<float> 54.000000
+      colliderSizeCm: !<Vec3> {x: 32.000000, y: 8.000000, z: 88.000000}
+      tagHeightCm: !<float> 11.000000
       placedOffsetCm: !<Vec3> {x: 0.000000, y: -48.500000, z: 0.000000}
       placedVisualRotationDeg: !<Vec3> {x: 0.000000, y: 70.000000, z: 0.000000}
-      standOffsetCm: !<Vec3> {x: 0.000000, y: 0.500000, z: -23.000000}
+      standOffsetCm: !<Vec3> {x: 0.000000, y: -1.000000, z: 0.000000}
   ScriptTypes:
     "":
       {}
+- !<SceneObject/766df14c-e121-4b24-80d5-8ec756ff383f>
+  PrefabRemaps:
+    []
+  Name: WardrobeSlot3
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 10.000000, y: 162.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 18399498-a8ed-44ec-bda4-f80f3fd80f9a
+  Components:
+    - !<own> ebf06867-0c08-4ff2-9b69-0b28a49e70b1
 - !<SceneObject/77789244-50d0-4bc0-a702-844dfb6a213d>
   PrefabRemaps:
     []
@@ -2169,6 +2491,27 @@
       kind: Plate
       mainColor: !<Vec3> {x: 0.880000, y: 0.740000, z: 0.550000}
       accentColor: !<Vec3> {x: 0.550000, y: 0.750000, z: 1.000000}
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/7e14ce02-2d79-428a-9cab-cf6974749f4b>
+  PrefabRemaps:
+    []
+  Name: TidyTroopLayoutSpot
+  Enabled: true
+  ScriptAsset: !<reference> c0964c44-c97e-4ae4-9bf3-4285f3de0cfa
+  ScriptInputsDefault:
+    showInBedroom: true
+    aroundUserPositionCm: true
+    aroundUserRotationDeg: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      showInBedroom: true
+      showAroundUser: false
+      aroundUserPositionCm: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
+      aroundUserRotationDeg: !<Vec3> {x: 0.000000, y: 0.000000, z: 0.000000}
   ScriptTypes:
     "":
       {}
@@ -2271,6 +2614,21 @@
     - !<own> 98ca4c11-46cd-4319-8052-211bcfb67470
   Components:
     - !<own> 084b228e-e047-4c10-a004-264fba3e6308
+- !<SceneObject/83c093bd-3700-46a8-8d46-5085b2600f02>
+  PrefabRemaps:
+    []
+  Name: RealShelfSlot1
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: -11.500000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> ac8073df-c8af-4c6c-9888-6339a27aaf4a
 - !<SceneObject/84d2970b-c5e9-4495-adc3-4c9d9e95d8ee>
   PrefabRemaps:
     []
@@ -2327,6 +2685,21 @@
     - !<own> b1312b55-aede-4941-8e8f-3f9d374971b1
   Components:
     []
+- !<SceneObject/87f48262-fe67-464e-9b0b-6abee9e86657>
+  PrefabRemaps:
+    []
+  Name: RealShelfSlot2
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> 299334d2-9be7-41ec-a2f1-d98280742648
 - !<ScriptComponent/880f6b35-0151-4a45-b21a-58125550ac10>
   PrefabRemaps:
     []
@@ -2469,7 +2842,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -513.099976, y: -90.000000, z: 224.500000}
+    Position: {x: -506.399994, y: -134.500000, z: 245.800003}
     Rotation: {x: 0.000000, y: -156.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -2508,6 +2881,63 @@
     []
   Components:
     - !<own> 20f54ae8-7a42-44ac-9a6b-bb16b3f82bc3
+- !<ScriptComponent/90c6607a-f4b2-4352-8186-0544c618f894>
+  PrefabRemaps:
+    []
+  Name: TidyTroopSlot
+  Enabled: true
+  ScriptAsset: !<reference> ef651cf2-00ad-46f5-a2d4-add42034474e
+  ScriptInputsDefault:
+    glowRadiusCm: true
+    glowColor: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      category: book
+      glowRadiusCm: !<float> 6.000000
+      glowOffsetCm: !<Vec3> {x: 0.000000, y: 11.000000, z: 9.000000}
+      glowUpright: true
+      glowColor: !<Vec3> {x: 0.550000, y: 1.000000, z: 0.800000}
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/912e5ab3-d5d3-40ad-8784-25496ab9a6ae>
+  PrefabRemaps:
+    []
+  Name: TidyTroopProp
+  Enabled: true
+  ScriptAsset: !<reference> 9e36db5d-3a27-4f77-be56-ccd4b4664da7
+  ScriptInputsDefault:
+    accentColor: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      kind: Hanger
+      mainColor: !<Vec3> {x: 0.950000, y: 0.880000, z: 0.700000}
+      accentColor: !<Vec3> {x: 0.600000, y: 0.780000, z: 0.980000}
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/913bfa4e-16bd-4175-94fd-fbb80990a643>
+  PrefabRemaps:
+    []
+  Name: TidyTroopProp
+  Enabled: true
+  ScriptAsset: !<reference> 9e36db5d-3a27-4f77-be56-ccd4b4664da7
+  ScriptInputsDefault:
+    accentColor: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      kind: Hanger
+      mainColor: !<Vec3> {x: 0.950000, y: 0.880000, z: 0.700000}
+      accentColor: !<Vec3> {x: 0.600000, y: 0.780000, z: 0.980000}
+  ScriptTypes:
+    "":
+      {}
 - !<RenderMeshVisual/93eb1911-f91d-43e1-a391-ab5a1ca9a001>
   PrefabRemaps:
     []
@@ -2561,6 +2991,27 @@
     []
   Components:
     - !<own> a71d3d02-621b-4a32-9c95-48e450490074
+- !<ScriptComponent/97848d75-b4b1-409b-a659-f9e18fd077b4>
+  PrefabRemaps:
+    []
+  Name: TidyTroopSlot
+  Enabled: true
+  ScriptAsset: !<reference> ef651cf2-00ad-46f5-a2d4-add42034474e
+  ScriptInputsDefault:
+    category: true
+    glowColor: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      category: clothes
+      glowRadiusCm: !<float> 8.000000
+      glowOffsetCm: !<Vec3> {x: 0.000000, y: -12.000000, z: 2.000000}
+      glowUpright: true
+      glowColor: !<Vec3> {x: 0.550000, y: 1.000000, z: 0.800000}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/9798868a-c97d-4c15-92f6-c7d99cdce5ae>
   PrefabRemaps:
     []
@@ -2641,6 +3092,27 @@
     []
   Components:
     - !<own> 65b7e7bd-b464-47b3-a1bd-03d0bad0e1b1
+- !<ScriptComponent/9d8d6211-bf68-4703-b692-c17c2c9b1dd3>
+  PrefabRemaps:
+    []
+  Name: TidyTroopSlot
+  Enabled: true
+  ScriptAsset: !<reference> ef651cf2-00ad-46f5-a2d4-add42034474e
+  ScriptInputsDefault:
+    glowUpright: true
+    glowColor: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      category: plate
+      glowRadiusCm: !<float> 4.000000
+      glowOffsetCm: !<Vec3> {x: 0.000000, y: 0.300000, z: 0.000000}
+      glowUpright: false
+      glowColor: !<Vec3> {x: 0.550000, y: 1.000000, z: 0.800000}
+  ScriptTypes:
+    "":
+      {}
 - !<ScriptComponent/a08c2ebf-80da-48da-a7cb-5e4bae103478>
   PrefabRemaps:
     []
@@ -2703,13 +3175,12 @@
   Enabled: true
   ScriptAsset: !<reference> c0964c44-c97e-4ae4-9bf3-4285f3de0cfa
   ScriptInputsDefault:
-    showInBedroom: true
     showAroundUser: true
   ScriptTypesDefault:
     {}
   ScriptInputs:
     "":
-      showInBedroom: true
+      showInBedroom: false
       showAroundUser: true
       aroundUserPositionCm: !<Vec3> {x: -135.000000, y: 0.000000, z: -10.000000}
       aroundUserRotationDeg: !<Vec3> {x: 0.000000, y: 90.000000, z: 0.000000}
@@ -2731,6 +3202,27 @@
     []
   Components:
     - !<own> 59165981-bf6b-4088-b9a8-fd818bd76507
+- !<ScriptComponent/a458abbc-d895-482f-81a6-7c09a98aa6d5>
+  PrefabRemaps:
+    []
+  Name: TidyTroopSlot
+  Enabled: true
+  ScriptAsset: !<reference> ef651cf2-00ad-46f5-a2d4-add42034474e
+  ScriptInputsDefault:
+    glowUpright: true
+    glowColor: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      category: plate
+      glowRadiusCm: !<float> 4.000000
+      glowOffsetCm: !<Vec3> {x: 0.000000, y: 0.300000, z: 0.000000}
+      glowUpright: false
+      glowColor: !<Vec3> {x: 0.550000, y: 1.000000, z: 0.800000}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/a714c7a2-1d7f-48c1-9f7e-40b26489a418>
   PrefabRemaps:
     []
@@ -2785,6 +3277,24 @@
     - !<own> 2d1f2db3-01a9-4207-b2cd-af96df9af92a
   Components:
     []
+- !<ScriptComponent/a94bc782-d08b-43c9-b63a-b6bfa29f20d4>
+  PrefabRemaps:
+    []
+  Name: TidyTroopProp
+  Enabled: true
+  ScriptAsset: !<reference> 9e36db5d-3a27-4f77-be56-ccd4b4664da7
+  ScriptInputsDefault:
+    accentColor: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      kind: Rail
+      mainColor: !<Vec3> {x: 0.860000, y: 0.880000, z: 0.920000}
+      accentColor: !<Vec3> {x: 0.600000, y: 0.780000, z: 0.980000}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/aa6d9031-7275-4932-8bb3-08cb546f60be>
   PrefabRemaps:
     []
@@ -2800,6 +3310,27 @@
     []
   Components:
     - !<own> 54092500-6cf3-4706-94da-9feb1e245a35
+- !<ScriptComponent/ac8073df-c8af-4c6c-9888-6339a27aaf4a>
+  PrefabRemaps:
+    []
+  Name: TidyTroopSlot
+  Enabled: true
+  ScriptAsset: !<reference> ef651cf2-00ad-46f5-a2d4-add42034474e
+  ScriptInputsDefault:
+    glowRadiusCm: true
+    glowColor: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      category: book
+      glowRadiusCm: !<float> 6.000000
+      glowOffsetCm: !<Vec3> {x: 0.000000, y: 11.000000, z: 9.000000}
+      glowUpright: true
+      glowColor: !<Vec3> {x: 0.550000, y: 1.000000, z: 0.800000}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/ae45296a-6e2c-415a-94e5-e3b23fed8625>
   PrefabRemaps:
     []
@@ -2916,7 +3447,7 @@
     "":
       showInBedroom: true
       showAroundUser: true
-      aroundUserPositionCm: !<Vec3> {x: -57.000000, y: 44.500000, z: 5.000000}
+      aroundUserPositionCm: !<Vec3> {x: -57.000000, y: 1.500000, z: 5.000000}
       aroundUserRotationDeg: !<Vec3> {x: 0.000000, y: 90.000000, z: 0.000000}
   ScriptTypes:
     "":
@@ -2936,6 +3467,21 @@
     []
   Components:
     - !<own> 03ba3848-8511-49dc-a9c7-d723fa49faac
+- !<SceneObject/b875c407-1962-4c52-b47d-8973d43165d2>
+  PrefabRemaps:
+    []
+  Name: WardrobeSlot4
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 30.000000, y: 162.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> ba157368-2391-4327-9683-bf27504de282
+  Components:
+    - !<own> eeed544e-1575-4830-b93f-4e280e0c8fb9
 - !<SceneObject/b8d090fd-f877-4cab-ba72-63069fb3435f>
   PrefabRemaps:
     []
@@ -2943,7 +3489,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -427.399994, y: -60.299999, z: -66.800003}
+    Position: {x: -217.600006, y: -108.199997, z: 66.900002}
     Rotation: {x: 0.000000, y: -136.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -2952,6 +3498,21 @@
   Components:
     - !<own> 8507768a-9811-4c34-b4fc-535b4c952765
     - !<own> 8222b63a-d645-4f38-b210-1e14f985bdbf
+- !<SceneObject/ba157368-2391-4327-9683-bf27504de282>
+  PrefabRemaps:
+    []
+  Name: WardrobeHanger4
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 70.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    []
+  Components:
+    - !<own> ea103071-f044-4e45-bbbd-c3b7d80572c5
 - !<SceneObject/ba70b771-4fd3-4ee8-ab3c-609ee3c1712e>
   PrefabRemaps:
     []
@@ -2967,6 +3528,23 @@
     - !<own> 3f2bd561-029e-4b6d-9c9e-552968479431
   Components:
     - !<own> af633ffc-b3ab-4ebf-a4bc-97061fa7a94b
+- !<ScriptComponent/baf47bfd-3f14-4b96-829b-f09eb62f7474>
+  PrefabRemaps:
+    []
+  Name: TidyTroopDropZone
+  Enabled: true
+  ScriptAsset: !<reference> 127072cc-7d25-4a84-81eb-50adb1207626
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      centerCm: !<Vec3> {x: 0.000000, y: 5.000000, z: 0.000000}
+      sizeCm: !<Vec3> {x: 90.000000, y: 40.000000, z: 90.000000}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/bb0e9f9b-62b1-4d7a-a93d-2d455319eb3f>
   PrefabRemaps:
     []
@@ -3275,6 +3853,21 @@
   ScriptTypes:
     "":
       {}
+- !<SceneObject/ccda6ba4-99ea-421f-9ded-79f593960f92>
+  PrefabRemaps:
+    []
+  Name: WardrobeSlot1
+  Enabled: true
+  Layers: 1
+  LocalTransform: !<TransformEntity>
+    Position: {x: -30.000000, y: 162.000000, z: 0.000000}
+    Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
+    Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
+    HasSegmentScaleCompensation: false
+  Children:
+    - !<own> 2fc46b85-af99-4f4e-9b59-74940be331a0
+  Components:
+    - !<own> 4b78ad44-3afc-4d5a-b9b3-2df5dcd0de7c
 - !<ScriptComponent/cd8a9912-82c6-4b79-b0fc-9673797987e7>
   PrefabRemaps:
     []
@@ -3612,6 +4205,24 @@
   ScriptTypes:
     "":
       {}
+- !<ScriptComponent/ea103071-f044-4e45-bbbd-c3b7d80572c5>
+  PrefabRemaps:
+    []
+  Name: TidyTroopProp
+  Enabled: true
+  ScriptAsset: !<reference> 9e36db5d-3a27-4f77-be56-ccd4b4664da7
+  ScriptInputsDefault:
+    accentColor: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      kind: Hanger
+      mainColor: !<Vec3> {x: 0.950000, y: 0.880000, z: 0.700000}
+      accentColor: !<Vec3> {x: 0.600000, y: 0.780000, z: 0.980000}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/ead232da-ec1c-43de-b7c8-3685f2567314>
   PrefabRemaps:
     []
@@ -3643,6 +4254,27 @@
     - !<own> 0b98f08e-1dad-4cdb-b3fe-8d11b4ba798b
   Components:
     - !<own> edd76ac0-9032-4e0f-82f8-0e26b3fa58ed
+- !<ScriptComponent/ebf06867-0c08-4ff2-9b69-0b28a49e70b1>
+  PrefabRemaps:
+    []
+  Name: TidyTroopSlot
+  Enabled: true
+  ScriptAsset: !<reference> ef651cf2-00ad-46f5-a2d4-add42034474e
+  ScriptInputsDefault:
+    category: true
+    glowColor: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      category: clothes
+      glowRadiusCm: !<float> 8.000000
+      glowOffsetCm: !<Vec3> {x: 0.000000, y: -12.000000, z: 2.000000}
+      glowUpright: true
+      glowColor: !<Vec3> {x: 0.550000, y: 1.000000, z: 0.800000}
+  ScriptTypes:
+    "":
+      {}
 - !<SceneObject/ed242ac7-8103-4ef0-bc07-aedd758a26da>
   PrefabRemaps:
     []
@@ -3695,6 +4327,27 @@
       kind: Book
       mainColor: !<Vec3> {x: 0.980000, y: 0.620000, z: 0.550000}
       accentColor: !<Vec3> {x: 0.600000, y: 0.780000, z: 0.980000}
+  ScriptTypes:
+    "":
+      {}
+- !<ScriptComponent/eeed544e-1575-4830-b93f-4e280e0c8fb9>
+  PrefabRemaps:
+    []
+  Name: TidyTroopSlot
+  Enabled: true
+  ScriptAsset: !<reference> ef651cf2-00ad-46f5-a2d4-add42034474e
+  ScriptInputsDefault:
+    category: true
+    glowColor: true
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      category: clothes
+      glowRadiusCm: !<float> 8.000000
+      glowOffsetCm: !<Vec3> {x: 0.000000, y: -12.000000, z: 2.000000}
+      glowUpright: true
+      glowColor: !<Vec3> {x: 0.550000, y: 1.000000, z: 0.800000}
   ScriptTypes:
     "":
       {}
@@ -3864,6 +4517,23 @@
   Components:
     - !<own> 7eb16157-9e66-49e0-9867-e0f7d198435f
     - !<own> 529fa3a6-fab5-4865-ba33-79ed918a7be5
+- !<ScriptComponent/fe032ece-739a-414e-a540-bddde60f76e0>
+  PrefabRemaps:
+    []
+  Name: TidyTroopDropZone
+  Enabled: true
+  ScriptAsset: !<reference> 127072cc-7d25-4a84-81eb-50adb1207626
+  ScriptInputsDefault:
+    {}
+  ScriptTypesDefault:
+    {}
+  ScriptInputs:
+    "":
+      centerCm: !<Vec3> {x: 0.000000, y: 117.000000, z: -5.000000}
+      sizeCm: !<Vec3> {x: 110.000000, y: 115.000000, z: 50.000000}
+  ScriptTypes:
+    "":
+      {}
 - !<ScriptComponent/fe12d8ae-9510-41c3-a7fb-60ac86fba4f9>
   PrefabRemaps:
     []

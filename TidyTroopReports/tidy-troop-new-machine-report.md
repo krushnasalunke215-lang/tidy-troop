@@ -179,3 +179,32 @@ DebugDriver was on only for these tests and is off in the save.
 Fix (`TidyTroopMain.tick`): before a pick, if the eyes move more than 1.5 m (`PICKER_REOPEN_CM`) from where the picker opened, it opens again in front of them. On the glasses this also covers walking into the room before picking. The documented start pose now looks at (−359.7, −65, 145.8), so the cards and the bed items are in one view.
 
 Test: reset the camera to the living room, refresh, then moved it to the start pose. Log: `eyes moved 499 cm before a pick, so the picker opens again in front of them`; the cards and the bed items showed together (screen 17b; 17a is the learner's empty start screen).
+
+## Option A: the places are the bedroom's own furniture (Nov 8, 13:45)
+**Why.** The learner asked why the table and cupboard looked "half baked". SPECS 27 draws Lens content only inside its display window, about 31 % to 69 % of the Preview panel's width (both pieces were cut with straight edges at exactly those columns, screens 18a and 18b), while the Colorful Home room draws everywhere. The 180 cm cupboard and the 1 m desk, 1.2 to 1.5 m away, were bigger than that window. The learner chose option A: use the room's own furniture.
+
+**Measured** with a new DebugDriver key, H. It casts a 21 x 21 grid of WorldQueryModule hit tests through the view and prints s/d/h/normal in the bedroom frame (s right, d toward the headboard wall, h above the floor). The first run after a Lens restart misses everything while the depth data starts up, so press H twice.
+- White wardrobe: front plane s = 571, from d = -284 to past -418, at least 177 cm tall. An open cubby sits low on its left (floor 63 cm).
+- White open shelves next to it: back panel s = 600, front edge s = 564, shelf tops at h = 8, 45, 80, 114 and about 148, with a divider at d = -505.
+- TV dresser: front s = 565, top 85 to 90 cm, around d = -150 to -205.
+- Round table: top h = 56, around s 380 to 468 and d -407 to -506.
+- Left nightstand: top 27 cm at about s 215, d -105, with the lamp at s 224, d -86. The headboard wall is at d = -45.
+
+**Built** (scene objects under `Room/Furniture/BedroomPlaces`, which shows in the bedroom layout only):
+- `WardrobeRail`: a new TidyTroopProp kind "Rail" (an 88 cm bar at 162 cm on two brackets, 25 cm out from the wardrobe front), with `WardrobeSlot1-4` and hangers at d = -350 to -410.
+- `RealShelves`: no mesh, with 3 book slots on the left column's 114 cm shelf.
+- `TablePlateRack`: the PlateRack prop on the table top at s 420, d -450, turned so its plates face the start spot.
+- New `TidyTroopDropZone` component: a box on each of the three, so a drop anywhere on the wardrobe, shelves or table counts (`findFurnitureSnap` uses it before the parent's mesh box).
+- Cupboard, Desk and Chair: `showInBedroom = false`, so they now show in `AroundUser` only.
+- `TidyTroopMain.placeRoom` keeps only the slots that are shown in the applied layout. The log line `TidyTroop: 10 items, 10 slots` now prints after `placement ...`.
+- Items: plate 7 moved to the left nightstand; shirt 5 and pants 6 lie on the floor in front of the dresser (pants 6 now lie flat like pants 2).
+
+**Test** (start pose, Sergeant Sweep):
+- Real drag of book 4 from the floor to the shelves. The three glows showed on the shelf (19d), and the book now stands on it (19e): `item 4 placed (1 of 10)`, voice `Book shelved, soldier! / You are disciplined! 1 of 10`.
+- Key N for the rest. The clothes hang on the wardrobe rail (19h), and the plates go into the rack on the table (19i). The last item gives `That's all of them! / Eyes on your bed, soldier!` with the arrow. The ending on the bed: voice `Room fresh! 10 of 10`, then `ending finished`.
+- Earlier in the same session, a real drop of shirt 1 on the rail and of plate 10 on the table both snapped.
+- New item spots: 19f (shirt 5 and pants 6 by the dresser) and 19g (plate 7 on the left nightstand).
+
+**Picker:** before a pick, moving more than 1.5 m opens it again in front of you (see the start-screen section above).
+
+Not re-tested in this pass: the `AroundUser` layout. Its objects and slots are unchanged, and the slot filter keeps only the cupboard and desk places there.

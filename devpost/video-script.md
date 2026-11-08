@@ -12,7 +12,8 @@ Target length: about 2:45. The spoken lines are drafts in your voice. Change any
 5. Do one practice run before recording:
    - Hover over a card or an item until it highlights. Click to pick a card. Press and hold to grab an item.
    - Keep holding while you turn toward its place. Release over a glowing place.
-   - Shirts and pants go on the hangers in the cupboard on your **right**. Books go on the shelf, and plates in the rack, on the desk on your **left**. Plate 10 is on the floor **behind** you.
+   - Shirts and pants go on the hangers on the white wardrobe on your **right**. Books go on the white open shelves next to it (right, a little behind you). Plates go in the rack on the round table **behind** you on the right. Plate 10 is on the floor **behind** you.
+   - Don't scroll to zoom out: scrolling moves the camera back out of the bedroom. Look around with right-drag instead.
 6. Recorder: Windows Snipping Tool (Win+Shift+R, then drag a box around the Lens Studio window) or OBS Studio. Record your voice at the same time, or add it afterwards.
 7. Have ready: `devpost/design-brief.md` open in an editor, and this Kiro chat (or the reports) to show the agent's work for a few seconds.
 
@@ -28,7 +29,7 @@ Target length: about 2:45. The spoken lines are drafts in your voice. Change any
 | 1:05-1:10 | Numbers 1-10 on the items, tag 1 pulsing | "Numbers appear on ten things lying around." |
 | 1:10-1:25 | Grab shirt 1 on the bed, turn right, the hangers glow, drop it on a hanger (bugle) | "I grab the shirt. Only the places it fits light up. I drop it on a hanger and it snaps in." |
 | 1:25-1:35 | Turn back to the bed: the buddy appears on the cleared spot, "Shirt hung, soldier! / You are disciplined! 1 of 10" | "When I look back, my buddy is standing where the shirt was. It waits until I look, so I never miss it." |
-| 1:35-1:55 | Pants 2 to a hanger, book 3 to the shelf on the left, then face the bed: "Bed clear, soldier!" with sparkles | "When the bed is empty, that's the moment that felt good in real life, so it gets its own cheer." |
+| 1:35-1:55 | Pants 2 to a hanger, book 3 to the shelves on the right, then face the bed: "Bed clear, soldier!" with sparkles | "When the bed is empty, that's the moment that felt good in real life, so it gets its own cheer." |
 | 1:55-2:05 | A plate to the rack. With only plate 10 left, face the bed: the arrow appears and the chime plays | "When everything left is out of view, an arrow and a soft chime point me to it." |
 | 2:05-2:35 | Turn around, grab plate 10, drop it in the rack: "That's all of them! / Eyes on your bed, soldier!", the arrow points to the bed. Turn to the bed: big salute, light wave, sparkles, fanfare, "Room fresh! 10 of 10 / Done in ..." | "The tenth one finishes the room, and my buddy sends me back to see the clear bed." |
 | 2:35-2:50 | Back to the clear bed, or the brief's done criteria | "The logic is tested in the preview. What only real glasses can tell is comfort and real recognition. That's next: spotting real clothes on a real bed, and tidying together with roommates." |

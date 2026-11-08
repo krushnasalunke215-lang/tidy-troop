@@ -2,7 +2,7 @@
  * TidyTroopProp — code-authored stand-in geometry for the virtual room (MeshBuilder backend,
  * chosen because AI mesh generation needs a Lens Studio sign-in that is not available).
  * Owns: building ONE prop mesh (bed, cupboard, desk, chair, bookshelf, plate rack, hanger,
- *       shirt, pants, book, plate) on its own SceneObject at real-world cm sizes.
+ *       shirt, pants, book, plate, wall rail) on its own SceneObject at real-world cm sizes.
  * Inputs: kind, main/accent colors. Place/rotate the SceneObject in the scene; the mesh is
  *       built around its origin (floor/base contact at y = 0 for furniture, centre for items).
  * Must not: hold gameplay state (items/slots own that).
@@ -44,7 +44,7 @@ export class TidyTroopProp extends BaseScriptComponent {
     new ComboBoxItem("Bookshelf", "Bookshelf"), new ComboBoxItem("Plate Rack", "PlateRack"),
     new ComboBoxItem("Hanger", "Hanger"), new ComboBoxItem("Shirt", "Shirt"),
     new ComboBoxItem("Pants", "Pants"), new ComboBoxItem("Book", "Book"),
-    new ComboBoxItem("Plate", "Plate"),
+    new ComboBoxItem("Plate", "Plate"), new ComboBoxItem("Wall Rail", "Rail"),
   ]))
   kind: string = "Bed"
 
@@ -79,6 +79,7 @@ export class TidyTroopProp extends BaseScriptComponent {
       case "Pants": this.pants(k, m, a); break
       case "Book": this.book(k, m); break
       case "Plate": this.plate(k, a); break
+      case "Rail": this.rail(k); break
       default: print("TidyTroopProp: unknown kind " + this.kind)
     }
     k.build(this.sceneObject, VERTEX_COLOR_MATERIAL)
@@ -114,6 +115,18 @@ export class TidyTroopProp extends BaseScriptComponent {
     k.box(22, 0, 1, 44, 176, 2, door)
     k.box(38, 0, 2.6, 1.5, 12, 1.5, METAL)
     k.pop()
+  }
+
+  // Clothes rail fixed to a wardrobe front: an 88 cm bar along X at 162 cm, held 25 cm out from the
+  // wardrobe (local -Z) by two brackets with wall plates. Origin on the floor below the bar, like the cupboard.
+  private rail(k: MeshKit) {
+    k.push(new vec3(0, 162, 0), axisDeg(90, vec3.forward()))
+    k.cylinderY(0, -44, 0, 0.9, 88, METAL, 12)
+    k.pop()
+    for (const x of [-42, 42]) {
+      k.box(x, 162, -12.5, 1.6, 1.6, 25, METAL)
+      k.box(x, 162, -25, 4, 10, 1, METAL)
+    }
   }
 
   // Desk 100 x 75 x 60 cm, top surface at 75 cm.

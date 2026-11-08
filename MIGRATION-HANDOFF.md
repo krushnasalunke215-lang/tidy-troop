@@ -17,7 +17,7 @@ The flow in the preview (Colorful Home bedroom):
 1. Pick a buddy on two cards.
 2. The buddy salutes and says where to start, and tag 1 pulses.
 3. Numbers 1 to 10 appear on 2 shirts, 2 pants, 3 books and 3 plates (AI 3D models).
-4. Grab each item and drop it in its place: hangers on the right, the shelf and the rack on the desk to the left.
+4. Grab each item and drop it in its place, all on the bedroom's own furniture (Nov 8): the hangers on a rail fixed to the white wardrobe on the right, the white open shelves next to it, and the rack on the round table behind you. The virtual cupboard, desk and chair now only show in the `AroundUser` layout.
 5. The bugle plays at the drop. When you look back at the cleared spot, the buddy salutes there with the job in its own words and "You are disciplined! N of 10".
 6. Clearing the bed gets "Bed clear!" with sparkles.
 7. An arrow and a chime point to items out of view (plate 10 is behind you).

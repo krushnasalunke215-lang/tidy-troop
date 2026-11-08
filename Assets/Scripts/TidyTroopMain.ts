@@ -35,6 +35,7 @@ import {TidyTroopCharacter} from "./TidyTroopCharacter"
 import {TidyTroopItem} from "./TidyTroopItem"
 import {TidyTroopSlot} from "./TidyTroopSlot"
 import {TidyTroopLayoutSpot} from "./TidyTroopLayoutSpot"
+import {TidyTroopDropZone} from "./TidyTroopDropZone"
 import {TidyTroopState} from "./TidyTroopState"
 import {doneInText, itemKind, linesFor, parseNumberList} from "./TidyTroopLines"
 
@@ -306,7 +307,6 @@ export class TidyTroopMain extends BaseScriptComponent {
     this.picker.onPick.add((i) => this.pick(i))
     if (this.debugColliders) this.setColliderDebug(this.room, true)
     this.setMouseReach()
-    print("TidyTroop: " + this.items.length + " items, " + this.slots.length + " slots")
   }
 
   /** The preview mouse can only reach 500 cm by default; items further away can't be picked up. */
@@ -426,7 +426,11 @@ export class TidyTroopMain extends BaseScriptComponent {
     }
     for (const spot of this.spots) spot.applyMode(mode)
     this.appliedMode = mode
+    // Each layout has its own places (the bedroom uses the preview room's real wardrobe, shelves and
+    // table; AroundUser uses the stand-in cupboard and desk). Only the ones shown in this mode count.
+    this.slots = this.slots.filter((s) => s.getSceneObject().isEnabledInHierarchy)
     print("TidyTroop: placement " + mode + " (" + this.spots.length + " layout spots)")
+    print("TidyTroop: " + this.items.length + " items, " + this.slots.length + " slots")
   }
 
   private previewOnCard(ch: TidyTroopCharacter, index: number, eye: vec3) {
@@ -495,8 +499,8 @@ export class TidyTroopMain extends BaseScriptComponent {
 
   /**
    * Nearest free matching slot that the item was released "over" (3D distance or along the view ray).
-   * If none is that close, a drop over the furniture that holds free matching slots (the cupboard,
-   * the bookshelf, the plate rack) takes the nearest free one on it.
+   * If none is that close, a drop over the furniture that holds free matching slots (the wardrobe
+   * rail, the shelves, the plate rack; their TidyTroopDropZone or mesh box) takes the nearest free one.
    */
   findSnap(item: TidyTroopItem): TidyTroopSlot | null {
     const p = item.getSceneObject().getTransform().getWorldPosition()
@@ -532,12 +536,14 @@ export class TidyTroopMain extends BaseScriptComponent {
       if (s.occupied || s.category !== item.category) continue
       const furniture = s.getSceneObject().getParent()
       if (!furniture) continue
+      // A drop zone (real furniture in the preview room) wins; otherwise the parent's own mesh box.
+      const zone = furniture.getComponent(TidyTroopDropZone.getTypeName()) as TidyTroopDropZone
       const v = furniture.getComponent("Component.RenderMeshVisual") as RenderMeshVisual
-      if (!v || !v.mesh) continue
+      if (!zone && (!v || !v.mesh)) continue
       // Test in the furniture's own frame so the rotated cupboard uses its real box, not a padded world box.
       const inv = furniture.getTransform().getInvertedWorldTransform()
-      const min = v.localAabbMin().sub(pad)
-      const max = v.localAabbMax().add(pad)
+      const min = (zone ? zone.minCm : v.localAabbMin()).sub(pad)
+      const max = (zone ? zone.maxCm : v.localAabbMax()).add(pad)
       if (!segmentHitsBox(inv.multiplyPoint(eye), inv.multiplyPoint(p), min, max, FURNITURE_RAY_REACH)) continue
       const d = s.getSceneObject().getTransform().getWorldPosition().distance(p)
       if (d < bestDist) {

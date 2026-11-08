@@ -6,10 +6,22 @@
  *   N = put the lowest-numbered remaining item into a free matching place, through the same
  *       placement code a real drop uses (test shortcut, used to reach the ending quickly)
  *   R = print a one-line state report (phase, count, tags, picker, character, bubble, arrow)
+ *   H = hit-test a 21 x 21 grid of rays through the view against the preview room (WorldQueryModule)
+ *       and print each hit as s/d/h/normal in the Colorful Home bedroom frame (see BEDROOM_* below):
+ *       s along "right", d along "forward" (toward the headboard wall), h = cm above the floor.
+ *       Used to measure the room's own furniture for the slot positions.
  * Must not: run during normal use (keep the DebugDriver object disabled).
  */
 import WorldCameraFinderProvider from "InteractionKit.lspkg/Providers/CameraProvider/WorldCameraFinderProvider"
 import {TidyTroopMain} from "./TidyTroopMain"
+
+const WorldQuery = require("LensStudio:WorldQueryModule") as WorldQueryModule
+
+/** Colorful Home bedroom frame (TidyTroopReports/tidy-troop-colorful-home-report.md): walls at 45 degrees. */
+const BEDROOM_RIGHT = new vec3(-0.7193, 0, 0.6947)
+const BEDROOM_FORWARD = new vec3(0.6947, 0, 0.7193)
+const BEDROOM_FLOOR_Y = -136
+const HIT_GRID = 21
 
 @component
 export class TidyTroopDebugDriver extends BaseScriptComponent {
@@ -28,7 +40,59 @@ export class TidyTroopDebugDriver extends BaseScriptComponent {
       if (e.key === Keys.P) this.printScreen()
       else if (e.key === Keys.N) print("DEBUG N placed=" + this.main.debugPlaceNext() + " count=" + this.main.placedCount)
       else if (e.key === Keys.R) print("DEBUG R " + this.main.debugReport())
+      else if (e.key === Keys.H) this.hitGrid()
     })
+  }
+
+  private session: HitTestSession | null = null
+
+  private hitGrid() {
+    if (!this.session) {
+      const o = HitTestSessionOptions.create()
+      o.filter = false
+      this.session = WorldQuery.createHitTestSessionWithOptions(o)
+      this.session.start()
+    }
+    const cam = WorldCameraFinderProvider.getInstance().getComponent()
+    const eye = cam.getTransform().getWorldPosition()
+    const rows: string[][] = []
+    for (let j = 0; j < HIT_GRID; j++) rows.push(new Array(HIT_GRID).fill("?"))
+    let pending = HIT_GRID * HIT_GRID
+    let printed = false
+    const dump = () => {
+      if (printed) return
+      printed = true
+      print("DEBUG H eye s/d/h=" + this.frame(eye) + " grid " + HIT_GRID + "x" + HIT_GRID + " u,v 0.05..0.95, entries s/d/h/normal")
+      rows.forEach((r, j) => print("DEBUG H v" + j + " " + r.join(" ")))
+    }
+    for (let j = 0; j < HIT_GRID; j++) {
+      for (let i = 0; i < HIT_GRID; i++) {
+        const u = 0.05 + 0.9 * i / (HIT_GRID - 1)
+        const v = 0.05 + 0.9 * j / (HIT_GRID - 1)
+        const far = cam.screenSpaceToWorldSpace(new vec2(u, v), 1500)
+        this.session.hitTest(eye, far, (hit) => {
+          rows[j][i] = hit ? this.frame(hit.position) + "/" + this.normalTag(hit.normal) : "-"
+          if (--pending === 0) dump()
+        })
+      }
+    }
+    const ev = this.createEvent("DelayedCallbackEvent")
+    ev.bind(() => dump())
+    ev.reset(3)
+  }
+
+  /** "s/d/h" in the bedroom frame, whole cm. */
+  private frame(p: vec3): string {
+    return Math.round(p.dot(BEDROOM_RIGHT)) + "/" + Math.round(p.dot(BEDROOM_FORWARD)) + "/" + Math.round(p.y - BEDROOM_FLOOR_Y)
+  }
+
+  /** U up, D down, or which bedroom axis a wall-like normal points along (R+, R-, F+, F-). */
+  private normalTag(n: vec3): string {
+    if (n.y > 0.8) return "U"
+    if (n.y < -0.8) return "D"
+    const a = n.dot(BEDROOM_RIGHT)
+    const b = n.dot(BEDROOM_FORWARD)
+    return Math.abs(a) > Math.abs(b) ? (a > 0 ? "R+" : "R-") : (b > 0 ? "F+" : "F-")
   }
 
   private printScreen() {

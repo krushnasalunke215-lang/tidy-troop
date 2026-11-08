@@ -191,6 +191,11 @@ export class TidyTroopMain extends BaseScriptComponent {
   buddyMaxFarScale: number = 2.5
 
   @input
+  @hint("Star sparkles around the buddy on every cleared spot (clearing the bed gets 24 and a shimmer sound)")
+  @widget(new SliderWidget(0, 30, 1))
+  saluteSparkles: number = 14
+
+  @input
   @hint("Lens Studio preview only: how far the mouse can reach items, cm (the interaction kit's default is 500)")
   @widget(new SliderWidget(300, 3000, 50))
   mouseReachCm: number = 1500
@@ -602,16 +607,21 @@ export class TidyTroopMain extends BaseScriptComponent {
   private startSalute(p: PendingSalute, inView: boolean, waited: number) {
     const ch = this.chosenCharacter
     if (!ch) return
-    ch.appearAt(p.item.originWorld, this.camPos(), this.farScale(p.item.originWorld))
+    const scale = this.farScale(p.item.originWorld)
+    ch.appearAt(p.item.originWorld, this.camPos(), scale)
     // The bugle played at the drop: start talking once it is nearly over.
     const hold = Math.max(this.saluteSeconds, this.speak(p.text, Math.max(0.2, BUGLE_SECONDS - waited)) + 0.4)
     ch.salute(Math.max(0.4, hold - 1.4))
+    // Star sparkles around the buddy on every cleared spot, low and below its bubble (which starts
+    // about 29 cm up). Clearing the bed gets a bigger burst and the shimmer sound. No light wave:
+    // that's kept for the ending.
     if (p.bedClear) {
       this.audio.playSparkle()
-      // A small burst low over the cleared bed, around the buddy and below its bubble (which starts
-      // about 29 cm up). No light wave: that's kept for the ending.
-      this.celebration.play(p.item.originWorld, new vec3(50, 14, 50), hold,
-        {wave: false, count: 24, base: 2, maxRise: 8, sizeScale: 0.7})
+      this.celebration.play(p.item.originWorld, new vec3(50, 14, 50).uniformScale(scale), hold,
+        {wave: false, count: 24, base: 2, maxRise: 8, sizeScale: 0.7 * scale})
+    } else {
+      this.celebration.play(p.item.originWorld, new vec3(28, 10, 28).uniformScale(scale), hold,
+        {wave: false, count: this.saluteSparkles, base: 2, maxRise: 7, sizeScale: 0.6 * scale})
     }
     this.lastMessage = p.text
     this.bubbleFollows = true

@@ -50,6 +50,7 @@
     praiseText: false
     room: false
     saluteSeconds: false
+    saluteSparkles: false
     saluteViewConeDeg: false
     saluteWaitSeconds: false
     sergeant: false
@@ -91,6 +92,7 @@
       finaleWaitSeconds: !<float> 10.000000
       buddyFullSizeWithinCm: !<float> 200.000000
       buddyMaxFarScale: 2.500000
+      saluteSparkles: !<float> 14.000000
       mouseReachCm: !<float> 1500.000000
       debugColliders: false
   ScriptTypes:
@@ -131,6 +133,7 @@
     - '// @input float finaleWaitSeconds = 10 {"hint":"Longest wait (s) for you to turn to the final salute spot; after this the ending plays anyway", "widget":"slider", "min":2, "max":30, "step":0.5}'
     - '// @input float buddyFullSizeWithinCm = 200 {"hint":"Farther away than this (cm), the buddy grows so it looks no smaller than at this distance", "widget":"slider", "min":100, "max":400, "step":10}'
     - '// @input float buddyMaxFarScale = 2.5 {"hint":"Most the buddy grows when far away (times its normal size)", "widget":"slider", "min":1, "max":4, "step":0.1}'
+    - '// @input float saluteSparkles = 14 {"hint":"Star sparkles around the buddy on every cleared spot (clearing the bed gets 24 and a shimmer sound)", "widget":"slider", "min":0, "max":30, "step":1}'
     - "// @input float mouseReachCm = 1500 {\"hint\":\"Lens Studio preview only: how far the mouse can reach items, cm (the interaction kit's default is 500)\", \"widget\":\"slider\", \"min\":300, \"max\":3000, \"step\":50}"
     - '// @ui {"widget":"group_end"}'
     - '// @ui {"widget":"separator"}'

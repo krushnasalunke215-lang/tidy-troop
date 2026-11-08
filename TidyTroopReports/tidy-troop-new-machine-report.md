@@ -208,3 +208,22 @@ Test: reset the camera to the living room, refresh, then moved it to the start p
 **Picker:** before a pick, moving more than 1.5 m opens it again in front of you (see the start-screen section above).
 
 Not re-tested in this pass: the `AroundUser` layout. Its objects and slots are unchanged, and the slot filter keeps only the cupboard and desk places there.
+
+## Learner test, round 3: sparkles, a human voice, lag (Nov 8, 16:10)
+Learner reports, with what was found and done:
+- **"The star bubbles are not appearing for each and every item."** Right: only clearing the bed had sparkles. Now every salute plays a small burst around the buddy (new input `saluteSparkles`, 14 sparkles in a 28 x 10 x 28 cm box, grown with the buddy's far-away scale). Clearing the bed keeps its bigger burst of 24 and the shimmer sound. The light wave is still kept for the ending.
+- **"We want a human voice."** The Windows voices sounded robotic. `tools/make-voice-lines.mjs` now makes all 40 clips with Kokoro-82M (Apache-2.0, hexgrad), an open-weight neural voice model, run on the CPU through kokoro-js 1.2.1: `am_michael` (speed 1.05) for Sergeant Sweep, `af_heart` for Captain Fresh. Numbers are spoken as words. 64.7 s of audio in total. The clips and `TidyTroopVoiceLines.ts` keep the same names, so no Lens code changed for this. Kokoro itself is installed in `%LOCALAPPDATA%\TidyTroopVoice`, outside the repo. The old `tools/make-voice-lines.ps1` (Windows voices) is still there as a fallback.
+- **"Zoom in and out is really laggy, the whole thing lags."** Measured with a new DebugDriver key F (average frame rate and slowest frame over 3 s): 9.8 fps (slowest frame 151 ms) earlier in the session, and 14.8 fps (slowest 82 ms) after the cleanup below. The machine has an integrated AMD Radeon GPU, the Preview panel renders at 3590 x 1590, Lens Studio had been open for about 5 hours at 2 to 2.4 GB, and about 2.6 GB of RAM was free. Advice to the learner (in the chat): a smaller Preview panel, the charger plugged in with Windows power mode on Best performance, other apps closed, a Lens Studio restart, and WASD plus right-drag instead of scroll-zooming.
+- **"Where are the table and the cupboard?"** By option A they're the room's own: clothes go on the rail on the white wardrobe, books on the white open shelves, plates in the rack on the round table.
+
+**Checked in the preview** (start pose, Sergeant Sweep, Nov 8, 16:05 to 16:09):
+- Real click on the card: `picked Sergeant Sweep`, then `voice: 10 things out of place! / Start with number 1! (2.8 s)` with `Sgt_Briefing1.wav` and `Sgt_Briefing2.wav` opened in turn.
+- Key N for items 1 to 4. Each salute spoke its two clips: `Sgt_JobShirt` + `Sgt_Praise1` (3.3 s), `Sgt_JobPants` + `Sgt_Praise2` (3.2 s), `Sgt_BedClear` + `Sgt_Praise3` (3.1 s), `Sgt_JobBook` + `Sgt_Praise4` (3.3 s). The salutes lasted 3.9, 3.8, 4.9 and 5.1 s.
+- Sparkles on ordinary salutes: screen 21a (item 1, the buddy at the left edge of the SPECS display, sparkles beside it) and screen 21b (item 4, the book on the floor: the buddy saluting inside a ring of sparkles under "Book shelved, soldier! / You are disciplined! 4 of 10").
+- Not captured: the bed-clear burst in this run (the screenshot landed after the salute had ended, so it was deleted). The log shows the bed-clear line for item 3.
+
+**Tooling incident.** One call to `PreviewInteractTool` installed `AiPreviewAgentInteract.lspkg` and LEAF into `Packages/`, rewrote the project's `LeafPlugin` files, and added a second script to the `AiPreviewAgent Handler` object. LEAF doesn't compile on 5.24.1, so the Lens stopped running. Both packages were removed, the plugin files were restored from Git, the handler was left with only its original `AgentInspectScript`, and a script edit restarted the stuck compile (it then took 30 s). The handler object got a new ID in the scene file; its content is the same.
+
+Saved at 16:10 with DebugDriver off.
+
+Screens added: 20a (the learner's view), 20b (the picker at the start pose), 21a, 21b.

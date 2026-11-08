@@ -46,15 +46,15 @@ For: students sharing a room, like the learner and their roommates, who know whe
 - Put a thing away: grab the item, carry it, and release it over its place. It snaps neatly into place (default).
 - Dropped somewhere else: the item stays where you dropped it and keeps its number (default).
 - Targets are big and highlight when aimed at.
-- Voice: none.
+- Voice commands: none. (The buddies speak, but you don't talk to them.)
 
 ## When things show
 - Character picker: shows at the start; hides once a character is picked. Card names and taglines are sized to read at 80 cm. If a virtual stand-in (for example the open cupboard door) would cover the cards, it stays hidden until you pick (default), since real furniture can't cover virtual content on the glasses either.
 - Number tags: appear on all 10 items once a character is picked. Each tag disappears when its item is in its place.
 - Briefing (default): right after the pick, the chosen character stays where its card was for about 3.5 seconds, salutes, and says where to start ("10 things out of place! / Start with number 1!"). Tag 1 pulses.
 - Places (hanger, shelf slot, rack slot): glow softly only while you're carrying an item that belongs there (default).
-- Character: the salute sound plays when the item snaps in. The character then waits until the spot that just got clear is in view (or 8 seconds at most), because you're usually facing the wardrobe, shelves or table at that moment. Then it appears on the cleared spot, salutes, shows a two-line speech bubble and says both lines out loud: what you did ("Shirt hung, soldier!") and "You are disciplined! 3 of 10" (the count is a default). It stays until it has finished talking, about 4 to 6 seconds. Far away, the character and the bubble grow so they stay readable.
-- Bed clear (default): when the last of the 3 things on the bed is put away, the first line says "Bed clear!" and a small burst of sparkles shows around the character on the bed. This is the learner's own good moment: "the bed is clean and it felt good."
+- Character: the salute sound plays when the item snaps in. The character then waits until the spot that just got clear is in view (or 8 seconds at most), because you're usually facing the wardrobe, shelves or table at that moment. Then it appears on the cleared spot, salutes with a few sparkles around it, shows a two-line speech bubble and says both lines out loud in a human-sounding voice: what you did ("Shirt hung, soldier!") and "You are disciplined! 3 of 10" (the count is a default). It stays until it has finished talking, about 4 to 6 seconds. Far away, the character and the bubble grow so they stay readable.
+- Bed clear (default): when the last of the 3 things on the bed is put away, the first line says "Bed clear!" and a bigger burst of sparkles shows around the character on the bed, with a shimmer sound. This is the learner's own good moment: "the bed is clean and it felt good."
 - Ending after the 10th item (default, the learner should decide): a bubble right where you're looking says "That's all of them! / Now look at your bed!", and the arrow points to the bed if it's out of view. Once the bed is in view (or after 10 seconds), the character appears on the bed where shirt 1 lay, grows to twice its size and holds a big salute. A soft wave of light sweeps out from the bed with sparkles and a short fanfare, and the bubble says "Room fresh! 10 of 10 / Done in 2 min 41 s" (the time since the pick). It stays for about 6 seconds, then fades.
 - If something needs attention out of view: when every remaining item is out of view, a small arrow points toward the nearest one and a soft chime plays once (default).
 

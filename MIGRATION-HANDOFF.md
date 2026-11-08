@@ -18,13 +18,13 @@ The flow in the preview (Colorful Home bedroom):
 2. The buddy salutes and says where to start, and tag 1 pulses.
 3. Numbers 1 to 10 appear on 2 shirts, 2 pants, 3 books and 3 plates (AI 3D models).
 4. Grab each item and drop it in its place, all on the bedroom's own furniture (Nov 8): the hangers on a rail fixed to the white wardrobe on the right, the white open shelves next to it, and the rack on the round table behind you. The virtual cupboard, desk and chair now only show in the `AroundUser` layout.
-5. The bugle plays at the drop. When you look back at the cleared spot, the buddy salutes there with the job in its own words and "You are disciplined! N of 10".
-6. Clearing the bed gets "Bed clear!" with sparkles.
+5. The bugle plays at the drop. When you look back at the cleared spot, the buddy salutes there with a few sparkles around it, and says the job in its own words and "You are disciplined! N of 10" out loud (Kokoro voice clips, Nov 8).
+6. Clearing the bed gets "Bed clear!" with a bigger burst of sparkles and a shimmer.
 7. An arrow and a chime point to items out of view (plate 10 is behind you).
 8. After item 10: "look at your bed", then the big salute, light wave and fanfare on the clear bed, with "Room fresh! 10 of 10 / Done in 3 min 21 s".
 
-State of the saved project (Nov 7, 13:51, Lens Studio 5.24.1, pushed to GitHub):
-- `DebugDriver` is **disabled**. It enables the test keys P/N/R; turn it on only for agent tests.
+State of the saved project (Nov 8, 16:10, Lens Studio 5.24.1, pushed to GitHub):
+- `DebugDriver` is **disabled**. It enables the test keys P/N/R/H/F (F prints the frame rate); turn it on only for agent tests.
 - `placementMode` is `ColorfulHomeBedroom`.
 - The timers are at their normal values: briefing 3.5 s, salute 3 s, salute wait 8 s, ending 6 s, final wait 10 s.
 - All 5 done criteria pass in the preview, with screenshots: `TidyTroopReports/tidy-troop-new-machine-report.md` and `TidyTroopReports/screens/` (latest run: 13a to 13f2).
@@ -79,7 +79,7 @@ The repo leaves out these local files: `Cache/`, `Workspaces/`, `PluginsUserPref
 - **Open this project only in Lens Studio 5.24.1.** 5.23.2 re-saves it, and the interaction kit (SIK 4.0.0) then fails to compile ("Cannot find namespace 'SpecsInteractionModule'"). Use 5.23.2 only for a separate scratch project.
 - Sign-in in 5.24.1 sends you to the SPECS developer portal, which hasn't opened sign-ups, so SPECS text-to-3D and FAST3D only work from 5.23.2. 5.23.2 has no `SubmitSpecsAssetJobs`; use `ExecuteEditorCode` with `.kiro/skills/build-mesh/tools/text-to-3d-request.ts`. PowerShell ports of the helpers are in `tempAssetGen/specs3d/`.
 - LEAF 4.0.0 doesn't compile on 5.24.1 (it needs 5.25 typings), and 5.25 isn't out. Don't install it. The scenarios are drafted in `LeafDrafts/`; testing is done in the preview through the MCP.
-- For clicks and drags, use `InjectPreviewGesture` touch events; `PreviewInteractTool` Pinch/Hover returns "unknown command" in this project.
+- For clicks and drags, use `InjectPreviewGesture` touch events. **Don't call `PreviewInteractTool`**: on Nov 8 it installed `AiPreviewAgentInteract.lspkg` and LEAF into `Packages/`, rewrote `Plugins/.../LeafPlugin`, and LEAF broke the TypeScript compile. They were removed again (asset remove, then `git checkout -- Plugins/...`), and the compile had to be restarted by editing a script.
   - A click is: move, end, then start, end.
   - Lens x = 2.07 × input x − 0.537, with y unchanged.
   - Sergeant Sweep's card is at input (0.413, 0.634) from the start pose.
@@ -88,6 +88,8 @@ The repo leaves out these local files: `Cache/`, `Workspaces/`, `PluginsUserPref
 - The package folders are renamed `InteractionKit.lspkg` and `UIKit.lspkg`, and the scripts import those names.
 - The AI item models sit under `ItemNN_Visual/ModelSlot`; `TidyTroopProp` skips its code mesh when that slot has a model. glTF lighting is off on their materials, because lit they looked purple. The characters stay code-built, because their arm salutes and their legs march.
 - Save after every stage (`pluginSystem.findInterface(Editor.Model.IModel).project.save()`). Lens Studio has crashed and lost unsaved work.
+- Voice lines: to change one, edit `Assets/Scripts/TidyTroopLines.ts` and `tools/make-voice-lines.mjs`, then run the script (setup in its header; Kokoro lives in `%LOCALAPPDATA%\TidyTroopVoice`, outside the repo). It rewrites `Assets/GeneratedSFX/Voice/` and `TidyTroopVoiceLines.ts`, and Lens Studio reloads the Lens while the files change.
+- This machine's preview is slow (about 15 fps measured with key F; integrated Radeon GPU, Preview panel 3590 x 1590). Tool calls take seconds, so a 4 s salute is easy to miss: send the key press and the screenshot in the same batch.
 - Watch memory on long sessions: restart Lens Studio after many preview reloads. Close idle agent terminals in Kiro (Ctrl+Shift+P, "Terminal: Kill All Terminals").
 - Keep secrets out of the repo. `.gitignore` covers them; never force-add ignored files.
 - "Mr. Clean" is a trademark. Both characters are original and must stay that way.

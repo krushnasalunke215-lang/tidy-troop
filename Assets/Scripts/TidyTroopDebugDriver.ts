@@ -10,6 +10,8 @@
  *       and print each hit as s/d/h/normal in the Colorful Home bedroom frame (see BEDROOM_* below):
  *       s along "right", d along "forward" (toward the headboard wall), h = cm above the floor.
  *       Used to measure the room's own furniture for the slot positions.
+ *   F = print the Lens's average frame rate and slowest frame over the next 3 seconds (pressing it
+ *       again restarts the count)
  * Must not: run during normal use (keep the DebugDriver object disabled).
  */
 import WorldCameraFinderProvider from "InteractionKit.lspkg/Providers/CameraProvider/WorldCameraFinderProvider"
@@ -41,7 +43,32 @@ export class TidyTroopDebugDriver extends BaseScriptComponent {
       else if (e.key === Keys.N) print("DEBUG N placed=" + this.main.debugPlaceNext() + " count=" + this.main.placedCount)
       else if (e.key === Keys.R) print("DEBUG R " + this.main.debugReport())
       else if (e.key === Keys.H) this.hitGrid()
+      else if (e.key === Keys.F) this.measureFps()
     })
+    this.createEvent("UpdateEvent").bind(() => {
+      if (this.fpsLeft <= 0) return
+      this.fpsFrames++
+      this.fpsWorst = Math.max(this.fpsWorst, getDeltaTime())
+      this.fpsLeft -= getDeltaTime()
+      if (this.fpsLeft <= 0) {
+        const secs = getTime() - this.fpsStart
+        print("DEBUG F " + (this.fpsFrames / secs).toFixed(1) + " fps over " + secs.toFixed(1) + " s, slowest frame " +
+          Math.round(this.fpsWorst * 1000) + " ms")
+      }
+    })
+  }
+
+  private fpsLeft = 0
+  private fpsFrames = 0
+  private fpsStart = 0
+  private fpsWorst = 0
+
+  /** Key F: average frame rate of the Lens over the next 3 seconds. */
+  private measureFps() {
+    this.fpsLeft = 3
+    this.fpsFrames = 0
+    this.fpsWorst = 0
+    this.fpsStart = getTime()
   }
 
   private session: HitTestSession | null = null

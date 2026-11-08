@@ -201,7 +201,7 @@ Test: reset the camera to the living room, refresh, then moved it to the start p
 
 **Test** (start pose, Sergeant Sweep):
 - Real drag of book 4 from the floor to the shelves. The three glows showed on the shelf (19d), and the book now stands on it (19e): `item 4 placed (1 of 10)`, voice `Book shelved, soldier! / You are disciplined! 1 of 10`.
-- Key N for the rest. The clothes hang on the wardrobe rail (19h), and the plates go into the rack on the table (19i). The last item gives `That's all of them! / Eyes on your bed, soldier!` with the arrow. The ending on the bed: voice `Room fresh! 10 of 10`, then `ending finished`.
+- Key N for the rest. The clothes hang on the wardrobe rail (19h), and the plates go into the rack on the table (19i). The last item gives `That's all of them! / Eyes on your bed, soldier!` with the arrow. The ending on the bed: voice `Room fresh! 10 of 10`, then `ending finished` (log only: it played on its 10 s timer while the camera faced the table; 19j is the clear bed afterwards).
 - Earlier in the same session, a real drop of shirt 1 on the rail and of plate 10 on the table both snapped.
 - New item spots: 19f (shirt 5 and pants 6 by the dresser) and 19g (plate 7 on the left nightstand).
 

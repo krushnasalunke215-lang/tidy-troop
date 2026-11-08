@@ -50,6 +50,13 @@ const LOOK_BUBBLE_DISTANCE_CM = 90
 /** Briefing bubble: its bottom edge sits this far below the buddy's feet (the bubble is about 12 cm tall). */
 const BRIEFING_BUBBLE_DROP_CM = 16
 
+/**
+ * Before a buddy is picked, moving the eyes this far (cm) from where the picker opened opens it again in
+ * front of them. In the Lens Studio preview the Lens can start before the saved preview camera pose is
+ * restored, which put the picker metres away; walking into the room before picking does the same.
+ */
+const PICKER_REOPEN_CM = 150
+
 /** The salute bugle is 1.6 s long; the buddy starts talking once it is nearly over. */
 const BUGLE_SECONDS = 1.5
 
@@ -224,6 +231,8 @@ export class TidyTroopMain extends BaseScriptComponent {
   private finaleSpot: vec3 = vec3.zero()
   /** Bumped whenever something new is said, so a delayed line that is no longer current stays quiet. */
   private voiceToken = 0
+  /** Where the eyes were when the picker last opened. */
+  private pickerEye: vec3 = vec3.zero()
   /** Every mesh under Room (furniture, hangers, items), gathered once at setup. */
   private roomVisuals: RenderMeshVisual[] = []
   /** Room meshes hidden because they covered the picker; shown again on pick. */
@@ -377,13 +386,21 @@ export class TidyTroopMain extends BaseScriptComponent {
       for (const item of this.items) item.recordOrigin()
       this.picker.placeInFront(eye, c.back)
       this.picker.show()
-      this.collectVisuals(this.room, this.roomVisuals)
+      this.pickerEye = eye
+      if (this.roomVisuals.length === 0) this.collectVisuals(this.room, this.roomVisuals)
       this.clearPickerView(eye)
       this.state.phase = "picking"
       return
     }
     if (this.state.phase === "picking") {
       const eye = c.getWorldPosition()
+      const moved = eye.distance(this.pickerEye)
+      if (moved > PICKER_REOPEN_CM) {
+        print("TidyTroop: eyes moved " + Math.round(moved) + " cm before a pick, so the picker opens again in front of them")
+        this.restorePickerView()
+        this.state.phase = "starting"
+        return
+      }
       this.clearPickerView(eye)
       this.previewOnCard(this.sergeant, 0, eye)
       this.previewOnCard(this.captain, 1, eye)

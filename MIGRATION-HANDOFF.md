@@ -63,7 +63,7 @@ Optional, only if time is left:
 The repo leaves out these local files: `Cache/`, `Workspaces/`, `PluginsUserPreferences/`, `.mcp.json`, `.kiro/settings/mcp.json`, the agent configs under `.claude/`, `.codex/`, `.cursor/` and `.vscode/` (they hold the MCP token), `spk_debug_key.pem`, `ls-live-instance.json` and the lock files. Lens Studio and `tools\connect-kiro-mcp.ps1` create fresh ones.
 
 ## How to run it (for the learner's test and the video)
-1. Start pose: the foot of the double bed in the green bedroom, facing the bed. Get there with WASD (right-drag to look around), or ask the agent to use `MovePreviewCamera`: `setPosition (-498.6, 0, 1.9)`, then `lookAt (-359.7, -25, 145.8)`.
+1. Start pose: the foot of the double bed in the green bedroom, facing the bed. Get there with WASD (right-drag to look around), or ask the agent to use `MovePreviewCamera`: `setPosition (-498.6, 0, 1.9)`, then `lookAt (-359.7, -65, 145.8)`. This looks slightly down, so the cards and the bed items are both in view (screen 17b). Don't scroll to zoom out: scrolling moves the camera back out of the bedroom. If the cards aren't in front of you, walk into the bedroom: before a pick they reopen in front of you once you have moved 1.5 m.
 2. Click the Preview panel's refresh button. Wait for the two cards (up to 15 s); a click sent earlier is lost.
 3. Hover over a card until it highlights, then click.
 4. To move an item: hover until it highlights, press and hold, keep holding while you turn to its place (it glows), then release.

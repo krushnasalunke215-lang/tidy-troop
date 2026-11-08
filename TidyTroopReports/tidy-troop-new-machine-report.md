@@ -172,3 +172,10 @@ Learner reports, with what the checks found:
 - **"Why not 3D models for the table and cupboard?"** Not changed yet; the answer and the options are in the chat. The hangers, shelf and rack places need exact positions, and SPECS text-to-3D needs Lens Studio 5.23.2 in a separate project.
 
 DebugDriver was on only for these tests and is off in the save.
+
+## Start screen after a Lens Studio restart (Nov 8, 11:25)
+**Learner report: the preview starts on a plain green wall, with no cards.** Lens Studio had been restarted. The Lens started at 11:20:57 while the preview camera was still at its default pose in the living room, and the saved camera pose (the foot of the bed) was restored after that. The picker opens once, in front of the eyes on the first frame, so it sat at (42, 113, 125), about 5.5 m away and out of view. The old start pose also looked only 10° down, so the bed sat at the bottom edge of the SPECS display.
+
+Fix (`TidyTroopMain.tick`): before a pick, if the eyes move more than 1.5 m (`PICKER_REOPEN_CM`) from where the picker opened, it opens again in front of them. On the glasses this also covers walking into the room before picking. The documented start pose now looks at (−359.7, −65, 145.8), so the cards and the bed items are in one view.
+
+Test: reset the camera to the living room, refresh, then moved it to the start pose. Log: `eyes moved 499 cm before a pick, so the picker opens again in front of them`; the cards and the bed items showed together (screen 17b; 17a is the learner's empty start screen).

@@ -276,6 +276,21 @@ export class TidyTroopMain extends BaseScriptComponent {
     return true
   }
 
+  /**
+   * Test hook (TidyTroopDebugDriver key D): put the lowest-numbered remaining item `distanceCm`
+   * straight ahead of the eyes and release it there, as if it had been carried there. Runs the
+   * same snap check as a real release. Returns whether it snapped.
+   */
+  debugDropAhead(distanceCm: number): boolean {
+    if (this.state.phase !== "tidying") return false
+    const c = this.camera()
+    const item = this.items.find((i) => !i.placed)
+    if (!c || !item) return false
+    item.getSceneObject().getTransform().setWorldPosition(this.camPos().add(c.back.uniformScale(distanceCm)))
+    this.onRelease(item)
+    return item.placed
+  }
+
   /** Test hook: the two picker card SceneObjects. */
   debugCards(): SceneObject[] {
     return this.picker.getCards()

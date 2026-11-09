@@ -17,18 +17,21 @@ The flow in the preview (Colorful Home bedroom):
 1. Pick a buddy on two cards.
 2. The buddy salutes and says where to start, and tag 1 pulses.
 3. Numbers 1 to 10 appear on 2 shirts, 2 pants, 3 books and 3 plates (AI 3D models).
-4. Grab each item and drop it in its place, all on the bedroom's own furniture (Nov 8): the hangers on a rail fixed to the white wardrobe on the right, the white open shelves next to it, and the rack on the round table behind you. The virtual cupboard, desk and chair now only show in the `AroundUser` layout.
+4. Grab each item and drop it in its place (Nov 9): the hangers in the small cream cupboard straight to your right, and the shelf and plate rack on the small cream table behind you on the left. Each one fits whole in the SPECS view window. The big cupboard, desk and chair only show in the `AroundUser` layout.
 5. The bugle plays at the drop. When you look back at the cleared spot, the buddy salutes there with a few sparkles around it, and says the job in its own words and "You are disciplined! N of 10" out loud (Kokoro voice clips, Nov 8).
 6. Clearing the bed gets "Bed clear!" with a bigger burst of sparkles and a shimmer.
 7. An arrow and a chime point to items out of view (plate 10 is behind you).
 8. After item 10: "look at your bed", then the big salute, light wave and fanfare on the clear bed, with "Room fresh! 10 of 10 / Done in 3 min 21 s".
 
-State of the saved project (Nov 8, 16:10, Lens Studio 5.24.1, pushed to GitHub):
-- `DebugDriver` is **disabled**. It enables the test keys P/N/R/H/F (F prints the frame rate); turn it on only for agent tests.
+State of the saved project (Nov 9, 11:30, Lens Studio 5.24.1, pushed to GitHub):
+- `DebugDriver` is **disabled**. It enables the test keys P/N/R/H/F/D (F prints the frame rate; D drops the next item 150 cm straight ahead with the real snap check); turn it on only for agent tests.
 - `placementMode` is `ColorfulHomeBedroom`.
 - The timers are at their normal values: briefing 3.5 s, salute 3 s, salute wait 8 s, ending 6 s, final wait 10 s.
 - All 5 done criteria pass in the preview, with screenshots: `TidyTroopReports/tidy-troop-new-machine-report.md` and `TidyTroopReports/screens/` (latest run: 13a to 13f2).
 - The improvement analysis behind the latest changes is in `TidyTroopReports/improvement-ideas.md`.
+
+## Small cupboard and table in the bedroom (Nov 9, learner chose "option b")
+The learner wanted a virtual cupboard and table they can see. The full-size Cupboard (180 cm) and Desk can't fit the SPECS view window from inside the bedroom, so the bedroom now has `Furniture/SmallCupboard` (kind `SmallCupboard`, 74 W x 111 H x 48 D, open front, rail at 98 cm, 4 hangers) and `Furniture/SmallTable` (kind `SmallTable`, 76 x 60 x 45, with the Bookshelf and PlateRack on top, each with a drop zone covering the whole table). Both are bedroom-only. `BedroomPlaces` (rail on the real wardrobe, real shelves, rack on the round table) is hidden in the bedroom. The old Cupboard, Desk and Chair stay AroundUser-only. `tempAssetGen/build-small-furniture.ts` rebuilds the two copies (see its header). Details and tests: the Nov 9 section of `TidyTroopReports/tidy-troop-new-machine-report.md`.
 
 ## What's left, in order
 1. **Gate on the new machine.** The Lens Studio MCP tools are present, `ListAllPanels` works, and the open project is this `lens.esproj` in Lens Studio **5.24.1**. Then recompile and refresh the preview from the start pose; expect no errors and the log lines `TidyTroop: 10 items, 10 slots` and `placement ColorfulHomeBedroom`.
@@ -90,6 +93,8 @@ The repo leaves out these local files: `Cache/`, `Workspaces/`, `PluginsUserPref
 - Save after every stage (`pluginSystem.findInterface(Editor.Model.IModel).project.save()`). Lens Studio has crashed and lost unsaved work.
 - Voice lines: to change one, edit `Assets/Scripts/TidyTroopLines.ts` and `tools/make-voice-lines.mjs`, then run the script (setup in its header; Kokoro lives in `%LOCALAPPDATA%\TidyTroopVoice`, outside the repo). It rewrites `Assets/GeneratedSFX/Voice/` and `TidyTroopVoiceLines.ts`, and Lens Studio reloads the Lens while the files change.
 - This machine's preview is slow (about 15 fps measured with key F; integrated Radeon GPU, Preview panel 3590 x 1590). Tool calls take seconds, so a 4 s salute is easy to miss: send the key press and the screenshot in the same batch.
+- Agent mouse drags that turn the camera with `MovePreviewCamera` while an item is held are unreliable here (Nov 9): one drop landed the book 60 cm above the shelf, and a later grab didn't register at all. Use key D to test drops. The learner's own drag with the real mouse is the real test.
+- After a refresh or a recompile, wait about 20 s before clicking a card; earlier clicks are lost. If the Lens Studio tools vanish from a Kiro chat after a Lens Studio restart, run `tools\connect-kiro-mcp.ps1` and reconnect `lens-studio` in Kiro's MCP panel (or reload the Kiro window).
 - Watch memory on long sessions: restart Lens Studio after many preview reloads. Close idle agent terminals in Kiro (Ctrl+Shift+P, "Terminal: Kill All Terminals").
 - Keep secrets out of the repo. `.gitignore` covers them; never force-add ignored files.
 - "Mr. Clean" is a trademark. Both characters are original and must stay that way.

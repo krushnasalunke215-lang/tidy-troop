@@ -1,8 +1,9 @@
 /**
  * TidyTroopProp — code-authored stand-in geometry for the virtual room (MeshBuilder backend,
  * chosen because AI mesh generation needs a Lens Studio sign-in that is not available).
- * Owns: building ONE prop mesh (bed, cupboard, desk, chair, bookshelf, plate rack, hanger,
- *       shirt, pants, book, plate, wall rail) on its own SceneObject at real-world cm sizes.
+ * Owns: building ONE prop mesh (bed, cupboard, small cupboard, desk, small table, chair, bookshelf,
+ *       plate rack, hanger, shirt, pants, book, plate, wall rail) on its own SceneObject at real-world
+ *       cm sizes.
  * Inputs: kind, main/accent colors. Place/rotate the SceneObject in the scene; the mesh is
  *       built around its origin (floor/base contact at y = 0 for furniture, centre for items).
  * Must not: hold gameplay state (items/slots own that).
@@ -45,6 +46,7 @@ export class TidyTroopProp extends BaseScriptComponent {
     new ComboBoxItem("Hanger", "Hanger"), new ComboBoxItem("Shirt", "Shirt"),
     new ComboBoxItem("Pants", "Pants"), new ComboBoxItem("Book", "Book"),
     new ComboBoxItem("Plate", "Plate"), new ComboBoxItem("Wall Rail", "Rail"),
+    new ComboBoxItem("Small Cupboard", "SmallCupboard"), new ComboBoxItem("Small Table", "SmallTable"),
   ]))
   kind: string = "Bed"
 
@@ -80,6 +82,8 @@ export class TidyTroopProp extends BaseScriptComponent {
       case "Book": this.book(k, m); break
       case "Plate": this.plate(k, a); break
       case "Rail": this.rail(k); break
+      case "SmallCupboard": this.smallCupboard(k, m, a); break // a = trim colour
+      case "SmallTable": this.smallTable(k, m); break
       default: print("TidyTroopProp: unknown kind " + this.kind)
     }
     k.build(this.sceneObject, VERTEX_COLOR_MATERIAL)
@@ -115,6 +119,33 @@ export class TidyTroopProp extends BaseScriptComponent {
     k.box(22, 0, 1, 44, 176, 2, door)
     k.box(38, 0, 2.6, 1.5, 12, 1.5, METAL)
     k.pop()
+  }
+
+  // Small open-front cupboard 74 W x 111 H x 48 D, hanging rail at 98 cm (pants hang 92 cm below it,
+  // just clearing the 5 cm base). Sized to fit whole inside the SPECS display (about 32 x 36 degrees)
+  // from about 1.6 m away. No doors: open doors would stick out toward you or to the sides and push
+  // it past the edge of the display. The accent colour frames the front, top and base.
+  private smallCupboard(k: MeshKit, wood: RGBA, trim: RGBA) {
+    const inside = rgb(0.95, 0.9, 0.8)
+    k.box(0, 54, -21.5, 70, 108, 2, inside)
+    k.box(-34, 54, 0, 2, 108, 45, wood)
+    k.box(34, 54, 0, 2, 108, 45, wood)
+    k.box(0, 107, 0, 70, 2, 45, wood)
+    k.box(0, 2.5, 0, 70, 5, 45, trim)
+    // Front frame: two posts and a header in the accent colour, and a cornice on top.
+    for (const x of [-33.5, 33.5]) k.box(x, 54, 22.3, 3, 108, 1.5, trim)
+    k.box(0, 104.5, 22.3, 70, 5, 1.5, trim)
+    k.box(0, 109.5, 0.5, 74, 3, 48, trim)
+    k.push(new vec3(0, 98, 0), axisDeg(90, vec3.forward()))
+    k.cylinderY(0, -32, 0, 0.8, 64, METAL, 12)
+    k.pop()
+  }
+
+  // Small table 76 x 60 x 45 cm, top surface at 60 cm: room for the bookshelf and the plate rack.
+  private smallTable(k: MeshKit, wood: RGBA) {
+    k.box(0, 58.5, 0, 76, 3, 45, wood)
+    for (const x of [-34, 34]) for (const z of [-18.5, 18.5]) k.box(x, 28.5, z, 4, 57, 4, wood)
+    k.box(0, 52, -19.5, 68, 7, 2, wood)
   }
 
   // Clothes rail fixed to a wardrobe front: an 88 cm bar along X at 162 cm, held 25 cm out from the

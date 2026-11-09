@@ -227,3 +227,29 @@ Learner reports, with what was found and done:
 Saved at 16:10 with DebugDriver off.
 
 Screens added: 20a (the learner's view), 20b (the picker at the start pose), 21a, 21b.
+
+## Small cupboard and table that fit the view (Nov 9, 11:00 to 11:30)
+**Learner report: "where is the table and cupboard?"** By option A they were the room's own wardrobe and round table, which the learner didn't read as "the cupboard and the table". The learner chose option b: a small virtual cupboard and table near the start spot, sized to fit whole inside the SPECS display.
+
+**Measured** with DebugDriver key H from the start spot (s 360, d -345, eyes at 136 cm):
+- Right: the white wardrobe front is at s = 570 to 572 from d = -282 to -409 (568 at floor level), with clear floor from s = 519 to 551.
+- Behind on the left: the left wall is at s = 183, and the floor is clear from s = 190 to 300 between d = -400 and -600. The round table and the black chair are further right.
+
+**Built** (new `TidyTroopProp` kinds, scene objects copied from the AroundUser Cupboard and Desk by `tempAssetGen/build-small-furniture.ts`):
+- `Furniture/SmallCupboard`, kind `SmallCupboard`: an open-front cupboard, 74 W x 111 H x 48 D, with a cream frame and 4 hangers on a rail at 98 cm. It stands at world (-628.1, -136, 127), rotation y 134 (s 540, d -345): straight to the right of the start spot, back to the wardrobe, front 157 cm from the eyes. Doors were left off on purpose, because open doors would make it wider than the display.
+- `Furniture/SmallTable`, kind `SmallTable`: 76 x 60 x 45 cm. The Bookshelf and PlateRack stand side by side on its top, and each has a `TidyTroopDropZone` covering the whole table. It stands at world (-495.5, -136, -177.6), rotation y -1 (s 233, d -472): behind the start spot on the left, front 157 cm from the eyes, facing the start spot.
+- `BedroomPlaces` (the rail on the real wardrobe, the real shelves and the rack on the round table) is hidden in the bedroom layout, so each item has one place. The log still says `TidyTroop: 10 items, 10 slots` (19 layout spots).
+- New DebugDriver key D: drop the lowest-numbered remaining item 150 cm straight ahead, through the same snap check as a real release (`TidyTroopMain.debugDropAhead`).
+
+**Checked in the preview** (start spot, Sergeant Sweep):
+- Each piece is whole inside the SPECS display window when you turn to it and look down a little: screen 22b (the cupboard, with its 4 hangers) and screen 22c (the table, with the shelf and rack).
+- Key D for all 10 items, facing the cupboard or the table. Every item snapped. Some went straight to the nearest place, and others came through the drop zone (`item 1 dropped on the SmallCupboard, so it goes to HangerSlot3`). Plate 7 was dropped low under the table top and still went to the rack (`dropped on the PlateRack, so it goes to RackSlot1`).
+- Screen 22d: shirt 1 and pants 2 hanging in the cupboard, both whole. The pants clear the base.
+- Screen 22e: 3 books on the shelf and 3 plates in the rack, with "That's all of them! / Eyes on your bed, soldier!".
+- Salutes and voices kept working: `Shirt hung, soldier!`, `Book shelved, soldier!`, `Pants hung, soldier!` and `Plate racked, soldier!`, each with its clip. Then the ending: `final salute after waiting 10 s`, `Room fresh! 10 of 10 / Done in 11 min 11 s` (`Sgt_Finale.wav`), then `ending finished`.
+
+**Not proven: a real mouse drag to the new places.** The agent's drags turn the camera with `MovePreviewCamera` while an item is held. In the first try the book followed the mouse to the shelf (screen 22d-book-carried-to-table). But at the release it was 60 cm above and to the right of the shelf, so it didn't snap (`item 3 dropped away from a free book place, not snapped`). Two later grabs didn't register at all. The learner's real-mouse drag (press, right-drag to turn, release over the glow) is the test still to do.
+
+Saved at 11:30 with DebugDriver off.
+
+Screens added: 22b, 22c, 22d-book-carried-to-table, 22d-clothes-in-small-cupboard, 22e.

@@ -12,6 +12,8 @@
  *       Used to measure the room's own furniture for the slot positions.
  *   F = print the Lens's average frame rate and slowest frame over the next 3 seconds (pressing it
  *       again restarts the count)
+ *   D = drop the lowest-numbered remaining item 150 cm straight ahead, as a real release would
+ *       (same snap check), to test the places without a mouse drag
  * Must not: run during normal use (keep the DebugDriver object disabled).
  */
 import WorldCameraFinderProvider from "InteractionKit.lspkg/Providers/CameraProvider/WorldCameraFinderProvider"
@@ -44,6 +46,7 @@ export class TidyTroopDebugDriver extends BaseScriptComponent {
       else if (e.key === Keys.R) print("DEBUG R " + this.main.debugReport())
       else if (e.key === Keys.H) this.hitGrid()
       else if (e.key === Keys.F) this.measureFps()
+      else if (e.key === Keys.D) print("DEBUG D placed=" + this.main.debugDropAhead(150) + " count=" + this.main.placedCount)
     })
     this.createEvent("UpdateEvent").bind(() => {
       if (this.fpsLeft <= 0) return
